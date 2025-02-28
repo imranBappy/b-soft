@@ -33,6 +33,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
+    "https://b-soft.vercel.app",
     "http://b-soft.xyz",
     "http://localhost:3000"
 ]
