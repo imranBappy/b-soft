@@ -1,0 +1,6 @@
+price-range
+offer-price
+Note 
+Reset
+Review 
+QNA

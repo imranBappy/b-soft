@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f6f6f6;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #4caf50;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .content {
+            padding: 20px;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            font-size: 12px;
+            color: #777777;
+        }
+
+        a {
+            color: #4caf50;
+            text-decoration: none;
+        }
+
+        .button {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>Welcome to Our Service!</h1>
+        </div>
+        <div class="content">
+            <p>Hi {{ user_name }},</p>
+            <p>Thank you for signing up for our service. We're excited to have you on board!</p>
+            <p>To get started, please confirm your email address by clicking the button below:</p>
+            <p><a href="{{ confirmation_link }}" class="button">Confirm Email</a></p>
+            <p>If the button above doesn't work, please copy and paste the following URL into your browser:</p>
+            <p><a href="{{ confirmation_link }}">{{ confirmation_link }}</a></p>
+            <p>Best regards,</p>
+            <p>The Team</p>
+        </div>
+        <div class="footer">
+            <p>&copy; {{ current_year }} Our Service. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>

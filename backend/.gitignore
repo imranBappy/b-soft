@@ -1,0 +1,15 @@
+/venv
+/temp
+
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env
+.git
+*.db
+
+run-cmd.txt
+cmd.txt
+b-soft.pem
+/backend/.env
