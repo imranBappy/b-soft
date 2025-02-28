@@ -28,17 +28,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY", None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+# DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = False
+
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
-    "https://mumin.world",
-    "https://demo.mumin.world"
+    "http://b-soft.xyz",
+    "http://localhost:3000"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-WEBSITE_URL = config('WEBSITE_URL', 'http://localhost:3000')
+WEBSITE_URL = config('WEBSITE_URL', 'http://b-soft.xyz')
 
 # OTP life time
 OTP_TIMESTAMP = config('OTP_TIMESTAMP', default=1440, cast=int)
@@ -96,6 +98,7 @@ GRAPHENE = {
     'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
     ],
+    'PLAYGROUND': False,
 }
 
 #token lifetime
