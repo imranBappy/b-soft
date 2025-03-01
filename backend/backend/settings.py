@@ -29,14 +29,25 @@ SECRET_KEY = config("SECRET_KEY", None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = config('DEBUG', default=False, cast=bool)
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = [
+#     "https://b-soft.vercel.app",
+#     "https://b-soft.xyz",
+#     "http://localhost:3000"  # Only for local development
+# ]
+ALLOWED_HOSTS = [
+   "*"
+]
+
+
+
 CSRF_TRUSTED_ORIGINS = [
     "https://b-soft.vercel.app",
-    "http://b-soft.xyz",
-    "http://localhost:3000"
+    "https://b-soft.xyz",
+    "http://localhost:3000"  # Only for local development
 ]
+
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -196,8 +207,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') # Absolute path to where collectstatic will gather the static files
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static') # Absolute path to where collectstatic will gather the static files
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
