@@ -16,3 +16,18 @@ export const SETTING_QUERY = gql`
         }
     }
 `;
+
+export const SLIDERS_QUERY = gql`
+query MyQuery($first: Int, $offset: Int) {
+  sliders(first: $first, offset: $offset) {
+    totalCount
+    edges {
+      node {
+        createdAt
+        id
+        image
+        link
+      }
+    }
+  }
+}`

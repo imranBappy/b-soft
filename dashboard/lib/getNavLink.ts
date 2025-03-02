@@ -62,7 +62,7 @@ const navbarLinks: NavLinks = {
             ],
         },
         {
-            title: "Order & POS",
+            title: "Order ",
             url: "#",
             icon: SquareTerminal,
             items: [
@@ -74,32 +74,21 @@ const navbarLinks: NavLinks = {
                     title: "Payment list",
                     url: "/orders/payments",
                 },
-              
+
 
             ],
         },
-     
+
         {
             title: "Settings",
             url: "#",
             icon: Settings2,
             items: [
                 {
-                    title: "General",
-                    url: "#",
+                    title: "Slider",
+                    url: "/settings/sliders",
                 },
-                {
-                    title: "Team",
-                    url: "#",
-                },
-                {
-                    title: "Billing",
-                    url: "#",
-                },
-                {
-                    title: "Limits",
-                    url: "#",
-                },
+
             ],
         },
     ],
@@ -160,7 +149,7 @@ const navbarLinks: NavLinks = {
     ],
     [WAITER]: [
         {
-            title: "Order & POS",
+            title: "Order ",
             url: "#",
             icon: SquareTerminal,
             items: [
@@ -174,7 +163,7 @@ const navbarLinks: NavLinks = {
                 },
                 {
                     title: "POS",
-                    url: "/orders/pos",
+                    url: "/dashboard",
                 },
 
             ],

@@ -4,11 +4,8 @@ import moment from "moment"
 import { Badge } from "@/components/ui/badge"
 import { COUNT_TYPE } from "@/graphql/types"
 import { getStatusStyle, toFixed, underscoreToSpace } from "@/lib/utils"
-import PaymentModal from "../../order-payment/payment-modal"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ORDER_STATUSES } from "@/constants/order.constants"
-import InvoiceGenerate from "@/components/invoice-generate"
 
 
 export const columns: ColumnDef<ORDER_TYPE>[] = [
@@ -74,39 +71,7 @@ export const columns: ColumnDef<ORDER_TYPE>[] = [
             <div className="capitalize">{`${moment(row.getValue("createdAt")).format("DD-MM-YYYY")} - ${moment(row.getValue("createdAt")).fromNow()}`}</div>
         ),
     },
-    {
-        id: "actions",
-        enableHiding: false,
-        cell: ({ row }) => {
-            const order = row.original as unknown as ORDER_TYPE
-            if (row.getValue('status') === ORDER_STATUSES.COMPLETED) {
-                return <InvoiceGenerate order={order} />
-            }
-            return (
-
-                <div className=" flex gap-2 items-center justify-end">
-                    <PaymentModal
-                        openBtnClassName="w-[102px] "
-                        variant="outline"
-                        openBtnName="Payment"
-                        orderId={row.original.id}
-                    />
-                    {
-                        row.getValue('status') !== ORDER_STATUSES.PENDING ? <InvoiceGenerate order={order} /> : <Button variant={'secondary'}
-                            disabled={row.getValue('status') !== ORDER_STATUSES.PENDING}
-                        >
-                            <Link href={`/orders/pos?id=${row.original.id}&orderId=${row.original.orderId.replace("#", "")}`}>
-                                Edit
-                            </Link>
-                        </Button>
-                    }
-
-                </div>
-            )
-
-
-        },
-    },
+   
 ]
 
 export default columns

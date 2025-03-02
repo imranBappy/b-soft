@@ -34,7 +34,6 @@ import { getStatusStyle, getThumblain } from '@/lib/utils';
 import moment from 'moment';
 
 
-import { PrintInvoice_ } from './Invoice';
 
 
 interface ProductNode {
@@ -102,7 +101,6 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
 
     return (
         <div className="space-y-6 p-4">
-            <PrintInvoice_ order={order} />
             {/* Customer Information */}
             <Card className="shadow-sm">
                 <CardHeader className="border-b">

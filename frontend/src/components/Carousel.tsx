@@ -9,15 +9,26 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import Image from "next/image"
-import banner1 from '@/assets/banner1.png'
-import banner2 from '@/assets/banner2.png'
-import banner3 from '@/assets/banner3.png'
 import Link from "next/link"
+import { SLIDER_TYPE, SLIDERS_QUERY } from "@/graphql/setting"
+import { useQuery } from "@apollo/client"
 
 function BannerCarousel() {
+
     const plugin = useRef(
         Autoplay({ delay: 2000, stopOnInteraction: false })
     )
+
+    const { data: res } = useQuery(SLIDERS_QUERY, {
+        variables: {},
+    }
+    );
+
+    const sliders: SLIDER_TYPE[] = res?.sliders?.edges?.map(({ node }: { node: SLIDER_TYPE }) => ({
+        id: node.id,
+        link: node.link,
+        image: node.image,
+    })) || [];
 
     return (
         <Carousel
@@ -27,45 +38,25 @@ function BannerCarousel() {
             onMouseLeave={plugin.current.reset}
         >
             <CarouselContent>
-                <CarouselItem>
-                    <div className="p-3 rounded border">
-                        <Link href={`/products/1`}>
-                            <Image
-                                className="rounded"
-                                src={banner1}
-                                alt="Banner 1"
-                                width={1500}
-                                height={700}
-                            />
-                        </Link>
-                    </div>
-                </CarouselItem>
-                <CarouselItem>
-                    <div className="p-3 rounded border">
-                        <Link href={`/products/1`}>
-                            <Image
-                                className="rounded"
-                                src={banner2}
-                                alt="Banner 1"
-                                width={1700}
-                                height={700}
-                            />
-                        </Link>
-                    </div>
-                </CarouselItem>
-                <CarouselItem>
-                    <div className="p-3 rounded border">
-                        <Link href={`/products/1`}>
-                            <Image
-                                className="rounded"
-                                src={banner3}
-                                alt="Banner 1"
-                                width={1700}
-                                height={700}
-                            />
-                        </Link>
-                    </div>
-                </CarouselItem>
+                {
+                    sliders.map((slider) => (<CarouselItem
+                        key={slider.id}
+                    >
+                        <div className="p-3 rounded border">
+                            <Link href={slider?.link || "#"}>
+                                <Image
+                                    className="rounded"
+                                    src={slider.image}
+                                    alt="Banner 1"
+                                    width={1500}
+                                    height={700}
+                                />
+                            </Link>
+                        </div>
+                    </CarouselItem>))
+                }
+
+
             </CarouselContent>
             <div className="  hidden lg:block">
                 <CarouselPrevious />

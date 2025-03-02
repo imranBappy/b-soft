@@ -78,7 +78,7 @@ const navbarLinks: NavLinks = {
             ],
         },
         {
-            title: "Order & POS",
+            title: "Order ",
             url: "#",
             icon: SquareTerminal,
             items: [
@@ -92,7 +92,7 @@ const navbarLinks: NavLinks = {
                 },
                 {
                     title: "POS",
-                    url: "/orders/pos",
+                    url: "/dashboard",
                 },
 
             ],
@@ -206,7 +206,7 @@ const navbarLinks: NavLinks = {
     ],
     [WAITER]: [
         {
-            title: "Order & POS",
+            title: "Order ",
             url: "#",
             icon: SquareTerminal,
             items: [
@@ -220,7 +220,7 @@ const navbarLinks: NavLinks = {
                 },
                 {
                     title: "POS",
-                    url: "/orders/pos",
+                    url: "/dashboard",
                 },
 
             ],

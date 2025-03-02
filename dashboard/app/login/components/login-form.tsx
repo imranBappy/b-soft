@@ -42,14 +42,16 @@ function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "admin.imran@gmail.com",
-      password: "pass123"
+      email: "sagor.works@gmail.com",
+      password: "ivpuvHgeCmm00T4hrF0D"
     },
   })
 
   const [userLogin, { loading }] = useMutation(LOGIN_USER, {
     onCompleted: async (res) => {
       const { token, user, success = false, message } = res.loginUser;
+      console.log(res.loginUser);
+      
       if (!success) {
         toast({
           variant: 'destructive',
@@ -65,7 +67,7 @@ function LoginForm() {
         variant: 'default',
         description: message,
       })
-      router.push('/orders/pos')
+      router.push('/dashboard')
     },
     onError: (err) => {
       console.log(err);
@@ -88,7 +90,7 @@ function LoginForm() {
 
   useEffect(() => {
     if (checkAuth?.isAuthenticated) {
-      router.push('/orders/pos')
+      router.push('/dashboard')
     }
   }, [checkAuth?.isAuthenticated, router])
 

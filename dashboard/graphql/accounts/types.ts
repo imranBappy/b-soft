@@ -20,6 +20,7 @@ export interface USER_TYPE {
     isActive: boolean
     isVerified: boolean
     address: ADDRESS_TYPE
+    createdAt?: string;
 }
 
 export interface USERS_TYPE {

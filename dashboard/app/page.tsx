@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     if (checkAuth?.isAuthenticated) {
-      router.push('/orders/pos')
+      router.push('/dashboard')
     } else {
       router.push('/login')
     }

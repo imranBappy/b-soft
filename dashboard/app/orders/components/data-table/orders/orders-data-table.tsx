@@ -59,16 +59,11 @@ export const OrdersDataTable = () => {
         createdAt: node.createdAt,
         payments: node.payments,
         status: node.status,
-        finalAmount: node.finalAmount,
+        finalAmount: node.totalPrice,
         user: node.user,
-        address: node.address,
         items: node.items,
-        type: node.type,
         orderId: node.orderId,
-        due: node.due || 0,
-        outlet: node.outlet,
         amount: node.amount,
-
     })) || [];
 
 

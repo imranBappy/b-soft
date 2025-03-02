@@ -1,4 +1,4 @@
-import { ADDRESS_TYPE, USER_TYPE } from "../accounts/types";
+import { USER_TYPE } from "../accounts/types";
 
 interface RELATED_TYPE {
     id: string;
@@ -12,15 +12,19 @@ export interface PRODUCT_TYPE {
     description?: string;
     price: number;
     sku?: string;
-    cookingTime?: number;
     tag?: string;
     isActive?: boolean;
     createdAt?: string;
     vat: number;
-    kitchen?: RELATED_TYPE | string;
     category?: RELATED_TYPE | string;
     subcategory?: RELATED_TYPE | string;
-    images?: string | Promise<string>,
+    photo?: string | Promise<string>,
+    orders?: {
+        totalCount: number,
+        edges: {
+            order: ORDER_TYPE
+        }[]
+    }
 }
 export interface CATEGORY_TYPE {
     id: string;
@@ -55,17 +59,12 @@ export interface ORDER_TYPE {
     id: string;
     user: USER_TYPE;
     paymentMethod: string;
-    finalAmount: number;
-    due?: number;
+    totalPrice: number;
     amount: number;
     status: string;
     createdAt: string;
-    kitchen: RELATED_TYPE | string;
     category: RELATED_TYPE | string;
-    subcategory: RELATED_TYPE | string;
     orderItems: ORDER_ITEM_TYPE[];
-    address: ADDRESS_TYPE;
-    type: string;
     orderId: string
     items?: {
         edges: { node: ORDER_ITEM_TYPE }[]
@@ -87,7 +86,7 @@ export interface PAYMENT_TYPE {
     order: ORDER_TYPE[];
 }
 
-export interface DESCRIPTION_TYPE{
+export interface DESCRIPTION_TYPE {
     id?: string;
     product?: PRODUCT_TYPE;
     label: string;

@@ -59,17 +59,6 @@ export const columns: ColumnDef<ORDER_TYPE>[] = [
         ),
     },
 
-    // {
-    //     id: "actions",
-    //     enableHiding: false,
-    //     cell: ({ row }) => {
-    //         return (<PaymentModal
-    //             variant="outline"
-    //             openBtnName="Edit"
-    //             id={row.original.id}
-    //         />)
-    //     },
-    // },
 ]
 
 

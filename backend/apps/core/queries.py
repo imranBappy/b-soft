@@ -10,7 +10,7 @@ from graphene_django.filter import DjangoFilterConnectionField
 class Query(graphene.ObjectType):
 
     slider = graphene.Field(SliderType, id=graphene.ID(required=True))
-    sliders = DjangoFilterConnectionField(ReviewType)
+    sliders = DjangoFilterConnectionField(SliderType)
 
     websiteinfo = graphene.Field(WebsiteInfoType, id=graphene.ID(required=True))
     websiteinfos = DjangoFilterConnectionField(WebsiteInfoType)
