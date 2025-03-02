@@ -43,6 +43,7 @@ ALLOWED_HOSTS = [
 
 
 CSRF_TRUSTED_ORIGINS = [
+    'https://bongotools.com',
     "https://b-soft.vercel.app",
     "https://b-soft.xyz",
     "http://localhost:3000"  # Only for local development
