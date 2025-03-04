@@ -113,3 +113,12 @@ mutation MyMutation($id: String ,, $product: ID!, $label: String!, $description:
   }
 }
 `
+
+export const PRODUCT_ATTRIBUTE_AND_OPTION_MUTATIONI = gql`
+    mutation MyMutation($input: ProductAttributeInput!) {
+        productAttributeAndOptonCud(input: $input) {
+            success
+        }
+    }
+`;
+

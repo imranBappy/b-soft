@@ -121,7 +121,7 @@ export function ProductForm({ id }: { id?: string }) {
         label: edge.node.name,
     }))
     
-    console.log({categories});
+
     
 
     const handleChangeFiles = (files: FileList) => {

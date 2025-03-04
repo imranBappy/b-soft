@@ -118,81 +118,68 @@ export const SUBCATEGORIES_QUERY = gql`
 `
 
 export const ORDERS_QUERY = gql`
-query MyQuery($first: Int, $orderBy: String, $offset: Int, $search: String, $type: ProductOrderTypeChoices, $status: ProductOrderStatusChoices, $outlet: ID) {
-  orders(
-    first: $first
-    orderBy: $orderBy
-    offset: $offset
-    search: $search
-    type: $type
-    status: $status
-    outlet: $outlet
-  ) {
-    totalCount
-    edges {
-      node {
-        id
-        createdAt
-        status
-        finalAmount
-        type
-        orderId
-        due
-        amount
-        user {
-          id
-          name
-          email
-        }
-        outlet {
-          email
-          id
-          address
-          name
-          phone
-          manager {
-            email
-            id
-            name
-          }
-        }
-        payments {
-          totalCount
-          edges {
-            node {
-                amount
-                createdAt
-                id
-                paymentMethod
-                remarks
-                status
-                trxId
-            }
-          }
-        }
-        items {
-          totalCount
-          edges {
-            node {
-               	price
-                quantity
-                id
-                discount
-                vat
-                product {
-                  id
-                  images
-                  name
-                  vat
+    query MyQuery(
+        $first: Int
+        $orderBy: String
+        $offset: Int
+        $search: String
+        $status: ProductOrderStatusChoices
+    ) {
+        orders(
+            first: $first
+            orderBy: $orderBy
+            offset: $offset
+            search: $search
+            status: $status
+        ) {
+            totalCount
+            edges {
+                node {
+                    id
+                    createdAt
+                    status
+                    totalPrice
+                    orderId
+
+                    user {
+                        id
+                        name
+                        email
+                    }
+
+                    payments {
+                        totalCount
+                        edges {
+                            node {
+                                amount
+                                createdAt
+                                id
+                                paymentMethod
+                                status
+                                trxId
+                            }
+                        }
+                    }
+                    items {
+                        totalCount
+                        edges {
+                            node {
+                                price
+                                quantity
+                                id
+                                product {
+                                    id
+                                    photo
+                                    name
+                                }
+                            }
+                        }
+                    }
                 }
             }
-          }
         }
-      }
     }
-  }
-}
-`
+`;
 export const ORDER_QUERY = gql`
 query MyQuery($id: ID!) {
   order(id: $id) {
@@ -399,45 +386,55 @@ query MyQuery($id: ID, $order: ID) {
   
   `
 export const PAYMENTS_QUERY = gql`
-query MyQuery($order: ID, $amount: Decimal, $trxId: String, $first: Int, $createdAt: DateTime, $orderBy: String, $status: ProductPaymentStatusChoices, $paymentMethod: ProductPaymentPaymentMethodChoices, $offset: Int, $search: String = "") {
-  payments(
-    order: $order
-    amount: $amount
-    trxId: $trxId
-    first: $first
-    createdAt: $createdAt
-    orderBy: $orderBy
-    status: $status
-    paymentMethod: $paymentMethod
-    offset: $offset
-    search: $search
-  ) {
-    totalCount
-    edges {
-      node {
-        amount
-        createdAt
-        id
-        paymentMethod
-        remarks
-        status
-        trxId
-        updatedAt
-        order {
-          id
-          status
-          user {
-            id
-            email
-            name
-            phone
-          }
+    query MyQuery(
+        $order: ID
+        $amount: Decimal
+        $trxId: String
+        $first: Int
+        $createdAt: DateTime
+        $orderBy: String
+        $status: ProductPaymentStatusChoices
+        $paymentMethod: ProductPaymentPaymentMethodChoices
+        $offset: Int
+        $search: String = ""
+    ) {
+        payments(
+            order: $order
+            amount: $amount
+            trxId: $trxId
+            first: $first
+            createdAt: $createdAt
+            orderBy: $orderBy
+            status: $status
+            paymentMethod: $paymentMethod
+            offset: $offset
+            search: $search
+        ) {
+            totalCount
+            edges {
+                node {
+                    amount
+                    createdAt
+                    id
+                    paymentMethod
+                    status
+                    trxId
+                    updatedAt
+                    order {
+                        id
+                        status
+                        user {
+                            id
+                            email
+                            name
+                            phone
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
-}
-`
+`;
 export const ADDRESS_PAYMENT_QUERY = gql`
 query PAYMENT_QUERY($user:ID, $orderId:ID!){
    address( user: $user) {
@@ -518,3 +515,28 @@ query MyQuery($id: ID , $address: ID) {
   }
 }
 `
+export const ATTRIBUTE_QUERY = gql`
+    query MyQuery($id: ID!) {
+        attribute(id: $id) {
+            createdAt
+            id
+            name
+            product {
+                id
+                name
+            }
+            attributeOptions {
+                totalCount
+                edges {
+                    node {
+                        photo
+                        option
+                        message
+                        id
+                        extraPrice
+                    }
+                }
+            }
+        }
+    }
+`;

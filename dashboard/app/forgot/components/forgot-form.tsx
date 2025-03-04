@@ -82,7 +82,6 @@ function ForgotForm() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
-
             <TextField
               form={form}
               name="email"

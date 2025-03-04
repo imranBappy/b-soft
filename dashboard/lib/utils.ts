@@ -28,6 +28,17 @@ export const getPageCount = (totalCount: number, pageSize: number): number => {
   return Math.ceil(totalCount / pageSize)
 }
 
+export function debounce(func: (...args: unknown[]) => void, wait: number) {
+    let timeout: NodeJS.Timeout;
+    return function executedFunction(...args: unknown[]) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
 export const randomId = () => {
   return `${Math.round(Math.random() * 10)}${Date.now()}`

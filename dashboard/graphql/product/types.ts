@@ -93,3 +93,18 @@ export interface DESCRIPTION_TYPE {
     createdAt: string;
     description: string;
 }
+
+export interface ATTRIBUTE_OPTION_TYPE {
+    id: number;
+    option: string;
+    extraPrice: number;
+    message?: string;
+    photo?: string;
+}
+export interface ATTRIBUTE_TYPE {
+    id: string;
+    name: string;
+    attributeOptions?: {
+        edges: { node: ATTRIBUTE_OPTION_TYPE }[];
+    };
+}
