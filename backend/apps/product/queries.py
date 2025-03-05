@@ -53,7 +53,7 @@ class Query(graphene.ObjectType):
     payments = DjangoFilterConnectionField(PaymentType)
     
     
-    def resolve__description(self, info, id):
+    def resolve_product_description(self, info, id):
         return get_object_by_kwargs(ProductDescription, {"id": id})
 
     def resolve_order_product_attribute(self, info, id):
