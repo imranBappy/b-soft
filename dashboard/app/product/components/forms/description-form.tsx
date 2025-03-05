@@ -29,9 +29,10 @@ const productFormSchema = z.object({
 
 type ProductFormValues = z.infer<typeof productFormSchema>
 
-export function DescriptionForm({ id }: { id?: string }) {
+export function DescriptionForm() {
     const searchParams = useSearchParams()
     const productId = searchParams.get('productId')
+    const id = searchParams.get('descriptionId');
     const { toast } = useToast()
     const [createProductDescription, { loading: create_loading }] = useMutation(PRODUCT_DESCRIPTION_MUTATION, {
         refetchQueries: [{
@@ -43,11 +44,15 @@ export function DescriptionForm({ id }: { id?: string }) {
         }],
         awaitRefetchQueries: true
     })
+
+    
     const router = useRouter()
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(productFormSchema),
-
     })
+
+
+
 
 
 
@@ -63,7 +68,7 @@ export function DescriptionForm({ id }: { id?: string }) {
                 variables: {
                     ...data,
                     product: productId,
-                    id: id || undefined,
+                    id:  id || undefined,
                 },
             })
             toast({

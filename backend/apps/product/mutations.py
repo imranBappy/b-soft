@@ -499,7 +499,7 @@ class DeleteReview(graphene.Mutation):
     success = graphene.Boolean()    
     class Arguments:
         id = graphene.ID(required=True)
-        
+
     @isAuthenticated()
     def mutate(self, info, id):
         review = get_object_by_kwargs(Review, {"id": id})
@@ -522,6 +522,7 @@ class DeleteDescription(graphene.Mutation):
     success = graphene.Boolean()    
     class Arguments:
         id = graphene.ID(required=True)
+        
     @isAuthenticated([UserRole.ADMIN])
     def mutate(self, info, id):
         description = get_object_by_kwargs(ProductDescription, {"id": id})

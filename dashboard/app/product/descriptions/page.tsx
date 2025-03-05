@@ -36,8 +36,7 @@ const Page = () => {
         {
             onCompleted: () => {
                 toast({
-                    description: 'Attribute Delete',
-                    variant: 'destructive',
+                    description: 'Description Deleted!',
                 });
                 refetch();
             },
@@ -51,7 +50,7 @@ const Page = () => {
             <div className=" flex justify-end mb-2">
                 <Button variant="outline">
                     <Link
-                        href={`/product/attribute/add?productId=${productId}`}
+                        href={`/product/descriptions/add?productId=${productId}`}
                     >
                         Add
                     </Link>
@@ -81,7 +80,7 @@ const Page = () => {
                                         <TableCell>
                                             <div className="flex gap-2">
                                                 <Link
-                                                    href={`/product/attribute/add?attributeId=${node.id}&productId=${productId}`}
+                                                    href={`/product/descriptions/add?descriptionId=${node.id}&productId=${productId}`}
                                                 >
                                                     <Button
                                                         size="sm"

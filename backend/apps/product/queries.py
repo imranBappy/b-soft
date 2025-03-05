@@ -1,6 +1,6 @@
 import graphene
 from apps.accounts.models import UserRole
-from apps.product.models import Attribute, OrderProductAttribute, FAQ, Review, Product, Category, Order, OrderProduct, Payment
+from apps.product.models import Attribute, OrderProductAttribute, FAQ, ProductDescription, Review, Product, Category, Order, OrderProduct, Payment
 from apps.base.utils import get_object_by_kwargs
 from apps.product.objectType import OrderProductAttributeType, ReviewType, FAQType, CredentialType, AttributeOptionType, AttributeType, ProductDescriptionType, CouponType, CategoryType, ProductType, SubCategoryType, PaymentType, OrderType, OrderProductType
 from graphene_django.filter import DjangoFilterConnectionField
@@ -53,6 +53,9 @@ class Query(graphene.ObjectType):
     payments = DjangoFilterConnectionField(PaymentType)
     
     
+    def resolve__description(self, info, id):
+        return get_object_by_kwargs(ProductDescription, {"id": id})
+
     def resolve_order_product_attribute(self, info, id):
         return get_object_by_kwargs(OrderProductAttribute, {"id": id})
      
