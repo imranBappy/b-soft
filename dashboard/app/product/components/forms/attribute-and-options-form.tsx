@@ -87,9 +87,7 @@ export default function AttributeAndOptionForm() {
                 toast({
                     description:"Successfully created!"
                 })
-                if(attributeId){
-                    router.push(`/product/attribute?productId=4`);
-                }
+                router.push(`/product/attribute?productId=4`);
             },
             onError:(err)=>{
                 toast({

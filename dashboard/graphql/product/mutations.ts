@@ -130,3 +130,12 @@ export const DELETE_ATTRIBUTE = gql`
         }
     }
 `;
+
+export const DELETE_DESCRIPTION = gql`
+    mutation MyMutation($id: ID!) {
+        deleteDescription(id: $id) {
+            message
+            success
+        }
+    }
+`;

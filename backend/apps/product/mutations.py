@@ -499,6 +499,8 @@ class DeleteReview(graphene.Mutation):
     success = graphene.Boolean()    
     class Arguments:
         id = graphene.ID(required=True)
+        
+    @isAuthenticated()
     def mutate(self, info, id):
         review = get_object_by_kwargs(Review, {"id": id})
         review.delete()
@@ -509,10 +511,22 @@ class DeleteAttribute(graphene.Mutation):
     success = graphene.Boolean()    
     class Arguments:
         id = graphene.ID(required=True)
+    @isAuthenticated([UserRole.ADMIN])
     def mutate(self, info, id):
         attribute = get_object_by_kwargs(Attribute, {"id": id})
         attribute.delete()
-        return DeleteReview(success=True, message="Deleted!")
+        return DeleteAttribute(success=True, message="Deleted!")
+    
+class DeleteDescription(graphene.Mutation):
+    message = graphene.String()
+    success = graphene.Boolean()    
+    class Arguments:
+        id = graphene.ID(required=True)
+    @isAuthenticated([UserRole.ADMIN])
+    def mutate(self, info, id):
+        description = get_object_by_kwargs(ProductDescription, {"id": id})
+        description.delete()
+        return DeleteDescription(success=True, message="Deleted!")
 
 class Mutation(graphene.ObjectType):
     review_cud = ReviewCUD.Field()
@@ -530,4 +544,5 @@ class Mutation(graphene.ObjectType):
     create_order = CreateOrder.Field()
     product_attribute_and_opton_cud = ProductAttributeAndOptonCUD.Field()
     delete_attribute = DeleteAttribute.Field()
+    delete_description = DeleteDescription.Field()
     

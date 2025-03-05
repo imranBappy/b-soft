@@ -73,8 +73,24 @@ export function ActionsDropdown({ item }: ActionsDropdownProps) {
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
+                    <Link
+                        className="w-full"
+                        href={`/product/attribute/add?productId=${item.id}`}
+                    >
+                        Add Attribute
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
                     <Link className="w-full" href={`/product/${item.id}`}>
                         Edit
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Link
+                        className="w-full"
+                        href={`/product/descriptions?productId=${item.id}`}
+                    >
+                        Description
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>

@@ -562,3 +562,23 @@ export const ATTRIBUTES_QUERY = gql`
         }
     }
 `;
+
+export const DESCRIPTIONS_QUERY = gql`
+    query MyQuery($first: Int, $offset: Int, $product: Decimal) {
+        productDescriptions(first: $first, offset: $offset, product: $product) {
+            totalCount
+            edges {
+                node {
+                    description
+                    id
+                    label
+                    tag
+                    product {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    }
+`;

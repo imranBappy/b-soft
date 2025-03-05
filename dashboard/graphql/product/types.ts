@@ -90,6 +90,7 @@ export interface DESCRIPTION_TYPE {
     id?: string;
     product?: PRODUCT_TYPE;
     label: string;
+    tag:string;
     createdAt: string;
     description: string;
 }
