@@ -26,7 +26,7 @@ const Navbar = () => {
                         <SearchInput />
                     </div>
                     <div className="flex items-center gap-3">
-                        <Button className=' md:hidden px-3  font-oswald  text-base' variant={'secondary'}>
+                        <Button className=' md:hidden px-3  font-playfair text-base' variant={'secondary'}>
                             <Link href={'/login'} className='flex items-center gap-2' >
                                 <Search className="text-4xl" />
                             </Link>
@@ -35,10 +35,10 @@ const Navbar = () => {
                             auth?.isAuthenticated ? (
                                 <Profile
                                 />
-                            ) : (<Button className=' font-oswald  px-3 text-base' variant={'ghost'}>
+                            ) : (<Button className='  font-playfair  px-3 text-base' variant={'ghost'}>
                                 <Link href={'/login'} className='flex items-center gap-2' >
                                     <User className="text-4xl" />
-                                    <span>Sing in</span>
+                                    <span>Sign in </span>
                                 </Link>
                             </Button>)
                         }

@@ -39,7 +39,7 @@ class OrderProductAdmin(admin.ModelAdmin):
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ['id','status']
+    list_display = ['id','status','payment_method']
 
 @admin.register(ProductDescription)
 class ProductDescriptionAdmin(admin.ModelAdmin):

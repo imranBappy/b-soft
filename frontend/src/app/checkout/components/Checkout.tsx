@@ -80,8 +80,8 @@ const {  loading:meLoading } = useQuery(ME_QUERY, {
         const paymentInfo = {
             accountNumber: data.accountNumber,
             trxId: data.trxId,
-            paymentMethod: data.phone
-        }
+            paymentMethod: data.paymentMethod,
+        };
         const products = carts.map((cart) => ({
             productId: cart.productId,
             quantity: cart.quantity,

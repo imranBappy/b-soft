@@ -354,7 +354,7 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                     </Button>
                                                 )}
 
-                                                {/* <Button className=" text-[#333333] font-oswald  ">
+                                                {/* <Button className=" text-[#333333] font-playfair ">
                                                     <TimerReset /> Renew Product
                                                 </Button> */}
                                             </div>

@@ -29,32 +29,7 @@ mutation MyMutation($email: String!, $name: String!, $password: String!, $phone:
 }
 `
 
-export const PROFILE_MUTATION = gql`
-mutation MyMutation($dateOfBirth: Date, $gender: String, $name: String, $id: String, $phone: String, $photo: String, $role: ID, $isActive: Boolean) {
-  profileUpdate(
-    input: {dateOfBirth: $dateOfBirth, gender: $gender, name: $name, phone: $phone, photo: $photo, id: $id, role: $role, isActive: $isActive}
-  ) {
-    success
-    message
-    profile {
-      name
-      role {
-        id
-        name
-      }
-      gender
-      phone
-      photo
-      id
-      isVerified
-      isActive
-      email
-      updatedAt
-      createdAt
-    }
-  }
-}
-`
+
 
 export const PASSWORD_RESET_MAIL_MUTATION = gql`
   mutation MyMutation($email: String!) {

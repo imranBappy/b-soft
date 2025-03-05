@@ -70,7 +70,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                       {product.name}
                   </h1>
                   {product?.priceRange ? (
-                      <div className=" my-3  font-oswald font-semibold mt-3 text-3xl">
+                      <div className=" my-3  font-playfairfont-semibold mt-3 text-3xl">
                           ${product.priceRange}
                       </div>
                   ) : (

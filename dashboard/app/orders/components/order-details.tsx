@@ -41,7 +41,7 @@ interface ProductNode {
         id: string;
         product: {
             name: string;
-            images: string;
+            photo: string;
             price: number;
         };
         quantity: number;
@@ -134,10 +134,12 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                         <div className="space-y-2">
                             <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">Status</p>
                             <Select
+                                
                                 defaultValue={order.status}
                                 value={order.status}
                                 onValueChange={handleStatusChange}
-                                disabled={order.status === ORDER_STATUSES.COMPLETED}
+                                // disabled={order.status === ORDER_STATUSES.COMPLETED}
+                                disabled={true}
                             >
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue />
@@ -148,12 +150,8 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                                             {ORDER_STATUSES.COMPLETED}
                                         </Badge>
                                     </SelectItem>
-                                    <SelectItem disabled value={ORDER_STATUSES.DUE}>
-                                        <Badge className={`${getStatusStyle(ORDER_STATUSES.DUE)} border-0`}>
-                                            {ORDER_STATUSES.DUE}
-                                        </Badge>
-                                    </SelectItem>
-                                    <SelectItem value={ORDER_STATUSES.PENDING}>
+                                  
+                                    <SelectItem   value={ORDER_STATUSES.PENDING}>
                                         <Badge className={`${getStatusStyle(ORDER_STATUSES.PENDING)} border-0`}>
                                             {ORDER_STATUSES.PENDING}
                                         </Badge>
@@ -166,13 +164,10 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div className="space-y-2">
-                            <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">Type</p>
-                            <p>{order?.type?.split("_").join(" ")}</p>
-                        </div>
+                       
                         <div className="space-y-2">
                             <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">Total Price</p>
-                            <p className="font-medium">${order?.finalAmount}</p>
+                            <p className="font-medium">${order?.totalPrice}</p>
                         </div>
                         <div className="space-y-2">
                             <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">Create At</p>
@@ -208,7 +203,6 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                             <TableRow>
                                 <TableHead className="text-[13px] font-medium uppercase tracking-wider">Amount</TableHead>
                                 <TableHead className="text-[13px] font-medium uppercase tracking-wider">Payment Method</TableHead>
-                                <TableHead className="text-[13px] font-medium uppercase tracking-wider">Remarks</TableHead>
                                 <TableHead className="text-[13px] font-medium uppercase tracking-wider">Status</TableHead>
                                 <TableHead className="text-[13px] font-medium uppercase tracking-wider">Transaction ID</TableHead>
                                 <TableHead className="text-[13px] font-medium uppercase tracking-wider">Created At</TableHead>
@@ -219,7 +213,6 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                                 <TableRow key={node.id}>
                                     <TableCell className="py-4">${node.amount}</TableCell>
                                     <TableCell className="py-4">{node.paymentMethod}</TableCell>
-                                    <TableCell className="py-4">{node.remarks}</TableCell>
                                     <TableCell className="py-4">
                                         <Badge className={`${getStatusStyle(node.status)} border-0`}>
                                             {node.status}
@@ -256,7 +249,7 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                                     <TableCell className="py-4">
                                         <div className="flex items-center gap-3">
                                             <Image
-                                                src={getThumblain(node?.product?.images)}
+                                                src={getThumblain(node?.product?.photo)}
                                                 alt={node?.product?.name}
                                                 width={48}
                                                 height={48}

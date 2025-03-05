@@ -43,7 +43,7 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
                     <CheckCheck size={20} className="text-blue " />
                     <span className=" font-oswald">In stock</span>{' '}
                 </p>
-                <p className=" mt-2 flex gap-2 items-center font-oswald ">
+                <p className=" mt-2 flex gap-2 items-center font-playfair">
                     {/* <span className='  text-gray-400 line-through text-sm '>$100</span> */}
                     <span className="text-blue text-base">${price}</span>
                 </p>
@@ -55,13 +55,13 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
                     href={`/products/${data.id}`}
                 >
                     <Button
-                        className=" font-oswald rounded-r-none  w-full"
+                        className=" font-playfairrounded-r-none  w-full"
                         variant={'secondary'}
                     >
                         {' '}
                         <ShoppingCart /> Add To Cart{' '}
                     </Button>
-                    <Button className=" text-white bg-blue   rounded-l-none font-oswald  w-full">
+                    <Button className=" text-white bg-blue   rounded-l-none font-playfair w-full">
                         {' '}
                         <ShoppingBasket /> Buy Now
                     </Button>

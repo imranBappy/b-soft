@@ -103,7 +103,7 @@ const Shop = () => {
             <Sheet>
                 <SheetTrigger asChild>
                     <Button
-                        className="  md:hidden flex gap-2  mt-5 rounded-sm font-oswald text-base"
+                        className="  md:hidden flex gap-2  mt-5 rounded-sm font-playfairtext-base"
                         variant={'outline'}
                     >
                         <FilterIcon size={22} />

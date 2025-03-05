@@ -48,14 +48,6 @@ const navbarLinks: NavLinks = {
                     url: "/product",
                 },
                 {
-                    title: "Descriptions",
-                    url: "/product/descriptions",
-                },
-                {
-                    title: "Variant",
-                    url: "/product/variants",
-                },
-                {
                     title: "Category List",
                     url: "/product/category",
                 },

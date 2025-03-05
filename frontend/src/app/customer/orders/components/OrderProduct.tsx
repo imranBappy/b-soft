@@ -29,14 +29,14 @@ const OrderProduct = ({ item }: { item: ORDER_ITEM_TYPE }) => {
                         {item.product.name}
                     </Link>
                 </CardTitle>
-                <p className=" mt-2 flex gap-2 items-center font-oswald ">
+                <p className=" mt-2 flex gap-2 items-center font-playfair">
                     <span className="text-blue text-base">
                         ${item.price} X {item.quantity}
                     </span>
                 </p>
             </CardContent>
             <CardFooter className="px-3 pb-3">
-                <Button className=" text-[#333333] font-oswald  w-full">
+                <Button className=" text-[#333333] font-playfair w-full">
                     {' '}
                     <TimerReset /> Renew Product{' '}
                 </Button>

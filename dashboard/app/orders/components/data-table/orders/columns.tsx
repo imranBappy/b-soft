@@ -3,7 +3,7 @@ import { ORDER_TYPE, } from "@/graphql/product/types"
 import moment from "moment"
 import { Badge } from "@/components/ui/badge"
 import { COUNT_TYPE } from "@/graphql/types"
-import { getStatusStyle, toFixed, underscoreToSpace } from "@/lib/utils"
+import { getStatusStyle, toFixed } from "@/lib/utils"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -33,18 +33,7 @@ export const columns: ColumnDef<ORDER_TYPE>[] = [
             <div className="capitalize">{toFixed(row.getValue("finalAmount"))}</div>
         ),
     },
-    {
-        accessorKey: "due",
-        header: "Due Amount",
-        cell: ({ row }) => <div className="capitalize">{toFixed(row.getValue('due'))}</div>,
-    },
-    {
-        accessorKey: "type",
-        header: "Type",
-        cell: ({ row }) => (
-            <div className="capitalize">{underscoreToSpace(row.getValue("type"))}</div>
-        )
-    },
+   
     {
         accessorKey: "status",
         header: "Status",

@@ -76,7 +76,7 @@ const ButtomCart = () => {
                             right: '-9px',
 
                         }}
-                        className=' absolute  bg-primary shadow-sm text-sm   font-oswald text-gray   rounded-full flex items-center justify-center'>{carts.length}</div>
+                        className=' absolute  bg-primary shadow-sm text-sm   font-playfairtext-gray   rounded-full flex items-center justify-center'>{carts.length}</div>
                 </div>
             </div>
         </>

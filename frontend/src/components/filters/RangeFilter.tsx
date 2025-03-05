@@ -20,7 +20,7 @@ const RangeFilter = ({ rangeState, name, className,cardClassName, ...props }: Fi
             <CardHeader className="px-4 py-4 dark:bg-primary-foreground   bg-gray-light  text-primary-background">
                 <CardTitle className=" flex justify-between font-playfair font-bold text-base">
                     <span>{name}</span>
-                    <span className=" font-oswald font-normal">{range}</span>
+                    <span className=" font-playfairfont-normal">{range}</span>
                 </CardTitle>
             </CardHeader>
             <CardContent className="px-4 py-8">

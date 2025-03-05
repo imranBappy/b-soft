@@ -55,8 +55,8 @@ const CartBuy = ({ product }: { product: PRODUCT_TYPE }) => {
 
     return (
         <div className='  mt-5 flex gap-[0.5px]'>
-            <Button onClick={()=>handleCart(false)} className=' font-oswald rounded-none w-40 ' variant={'secondary'} > <ShoppingCart /> Add To Cart </Button>
-            <Button onClick={()=>handleCart(true)} className=' text-white bg-blue rounded-none font-oswald  w-40' > <ShoppingBasket /> Buy Now</Button>
+            <Button onClick={()=>handleCart(false)} className=' font-playfairrounded-none w-40 ' variant={'secondary'} > <ShoppingCart /> Add To Cart </Button>
+            <Button onClick={()=>handleCart(true)} className=' text-white bg-blue rounded-none font-playfair w-40' > <ShoppingBasket /> Buy Now</Button>
         </div>
     );
 };

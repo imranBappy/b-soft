@@ -195,12 +195,12 @@ class ProfileUpdate(DjangoFormMutation):
     def mutate_and_get_payload(self, info, **input):
         try:
             user = info.context.User
-            instance = get_object_or_none(CustomUser, id=  input.get('id') if input.get('id') else user.id)
+
+            instance = get_object_or_none(CustomUser, id=input.get('id') if input.get('id') else user.id)
             if not instance:
                 raise GraphQLError("User not found!")
             
             role = user.role
-            print(role)
             if role:
                 input['role'] = role.id
 
@@ -211,8 +211,9 @@ class ProfileUpdate(DjangoFormMutation):
             # if phone is exit then error
             if input.get('phone'):
                 user_by_number = get_object_or_none(CustomUser, phone=input.get('phone'))
-                if user_by_number.id != user.id and user_by_number.phone == input.get('phone'):
-                    raise GraphQLError("Phone number already exit.")
+                if user_by_number:
+                    if user_by_number.id != user.id and user_by_number.phone == input.get('phone'):
+                        raise GraphQLError("Phone number already exit.")
             
             print(form.errors)
             if not form.is_valid():

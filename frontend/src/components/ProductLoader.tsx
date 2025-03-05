@@ -17,7 +17,7 @@ const ProductLoader = () => {
                 <p className=" mt-4 flex gap-2 items-center ">
                     <Skeleton className="h-4 w-[100px] rounded-sm" />
                 </p>
-                <p className=" mt-2 flex gap-2 items-center font-oswald ">
+                <p className=" mt-2 flex gap-2 items-center font-playfair">
                     {/* <span className='  text-gray-400 line-through text-sm '>$100</span> */}
                     <Skeleton className="h-4 w-[80px] rounded-sm" />
                 </p>
@@ -26,7 +26,7 @@ const ProductLoader = () => {
             <CardFooter className="px-3 pb-3 flex gap-[0.5px]">
                 <Button
                     disabled
-                    className=" font-oswald rounded-r-none  w-full"
+                    className=" font-playfairrounded-r-none  w-full"
                     variant={'secondary'}
                 >
                     {' '}
@@ -35,7 +35,7 @@ const ProductLoader = () => {
 
                 <Button
                     disabled
-                    className=" text-white bg-blue   rounded-l-none font-oswald  w-full"
+                    className=" text-white bg-blue   rounded-l-none font-playfair w-full"
                 >
                     {' '}
                     <ShoppingBasket /> Buy Now

@@ -181,68 +181,50 @@ export const ORDERS_QUERY = gql`
     }
 `;
 export const ORDER_QUERY = gql`
-query MyQuery($id: ID!) {
-  order(id: $id) {
-    user {
-      id
-      name
-      email
-    }
-  
-    payments {
-      totalCount
-      edges {
-        node {
-            amount
-            createdAt
-            id
-            paymentMethod
-            remarks
+    query MyQuery($id: ID!) {
+        order(id: $id) {
+            user {
+                id
+                name
+                email
+            }
+
+            payments {
+                totalCount
+                edges {
+                    node {
+                        amount
+                        createdAt
+                        id
+                        paymentMethod
+                        status
+                        trxId
+                    }
+                }
+            }
             status
-            trxId
-        }
-      }
-    }
-    status
-    finalAmount
-    due
-    amount
-    type
-    id
-    createdAt
-    outlet {
-      email
-      id
-      address
-      name
-      phone
-      manager {
-        email
-        id
-        name
-      }
-    }
-    items {
-      totalCount
-      edges {
-        node {
-          price
-          quantity
-          id
-          discount
-          vat
-          product {
+            totalPrice
             id
-            images
-            name
-            vat
-          }
+            createdAt
+
+            items {
+                totalCount
+                edges {
+                    node {
+                        price
+                        quantity
+                        id
+                        product {
+                            id
+                            photo
+                            name
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
-}
-`
+`;
 
 export const FLOORS_QUERY = gql`
 query MyQuery($after: String, $first: Int, $offset: Int, $name: String, $search: String, $isActive: Boolean, $orderBy: String ) {
@@ -578,6 +560,21 @@ export const DESCRIPTIONS_QUERY = gql`
                         name
                     }
                 }
+            }
+        }
+    }
+`;
+
+export const DESCRIPTION_QUERY = gql`
+    query MyQuery($id: ID!) {
+        productDescription(id: $id) {
+            description
+            id
+            label
+            tag
+            product {
+                id
+                name
             }
         }
     }

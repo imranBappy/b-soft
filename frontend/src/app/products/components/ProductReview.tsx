@@ -69,7 +69,7 @@ const ProductReview = ({ reviews, productId }: { reviews: { node: REVIEW_TYPE }[
                         <CardHeader >
                             <div className="w-full  flex justify-between">
                                 <CardTitle >{review.node.user?.name}</CardTitle>
-                                <p className=" font-oswald  text-sm ">{moment(review.node.createdAt).fromNow()}</p>
+                                <p className=" font-playfair text-sm ">{moment(review.node.createdAt).fromNow()}</p>
                             </div>
 
                         </CardHeader>

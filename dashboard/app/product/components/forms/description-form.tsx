@@ -3,9 +3,9 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { useMutation } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { useToast } from "@/hooks/use-toast"
-import { CATEGORIES_QUERY, PRODUCT_DESCRIPTION_MUTATION, } from "@/graphql/product"
+import { CATEGORIES_QUERY, DESCRIPTION_QUERY, PRODUCT_DESCRIPTION_MUTATION, } from "@/graphql/product"
 import {
     Form,
     Card,
@@ -14,9 +14,9 @@ import {
     CardHeader,
     CardTitle,
     Separator,
+    Loading,
 } from "@/components/ui"
 import { TextField } from "@/components/input/text-field"
-import { TextareaField } from "@/components/input/textarea-field"
 import Button from "@/components/button"
 import Editor from "@/components/Editor"
 import { useSearchParams } from 'next/navigation'
@@ -34,6 +34,8 @@ export function DescriptionForm() {
     const productId = searchParams.get('productId')
     const id = searchParams.get('descriptionId');
     const { toast } = useToast()
+    const router = useRouter();
+    
     const [createProductDescription, { loading: create_loading }] = useMutation(PRODUCT_DESCRIPTION_MUTATION, {
         refetchQueries: [{
             query: CATEGORIES_QUERY, variables: {
@@ -42,16 +44,55 @@ export function DescriptionForm() {
                 search: ""
             }
         }],
-        awaitRefetchQueries: true
+        awaitRefetchQueries: true,
+        onCompleted(){
+            router.push(
+                `/product/descriptions?productId=${productId}`
+            );
+            if (id) {
+                toast({
+                    title: 'Success',
+                    description: 'Product updated successfully',
+                });
+            }else{
+                toast({
+                    title: 'Success',
+                    description: 'Product created successfully',
+                });
+            }
+             
+             form.reset({
+                 description: '',
+                 label: '',
+                 tag: '',
+             });
+
+        }
     })
 
-    
-    const router = useRouter()
+
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(productFormSchema),
     })
 
-
+    const {loading:descriptionLoading} = useQuery(DESCRIPTION_QUERY,{
+        variables:{
+            id:id
+        },
+        skip:!id,
+        onCompleted(res){
+            const description = res?.productDescription;
+            if (description?.label) {
+                form.setValue('label', description?.label);
+            }
+            if (description?.tag) {
+                form.setValue('tag', description?.tag);
+            }
+            if (description?.description) {
+                form.setValue('description', description?.description);
+            }
+        }
+    })
 
 
 
@@ -71,17 +112,8 @@ export function DescriptionForm() {
                     id:  id || undefined,
                 },
             })
-            toast({
-                title: "Success",
-                description: "Product created successfully",
-            })
-            form.reset({
-                description: "",
-                label: "",
-                tag: "",
-            })
+           
 
-            router.push(`/product/description/`)
 
         } catch (error) {
             toast({
@@ -96,46 +128,58 @@ export function DescriptionForm() {
 
 
 
+    if (descriptionLoading) return <Loading />;
 
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-4xl mx-auto">
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="w-full max-w-4xl mx-auto"
+            >
                 <Card className="border-none shadow-none">
                     <CardHeader>
                         <CardTitle className="text-2xl font-bold">
-                            {
-                                id ? "Update " : "Create "
-                            }
+                            {id ? 'Update Description ' : 'Create Description '}
                         </CardTitle>
                         <CardDescription>
-                            {
-                                id ? "Update" : "Add a new category to your inventory"
-                            }
+                            {id
+                                ? 'Update description'
+                                : 'Add a new description to your product'}
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <div className="space-y-4">
-
-                            <TextField form={form} name="label" label="Label" placeholder="Enter label" />
-                            <TextareaField form={form} name="tag" label="Tag" placeholder="Enter tag" />
+                            <TextField
+                                form={form}
+                                name="label"
+                                label="Label"
+                                placeholder="Enter label"
+                            />
+                            <TextField
+                                form={form}
+                                name="tag"
+                                label="Tag"
+                                placeholder="Enter tag ( description )"
+                            />
                         </div>
                         <div className="space-y-4">
                             <Separator />
                             <Editor
-                                onChange={(value) => { form.setValue('description', value) }}
-                                value={form.watch("description") ?? ""} />
+                                onChange={(value) => {
+                                    form.setValue('description', value);
+                                }}
+                                value={form.watch('description') ?? ''}
+                            />
                         </div>
 
-                        <Button type="submit" isLoading={create_loading} >
-                            {
-                                id ? "Update " : "Create "
-                            }
+                        <Button type="submit" isLoading={create_loading}>
+                            {id ? 'Update Description' : 'Create Description'}
                         </Button>
                     </CardContent>
                 </Card>
             </form>
         </Form>
-    )
+    );
 }
 export default DescriptionForm

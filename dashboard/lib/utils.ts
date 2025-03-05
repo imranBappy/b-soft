@@ -95,9 +95,9 @@ export const getErrors = (errors: Error[]): getErrorsType => {
 
 export const toFixed = (value: number | string) => {
   if (typeof value === 'string') value = parseFloat(value)
-  return parseFloat(value.toFixed(2))
+  return parseFloat(value?.toFixed(2))
 }
 
 export const underscoreToSpace = (value: string) => {
-  return value.replace(/_/g, ' ')
+  return value?.replace(/_/g, ' ')
 }
