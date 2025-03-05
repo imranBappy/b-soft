@@ -24,7 +24,6 @@ export interface REVIEW_TYPE {
     createdAt: Date
     product: PRODUCT_TYPE
     user: USER_TYPE
-
 }
 export interface ATTRIBUTE_OPTION_TYPE {
     id: number,

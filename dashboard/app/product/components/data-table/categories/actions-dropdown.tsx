@@ -43,12 +43,18 @@ export function ActionsDropdown({  item }: ActionsDropdownProps) {
                 <DropdownMenuItem onClick={handleUserIdCopy}>
                     Copy ID
                 </DropdownMenuItem>
+                
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>View details</DropdownMenuItem>
                 <DropdownMenuItem>
-                    <Link className="w-full" href={`/product/category/${item.id}`}>Edit</Link>
+                    <Link
+                        className="w-full"
+                        href={`/product/category/${item.id}`}
+                    >
+                        Edit
+                    </Link>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-    )
+    );
 } 

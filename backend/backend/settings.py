@@ -14,7 +14,6 @@ from pathlib import Path
 from decouple import config
 from celery.schedules import crontab
 import datetime
-import os
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

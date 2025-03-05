@@ -21,17 +21,14 @@ import {
     ATTRIBUTE_OPTION_TYPE,
     ATTRIBUTE_QUERY,
     PRODUCT_ATTRIBUTE_AND_OPTION_MUTATIONI,
-    PRODUCT_TYPE,
-    PRODUCTS_QUERY,
 } from '@/graphql/product';
-import { Loading, Separator } from '@/components/ui';
+import { Loading } from '@/components/ui';
 import { useState } from 'react';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import SearchableFiled from '@/components/SearchableFiled';
 import Image from 'next/image';
 import { renamedFile, toFixed } from '@/lib/utils';
 import uploadImageToS3, { deleteImageFromS3 } from '@/lib/s3';
 import { useToast } from '@/hooks/use-toast';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 // Define the schema using Zod
 const optionSchema = z.object({
@@ -53,16 +50,19 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-export default function AttributeAndOptionForm({ attributeId }: { attributeId?: string }) {
-    const [search, setSearch] = useState('');
-    const [value, setValue] = useState('');
-    const [product, setProduct] = useState<PRODUCT_TYPE>();
+export default function AttributeAndOptionForm() {
     const [deletedPhotos, setDeletedPhoto] = useState<string[]>();
+    const searchParams = useSearchParams();
+    const productId = searchParams.get('productId');
+    const attributeId = searchParams.get('attributeId');
+    const router = useRouter()
+
     const {toast} = useToast()
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            product: '',
+            id:attributeId||"",
+            product: productId || "",
             attributeName: '',
             options: [
                 {
@@ -87,6 +87,9 @@ export default function AttributeAndOptionForm({ attributeId }: { attributeId?: 
                 toast({
                     description:"Successfully created!"
                 })
+                if(attributeId){
+                    router.push(`/product/attribute?productId=4`);
+                }
             },
             onError:(err)=>{
                 toast({
@@ -122,8 +125,6 @@ export default function AttributeAndOptionForm({ attributeId }: { attributeId?: 
                     attributeName: res?.attribute?.name,
                     options: options,
                 };
-                console.log(attributedefaultValues);
-                setProduct(res?.attribute?.product);
                 form.reset(attributedefaultValues);
             },
         }
@@ -169,19 +170,9 @@ export default function AttributeAndOptionForm({ attributeId }: { attributeId?: 
         });
     };
 
-    const { data, loading } = useQuery(PRODUCTS_QUERY);
 
-    const products: PRODUCT_TYPE[] = data?.products?.edges?.map(
-        ({ node }: { node: PRODUCT_TYPE }) => node
-    );
-
-    const handleSelect = (products: PRODUCT_TYPE) => {
-        form.setValue('product', products?.id || '');
-        form.setError('product', {});
-        setProduct(products);
-        setSearch('');
-        setValue('');
-    };
+ 
+   
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
             const variables: {
@@ -200,7 +191,7 @@ export default function AttributeAndOptionForm({ attributeId }: { attributeId?: 
             } = {
                 input: {
                     id: data?.id,
-                    product: product?.id || '',
+                    product: productId || '',
                     name: data.attributeName,
                     options: [],
                 },
@@ -234,45 +225,12 @@ export default function AttributeAndOptionForm({ attributeId }: { attributeId?: 
         });
     };
 
-    const resultsElements = products?.map((user: PRODUCT_TYPE) => (
-        <>
-            <div
-                onClick={() => handleSelect(user)}
-                key={user.id}
-                className="text-sm"
-            >
-                {`${user.name} `}
-            </div>
-            <Separator className="my-2" />
-        </>
-    ));
+    
+    console.log(form.formState.errors);
+    
 
-    const elementContainer = (
-        <div className="absolute shadow dark:bg-black top-10 bg-white">
-            <ScrollArea className="h-72 w-80 z-50 rounded-md   border ">
-                <div className="p-4">
-                    <h4 className="mb-4 text-sm font-medium leading-none">
-                        Search result
-                    </h4>
-                    {resultsElements}
-                </div>
-            </ScrollArea>
-        </div>
-    );
 
-    const notFound = (
-        <p className="  text-center mt-5 text-sm">Not Found Result!</p>
-    );
-    let content = products?.length ? elementContainer : notFound;
-
-    if (loading)
-        content = <p className="   text-center mt-5 text-sm">Loading...</p>;
-
-    if (!search) {
-        content = <></>;
-    }
-
-    if (loading || attributeLoading) return <Loading />;
+    if (attributeLoading) return <Loading />;
 
     return (
         <div className="m-5">
@@ -283,26 +241,6 @@ export default function AttributeAndOptionForm({ attributeId }: { attributeId?: 
                     className="space-y-6"
                 >
                     <div className="flex items-center gap-5">
-                        {/* Product Select */}
-                        <div className="">
-                            <p className="text-sm mb-3">Search Product</p>
-                            <SearchableFiled
-                                className="w-[600px]"
-                                onChange={(value: string) => {
-                                    setSearch(value);
-                                    setProduct(undefined);
-                                }}
-                                valueState={[
-                                    value ? value : product ? product.name : '',
-                                    setValue,
-                                ]}
-                            >
-                                {content}
-                            </SearchableFiled>
-                            <p className="text-red-900 text-sm mt-2 ">
-                                {form.formState.errors['product']?.message}
-                            </p>
-                        </div>
 
                         {/* Attribute Name */}
                         <FormField

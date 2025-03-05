@@ -1,7 +1,5 @@
 from django import forms
 from .models import OrderProductAttribute, FAQ, Review, Product, Category,ProductDescription,Attribute,AttributeOption,ProductAccess,  Order, OrderProduct, User,   Payment
-from .models import ORDER_TYPE_CHOICES, PAYMENT_METHOD_CHOICES, ORDER_STATUS_CHOICES
-from apps.accounts.models import Address
 
 class OrderProductAttributeForm(forms.ModelForm):
     id = forms.CharField(required=False)

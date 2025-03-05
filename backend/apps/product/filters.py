@@ -79,6 +79,7 @@ class OrderFilter(BaseFilterOrderBy):
     def order_search(self, queryset, name, value): 
         if not value :
             return queryset.filter(user__isnull=False)
+        
         return queryset.filter(
             Q(user__email__icontains=value) | 
             Q(user__name__icontains=value) |
@@ -129,6 +130,7 @@ class ProductDescriptionFilter(BaseFilterOrderBy):
         fields = '__all__'    
 
 class AttributeFilter(BaseFilterOrderBy):
+    product = filters.CharFilter(lookup_expr='exact', field_name='product')
     class Meta:
         model = Attribute
         fields = '__all__'    

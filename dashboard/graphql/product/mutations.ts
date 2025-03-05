@@ -122,3 +122,11 @@ export const PRODUCT_ATTRIBUTE_AND_OPTION_MUTATIONI = gql`
     }
 `;
 
+export const DELETE_ATTRIBUTE = gql`
+    mutation MyMutation($id: ID!) {
+        deleteAttribute(id: $id) {
+            message
+            success
+        }
+    }
+`;

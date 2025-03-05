@@ -1,23 +1,17 @@
 import graphene
-from apps.base.utils import generate_order_id, get_object_or_none, generate_message, create_graphql_error
-from .objectType import CategoryType, ProductType, OrderProductType, OrderType
+from apps.base.utils import generate_order_id, get_object_or_none, create_graphql_error
+from .objectType import CategoryType, ProductType, OrderType
 from apps.base.utils import get_object_by_kwargs
 from backend.authentication import isAuthenticated
 
-from datetime import datetime
 from graphene_django.forms.mutation import DjangoFormMutation
 from apps.product.forms import OrderProductAttributeForm, ReviewForm,FAQForm, ProductForm, CategoryForm, OrderForm, OrderProductForm, PaymentForm, CredentialForm, AttributeOptionForm, ProductDescriptionForm, AttributeForm
-from apps.product.models import ORDER_STATUS_CHOICES, OrderProductAttribute,FAQ, Review, Category, Product, Order, OrderProduct,  Payment, ProductAccess, AttributeOption, Attribute, ProductDescription
-from apps.accounts.models import Address, UserRole, User
-import json 
-from django.utils.timezone import now
-from datetime import timedelta
+from apps.product.models import OrderProductAttribute,FAQ, Review, Category, Product, Order, OrderProduct,  Payment, ProductAccess, AttributeOption, Attribute, ProductDescription
+from apps.accounts.models import  UserRole, User
 from graphql import GraphQLError
 import random
 import string
-import uuid
 from django.conf import settings
-from apps.base.utils import generate_otp
 from django.db import transaction
 
 base_url = settings.WEBSITE_URL
@@ -82,6 +76,107 @@ class ProductDescriptionCUD(DjangoFormMutation):
             
         form.save()
         return ProductDescriptionCUD(  success=True )  
+
+
+class ProductAttributeOptionInput(graphene.InputObjectType):
+    id = graphene.ID(required=False)
+    option = graphene.String(required=True)
+    message = graphene.String(required=False)
+    extra_price = graphene.Decimal(required=True)
+    photo = graphene.String(required=False)
+
+class ProductAttributeInput(graphene.InputObjectType):
+    id = graphene.ID(required=False)
+    product = graphene.ID(required=True)
+    name = graphene.String(required=True)
+    options = graphene.List(ProductAttributeOptionInput, required=False)  # Variants
+
+
+class ProductAttributeAndOptonCUD(graphene.Mutation):
+    """Mutation to create or update a product attribute and its options."""
+    
+    class Arguments:
+        input = ProductAttributeInput(required=True)
+    
+    success = graphene.Boolean()
+
+    @isAuthenticated([UserRole.ADMIN])
+    def mutate(self,info, input):
+        with transaction.atomic():
+            """
+            Handle creation or update of a product attribute and its options.
+            
+            Args:
+                root: The root object (unused here).
+                info: GraphQL execution info.
+                input: The ProductAttributeInput object containing attribute and option data.
+            
+            Returns:
+                ProductAttributeAndOptonCUD instance with the created or updated attribute.
+            
+            Raises:
+                Exception: If form validation fails.
+            """
+            # Step 1: Handle the attribute
+            attribute_id = input.get('id')
+            if attribute_id:
+                # Update existing attribute
+                attribute = Attribute.objects.get(id=attribute_id)
+            else:
+                # Create new attribute
+                attribute = Attribute()
+
+            # Validate and save attribute using AttributeForm
+            attribute_form = AttributeForm(
+                data={
+                    'product': input['product'],  # Graphene.ID as string, form handles ForeignKey
+                    'name': input['name'],
+                },
+                instance=attribute
+            )
+            if not attribute_form.is_valid():
+                raise create_graphql_error(attribute_form)
+            attribute = attribute_form.save()
+
+            # Step 2: Handle options
+            # Get list of option IDs from input (for updates), treating None as empty list
+            attributes_options_input = input.get('options') or []
+            input_option_ids = [opt['id'] for opt in attributes_options_input if 'id' in opt]
+            
+            # Get existing options for the attribute
+            existing_options = attribute.attribute_options.all()
+
+            # Delete options not present in the input (for updates)
+            for existing_option in existing_options:
+                if str(existing_option.id) not in input_option_ids:
+                    existing_option.delete()
+
+            # Create or update options based on input
+            for opt_input in attributes_options_input:
+                if 'id' in opt_input:
+                    # Update existing option
+                    option = AttributeOption.objects.get(id=opt_input['id'])
+                else:
+                    # Create new option linked to the attribute
+                    option = AttributeOption(attribute=attribute)
+
+                # Validate and save option using AttributeOptionForm
+                option_form = AttributeOptionForm(
+                    data={
+                        'option': opt_input['option'],
+                        'message': opt_input.get('message'),
+                        'extra_price': opt_input['extra_price'],
+                        'photo': opt_input.get('photo'),
+                        'attribute':attribute.id
+                    },
+                    instance=option
+                )
+                if not option_form.is_valid():
+                    raise create_graphql_error(option_form)
+                option_form.save()
+
+            # Return the mutation result
+            return ProductAttributeAndOptonCUD(success=True)
 
 class AttributeCUD(DjangoFormMutation):
     success = graphene.Boolean()
@@ -383,17 +478,7 @@ class ReviewCUD(DjangoFormMutation):
         except Exception as e:
             raise GraphQLError(e)
 
-
-
-class DeleteReview(graphene.Mutation):
-    message = graphene.String()
-    success = graphene.Boolean()    
-    class Arguments:
-        id = graphene.ID(required=True)
-    def mutate(self, info, id):
-        review = get_object_by_kwargs(Review, {"id": id})
-        review.delete()
-        return DeleteReview(success=True, message="Deleted!")
+    
 class FAQCUD(DjangoFormMutation):
     success = graphene.Boolean()
     class Meta:
@@ -407,6 +492,27 @@ class FAQCUD(DjangoFormMutation):
             
         form.save()
         return FAQCUD(success=True ) 
+    
+
+class DeleteReview(graphene.Mutation):
+    message = graphene.String()
+    success = graphene.Boolean()    
+    class Arguments:
+        id = graphene.ID(required=True)
+    def mutate(self, info, id):
+        review = get_object_by_kwargs(Review, {"id": id})
+        review.delete()
+        return DeleteReview(success=True, message="Deleted!")
+
+class DeleteAttribute(graphene.Mutation):
+    message = graphene.String()
+    success = graphene.Boolean()    
+    class Arguments:
+        id = graphene.ID(required=True)
+    def mutate(self, info, id):
+        attribute = get_object_by_kwargs(Attribute, {"id": id})
+        attribute.delete()
+        return DeleteReview(success=True, message="Deleted!")
 
 class Mutation(graphene.ObjectType):
     review_cud = ReviewCUD.Field()
@@ -422,4 +528,6 @@ class Mutation(graphene.ObjectType):
     order_product_attribute_cud = OrderProductAttributeCUD.Field()
     product_description_cud = ProductDescriptionCUD.Field()
     create_order = CreateOrder.Field()
+    product_attribute_and_opton_cud = ProductAttributeAndOptonCUD.Field()
+    delete_attribute = DeleteAttribute.Field()
     

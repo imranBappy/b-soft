@@ -1,6 +1,6 @@
 import graphene
 from apps.accounts.models import UserRole
-from apps.product.models import OrderProductAttribute, FAQ, Review, Product, Category, Order, OrderProduct, Payment
+from apps.product.models import Attribute, OrderProductAttribute, FAQ, Review, Product, Category, Order, OrderProduct, Payment
 from apps.base.utils import get_object_by_kwargs
 from apps.product.objectType import OrderProductAttributeType, ReviewType, FAQType, CredentialType, AttributeOptionType, AttributeType, ProductDescriptionType, CouponType, CategoryType, ProductType, SubCategoryType, PaymentType, OrderType, OrderProductType
 from graphene_django.filter import DjangoFilterConnectionField
@@ -59,6 +59,12 @@ class Query(graphene.ObjectType):
     def resolve_order_product_attributes(self, info, **kwargs):
         return OrderProductAttribute.objects.all()
 
+    def resolve_attribute(self, info, id):
+        return get_object_by_kwargs(Attribute, {"id": id})
+     
+    def resolve_attributes(self, info, **kwargs):
+        return Attribute.objects.all()
+    
     def resolve_review(self, info, id):
         return get_object_by_kwargs(Review, {"id": id})
      
@@ -96,10 +102,10 @@ class Query(graphene.ObjectType):
     @isAuthenticated() 
     def resolve_orders(self, info, **kwargs):
         user = info.context.User
-        
+        print(Order.objects.all() )
         if user.role:
             if user.role.name == UserRole.CUSTOMER:
-                print(Order.objects.filter(user=user) )
+                print(Order.objects.all().values() )
                 return Order.objects.filter(user=user) 
             
             if user.role.name == UserRole.ADMIN:

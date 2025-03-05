@@ -56,18 +56,36 @@ export function ActionsDropdown({ item }: ActionsDropdownProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem disabled={loading} onClick={handleDeleteProduct} className="text-red-600 cursor-pointer ">
+                <DropdownMenuItem
+                    disabled={loading}
+                    onClick={handleDeleteProduct}
+                    className="text-red-600 cursor-pointer "
+                >
                     Delete
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>View details</DropdownMenuItem>
                 <DropdownMenuItem>
-                    <Link className="w-full" href={`/product/${item.id}`}>Edit</Link>
+                    <Link
+                        className="w-full"
+                        href={`/product/attribute?productId=${item.id}`}
+                    >
+                        Attribute
+                    </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                    <Link className="w-full" href={`/product/descriptions/add?productId=${item.id}`}>Add Description</Link>
+                    <Link className="w-full" href={`/product/${item.id}`}>
+                        Edit
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Link
+                        className="w-full"
+                        href={`/product/descriptions/add?productId=${item.id}`}
+                    >
+                        Add Description
+                    </Link>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-    )
+    );
 } 

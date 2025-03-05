@@ -82,11 +82,7 @@ class  AttributeOption(models.Model):
     
   
 
-ORDER_TYPE_CHOICES = [
-        ("DELIVERY", "Delivery"),
-        ("PICKUP", "Pickup"),
-        ("DINE_IN", "Dine In"),
-    ]
+
     
 ORDER_STATUS_CHOICES = [
         ("PENDING", "Pending"),

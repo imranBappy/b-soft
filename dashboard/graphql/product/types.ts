@@ -105,6 +105,7 @@ export interface ATTRIBUTE_TYPE {
     id: string;
     name: string;
     attributeOptions?: {
+        totalCount?:number;
         edges: { node: ATTRIBUTE_OPTION_TYPE }[];
     };
 }

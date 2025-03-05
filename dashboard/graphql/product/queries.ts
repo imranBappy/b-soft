@@ -540,3 +540,25 @@ export const ATTRIBUTE_QUERY = gql`
         }
     }
 `;
+
+export const ATTRIBUTES_QUERY = gql`
+    query MyQuery($product: String, $last: Int, $offset: Int) {
+        attributes(product: $product, last: $last, offset: $offset) {
+            totalCount
+            edges {
+                node {
+                    name
+                    id
+                    createdAt
+                    attributeOptions {
+                        totalCount
+                    }
+                    product {
+                        name
+                        id
+                    }
+                }
+            }
+        }
+    }
+`;
