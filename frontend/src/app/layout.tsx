@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { Oswald, Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";
 import MainLayout from "@/layout/MainLayout";
 import logo from '@/assets/logo.png';
 import favicon from '@/assets/favicon.ico';
+import Script from 'next/script';
 
 
 const playfairDisplay = Playfair_Display({ // for heading
@@ -70,14 +72,35 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${playfairDisplay.variable} ${oswald.variable} ${lato.variable} scroll-smooth  relative antialiased`}
-      >
-        <MainLayout >
-          {children}
-        </MainLayout>
-      </body>
-    </html>
+      <html lang="en">
+          <body
+              className={`${playfairDisplay.variable} ${oswald.variable} ${lato.variable} scroll-smooth  relative antialiased`}
+          >
+              <MainLayout>{children}</MainLayout>
+
+              <Script id="facebook-pixel" strategy="afterInteractive">
+                  {`
+                    !function(f,b,e,v,n,t,s)
+                    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                    n.queue=[];t=b.createElement(e);t.async=!0;
+                    t.src=v;s=b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t,s)}(window, document,'script',
+                    'https://connect.facebook.net/en_US/fbevents.js');
+                    fbq('init', '850323950556537');
+                    fbq('track', 'PageView');
+                  `}
+                  <noscript>
+                      <img
+                          height="1"
+                          width="1"
+                          style={{ display: 'none' }}
+                          src="https://www.facebook.com/tr?id=850323950556537&ev=PageView&noscript=1"
+                      />
+                  </noscript>
+              </Script>
+          </body>
+      </html>
   );
 }
