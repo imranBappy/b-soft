@@ -13,7 +13,7 @@ class UserType(DjangoObjectType):
         fields = [
             'name', 'email', 'gender', 'date_of_birth', 'created_at','updated_at',
             'photo', 'role', 'phone', 'is_verified', 'term_and_condition_accepted',
-            'privacy_policy_accepted', 'privacy_policy_accepted', 'is_active', 'address'
+            'privacy_policy_accepted', 'privacy_policy_accepted', 'is_active', 'address', 'whatsApp', 'country'
         ]
         filterset_class = UserFilter
         interfaces = (graphene.relay.Node,)

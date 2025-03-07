@@ -66,8 +66,10 @@ class User(
     photo = models.URLField(max_length=1000, blank=True, null=True)
     role = models.ForeignKey(Group, related_name='users', on_delete=models.SET_NULL, blank=True, null=True)
     phone = models.CharField(max_length=15, blank=True, null=True, unique=True)
+    country = models.CharField(max_length=15, blank=True, null=True)
+    whatsApp = models.CharField(max_length=15, blank=True, null=True )
+    
     address = models.TextField( blank=True, null=True)
-        
     is_verified = models.BooleanField(default=False)
     term_and_condition_accepted = models.BooleanField(default=False)
     privacy_policy_accepted = models.BooleanField(default=False)

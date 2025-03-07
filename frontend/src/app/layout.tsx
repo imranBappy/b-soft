@@ -5,6 +5,7 @@ import MainLayout from "@/layout/MainLayout";
 import logo from '@/assets/logo.png';
 import favicon from '@/assets/favicon.ico';
 import Script from 'next/script';
+import Head from "next/head";
 
 
 const playfairDisplay = Playfair_Display({ // for heading
@@ -39,6 +40,7 @@ export const metadata = {
         'digital products',
         'online software shop',
     ],
+    
     icons: {
         icon: favicon.src, // Path to your favicon
     },
@@ -64,6 +66,7 @@ export const metadata = {
             'Purchase authentic software products like Windows, Photoshop, and ChatGPT subscriptions at Bsoft.',
         image: logo.src,
     },
+
 };
 
 export default function RootLayout({
@@ -73,6 +76,12 @@ export default function RootLayout({
 }>) {
   return (
       <html lang="en">
+          <Head>
+              <meta
+                  name="facebook-domain-verification"
+                  content="axanm867oa2gljplwh5p0vli7f4k11"
+              />
+          </Head>
           <body
               className={`${playfairDisplay.variable} ${oswald.variable} ${lato.variable} scroll-smooth  relative antialiased`}
           >

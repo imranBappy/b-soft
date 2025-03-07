@@ -15,7 +15,9 @@ class UserForm(forms.ModelForm):
             'phone',
             'role',
             'is_active',
-            'address'
+            'address',
+            'whatsApp',
+            'country'
         ]
 class AddressForm(forms.ModelForm):
     id = forms.CharField(required=False)

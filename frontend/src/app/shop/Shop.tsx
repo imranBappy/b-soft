@@ -97,7 +97,14 @@ const Shop = () => {
     if (productLoading) {
         content = new Array(6).fill(1).map((_, i) => <ProductLoader key={i} />);
     }
-    if (loading) return <Loading />;
+    if (loading) return (
+        <div  className='  h-[300px] flex items-center justify-center'>
+            <Loading />
+        </div>
+    );
+
+   
+    
     return (
         <div className="container">
             <Sheet>

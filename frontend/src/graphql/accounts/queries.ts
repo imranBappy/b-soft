@@ -3,18 +3,20 @@
 import { gql } from "@apollo/client";
 
 export const ME_QUERY = gql`
-    query{
-        me{
+    query {
+        me {
             id
             email
             name
             phone
             address
             role {
-              id
-              name
+                id
+                name
             }
             photo
+            country
+            whatsApp
         }
     }
 `;

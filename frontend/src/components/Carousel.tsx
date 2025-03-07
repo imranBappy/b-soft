@@ -12,6 +12,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { SLIDER_TYPE, SLIDERS_QUERY } from "@/graphql/setting"
 import { useQuery } from "@apollo/client"
+import { Skeleton } from "./ui/skeleton"
 
 function BannerCarousel() {
 
@@ -19,16 +20,27 @@ function BannerCarousel() {
         Autoplay({ delay: 2000, stopOnInteraction: false })
     )
 
-    const { data: res } = useQuery(SLIDERS_QUERY, {
+    const { data: res, loading } = useQuery(SLIDERS_QUERY, {
         variables: {},
     }
     );
+    
 
     const sliders: SLIDER_TYPE[] = res?.sliders?.edges?.map(({ node }: { node: SLIDER_TYPE }) => ({
         id: node.id,
         link: node.link,
         image: node.image,
     })) || [];
+
+  if (loading) {
+      return (
+          <div className="container max-h-[500px] mt-3">
+              <div className="p-3 rounded border">
+                  <Skeleton className="w-full md:h-[450px] h-[130px] rounded" />
+              </div>
+          </div>
+      );
+  }
 
     return (
         <Carousel

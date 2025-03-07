@@ -67,6 +67,8 @@ export const PROFILE_UPDATE_MUTATION = gql`
         $phone: String
         $photo: String
         $address: String
+        $country: String!
+        $whatsApp: String!
     ) {
         profileUpdate(
             input: {
@@ -78,6 +80,8 @@ export const PROFILE_UPDATE_MUTATION = gql`
                 photo: $photo
                 address: $address
                 isActive: true
+                country: $country
+                whatsApp: $whatsApp
             }
         ) {
             message

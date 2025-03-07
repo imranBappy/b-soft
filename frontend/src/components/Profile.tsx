@@ -21,7 +21,7 @@ import { useQuery } from "@apollo/client";
 function Profile() {
     const auth = useAuth();
 
-    const { data } = useQuery(ME_QUERY);
+    const { data } = useQuery(ME_QUERY,{});
     const {
         me: { name,  photo },
     } = data || {me: { name: '', photo: ''}};

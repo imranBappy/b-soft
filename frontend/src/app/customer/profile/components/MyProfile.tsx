@@ -8,29 +8,46 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form } from '@/components/ui/form';
-import { TextareaField, TextField } from '@/components/input';
+import { SwitchItem, TextareaField, TextField } from '@/components/input';
 import { useEffect, useState } from 'react';
 import { PROFILE_UPDATE_MUTATION } from '@/graphql/accounts';
 import { useToast } from '@/hooks/use-toast';
-import { getErrors, renamedFile } from '@/lib/utils';
+import { getErrors, isValidPhoneNumber, renamedFile } from '@/lib/utils';
 import uploadImageToS3, { deleteImageFromS3 } from '@/lib/s3';
+import { countries } from '@/constants';
 
-const formSchema = z.object({
-    email: z.string().email().toLowerCase().min(5, {
-        message: 'Email must be valid',
-    }),
-    name: z.string().min(5, {
-        message: 'name must be at least 5 characters.',
-    }),
-    phone: z
-        .string()
-        .min(11, {
-            message: 'number must be at least 1 characters.',
-        })
-        .optional(),
-    address: z.string().optional(),
-    photo: z.instanceof(File).optional(),
-});
+const formSchema = z
+    .object({
+        email: z.string().email().toLowerCase().min(5, {
+            message: 'Email must be valid',
+        }),
+        name: z.string().min(5, {
+            message: 'name must be at least 5 characters.',
+        }),
+        phone: z
+            .string()
+            .min(11, {
+                message: 'number must be at least 1 characters.',
+            })
+            .optional(),
+        country: z.string().nonempty('Country is required'),
+        whatsApp: z.string().nonempty({
+            message: 'WhatsApp number is required.',
+        }),
+        address: z.string().optional(),
+        photo: z.instanceof(File).optional(),
+    })
+    .refine(
+        (data) => isValidPhoneNumber(data.whatsApp as string, data.country),
+        {
+            message: 'Invalid WhatsApp number for the selected country',
+            path: ['whatsApp'],
+        }
+    )
+    .refine((data) => isValidPhoneNumber(data.phone as string, data.country), {
+        message: 'Invalid phone number for the selected country',
+        path: ['phone'],
+    });
 
 export default function MyAccount() {
     const [photoPreviewUrl, setImagePreviewUrl] = useState<string>('');
@@ -41,15 +58,19 @@ export default function MyAccount() {
     const { toast } = useToast();
     const { data, loading } = useQuery(ME_QUERY, {
         onCompleted: (data) => {
-            const { name, email, phone, address } = data?.me;
+            const { name, email, phone, address, country, whatsApp } = data?.me;
             form.setValue('name', name || '');
             form.setValue('email', email || '');
             if (phone) form.setValue('phone', phone || '');
             if (address) form.setValue('address', address || '');
+            if (address) form.setValue('address', address || '');
+            if (country) form.setValue('country', country || '');
+            if (whatsApp) form.setValue('whatsApp', whatsApp || '');
             if (data?.me?.photo) {
                 setImagePreviewUrl(data?.me?.photo);
             }
         },
+        fetchPolicy:'network-only'
     });
 
     const [updateProfile, { loading: mutationLoading }] = useMutation(
@@ -61,8 +82,10 @@ export default function MyAccount() {
                     variant: 'destructive',
                     description: err.message,
                 });
-                const errors: { errors?: { phone?: string } } = getErrors([...err.graphQLErrors]);
-                
+                const errors: { errors?: { phone?: string } } = getErrors([
+                    ...err.graphQLErrors,
+                ]);
+
                 if (errors?.errors?.phone) {
                     form.setError('phone', {
                         message: errors.errors?.phone,
@@ -84,10 +107,10 @@ export default function MyAccount() {
         }
     };
 
-   async function onSubmit(values: z.infer<typeof formSchema>) {
-         try {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        try {
             console.log({ values });
-            
+
             let uploadedFiles: string | undefined = undefined;
 
             if (values.photo && data?.me?.photo) {
@@ -100,25 +123,25 @@ export default function MyAccount() {
                     renamedFile(values.photo)
                 );
                 console.log({ uploadedFiles });
-                
+
                 if (!uploadedFiles) throw new Error('Failed to upload image');
             }
-            
+
             updateProfile({
                 variables: {
                     ...values,
                     photo: uploadedFiles,
                 },
             });
-         } catch (error) {
+        } catch (error) {
             console.log(error);
-            
+
             toast({
                 title: 'Error',
                 variant: 'destructive',
                 description: (error as Error).message,
             });
-         }
+        }
     }
 
     useEffect(() => {
@@ -127,7 +150,6 @@ export default function MyAccount() {
         };
     }, [photoPreviewUrl]);
 
-    
     return (
         <Form {...form}>
             <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
@@ -174,12 +196,30 @@ export default function MyAccount() {
                                 placeholder="Email"
                                 disabled={true}
                             />
+                            <div className="flex gap-2">
+                                <SwitchItem
+                                    form={form}
+                                    name="country"
+                                    label="Country"
+                                    options={countries}
+                                    placeholder="Country"
+                                />
+                                <div className="w-full">
+                                    <TextField
+                                        form={form}
+                                        name="whatsApp"
+                                        label="WhatsApp Number"
+                                        placeholder="e.g., +880170000000"
+                                    />
+                                </div>
+                            </div>
                             <TextField
                                 form={form}
                                 name="phone"
                                 label="Phone Number"
                                 placeholder="Phone Number"
                             />
+
                             <TextareaField
                                 form={form}
                                 name="address"

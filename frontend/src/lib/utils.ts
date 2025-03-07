@@ -1,5 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { parsePhoneNumberFromString, CountryCode } from 'libphonenumber-js';
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -102,3 +104,12 @@ export const getStatusStyle = (status: string) => {
         'bg-gray-500/20 text-gray-600 dark:bg-gray-500/30 dark:text-gray-400'
     );
 };
+
+export function isValidPhoneNumber(number: string, country: string) {
+    try {
+        const phoneNumber = parsePhoneNumberFromString(number, country as CountryCode);
+        return phoneNumber && phoneNumber.isValid();
+    } catch  {
+        return false;
+    }
+}
