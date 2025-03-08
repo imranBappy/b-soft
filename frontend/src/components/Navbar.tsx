@@ -26,8 +26,8 @@ const Navbar = () => {
                         <SearchInput />
                     </div>
                     <div className="flex items-center gap-3">
-                        <Button className=' md:hidden px-3  font-playfair text-base' variant={'secondary'}>
-                            <Link href={'/login'} className='flex items-center gap-2' >
+                        <Button className=' md:hidden px-3  mt-1 font-playfair text-base' variant={'secondary'}>
+                            <Link href={'/shop'} className='flex items-center gap-2' >
                                 <Search className="text-4xl" />
                             </Link>
                         </Button>

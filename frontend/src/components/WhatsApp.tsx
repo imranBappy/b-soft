@@ -13,12 +13,12 @@ const WhatsApp = () => {
      });
     return (
         <div
-            className="w-16 h-16 fixed  dark:bg-black  bg-white  border rounded-lg cursor-pointer shadow-md  "
-            style={{ right: '50px', bottom: '130px' }}
+            className="w-16 h-16 fixed  dark:bg-black  bg-white  border rounded-lg cursor-pointer shadow-md  md:right-[50px]  right-[10px] bottom-[130px]  "
         >
-            <Link target="blank" href={data?.websiteinfo?.whatsappLink || '#'}
-            
-                className='w-full h-full flex items-center justify-center'
+            <Link
+                target="blank"
+                href={data?.websiteinfo?.whatsappLink || '#'}
+                className="w-full h-full flex items-center justify-center"
             >
                 <Image
                     src={whatsappLogo}

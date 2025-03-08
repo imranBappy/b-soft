@@ -40,7 +40,7 @@ function Profile() {
                     </Avatar>
                     <Button
                         variant={'link'}
-                        className="text-white font-playfair text-base"
+                        className="text-white font-playfair text-base hidden md:inline-block"
                     >
                         {name}
                     </Button>

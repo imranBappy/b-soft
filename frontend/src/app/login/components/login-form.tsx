@@ -21,6 +21,7 @@ import { useEffect } from "react"
 import useAuth from "@/hooks/use-auth"
 import Link from "next/link"
 import { TextField } from "@/components/input"
+import PasswordField from "@/components/input/password-field"
 
 
 const formSchema = z.object({
@@ -110,12 +111,11 @@ function LoginForm() {
                           label="Email"
                           placeholder="Email"
                       />
-                      <TextField
+                      <PasswordField
                           form={form}
                           name="password"
                           label="Password"
                           placeholder="Password"
-                          type="password"
                       />
                       <Button
                           variant={'link'}
@@ -135,7 +135,7 @@ function LoginForm() {
               >
                   <span className="  ">{`Don’t have a account?`}</span>
                   <div>
-                    <Link href="/register">Register now</Link>
+                      <Link href="/register">Register now</Link>
                   </div>
               </Button>
           </CardContent>

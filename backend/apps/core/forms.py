@@ -1,5 +1,5 @@
 from django import forms
-from apps.core.models import Slider, StaticPage, WebsiteInfo
+from apps.core.models import Slider, StaticPage, WebsiteInfo, ContactUs
 
 
 
@@ -19,4 +19,10 @@ class WebsiteInfoForm(forms.ModelForm):
     id = forms.CharField(required=False)
     class Meta:
         model = WebsiteInfo
+        fields = '__all__'   
+
+class ContactUsForm(forms.ModelForm):
+    id = forms.CharField(required=False)
+    class Meta:
+        model = ContactUs
         fields = '__all__'   

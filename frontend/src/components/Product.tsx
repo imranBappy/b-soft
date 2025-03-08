@@ -55,7 +55,7 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
                     href={`/products/${data.id}`}
                 >
                     <Button
-                        className=" font-playfairrounded-r-none  w-full"
+                        className=" font-playfair rounded-r-none  w-full"
                         variant={'secondary'}
                     >
                         {' '}

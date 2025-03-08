@@ -39,8 +39,6 @@ const Shop = () => {
     // const limit = 1;
     const limit = parseInt(process.env.NEXT_PUBLIC_PAGE_LIMIT || '10');
 
-    
-
     const [selectedCategory, setCategory] = useState<string[]>(
         category ? [category] : []
     );
@@ -110,7 +108,7 @@ const Shop = () => {
             <Sheet>
                 <SheetTrigger asChild>
                     <Button
-                        className="  md:hidden flex gap-2  mt-5 rounded-sm font-playfairtext-base"
+                        className="  md:hidden flex gap-2  mt-5 rounded-sm font-playfair text-base"
                         variant={'outline'}
                     >
                         <FilterIcon size={22} />
@@ -118,14 +116,14 @@ const Shop = () => {
                     </Button>
                 </SheetTrigger>
                 <SheetContent>
-                    <div className="  w-96 mt-10  flex  flex-col gap-5">
+                    <div className="  w-full mt-10  flex  flex-col gap-5">
                         <RangeFilter
-                            cardClassName="border-none"
+                            cardClassName="border-none w-full"
                             rangeState={[priceRange, setPriceRage]}
                             name="Price Range"
                         />
                         <Filter
-                            cardClassName="border-none"
+                            cardClassName="border-none w-full"
                             selectedItems={selectedCategory}
                             onRemove={handRemove}
                             onSelect={handleSelect}

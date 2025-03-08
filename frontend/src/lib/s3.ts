@@ -32,6 +32,7 @@ export async function uploadImageToS3(file: File) {
 
 export async function deleteImageFromS3(url: string) {
     if (!url) throw new Error('No URL provided');
+    
     try {
         const s3Client = new S3Client({
             region: process.env.NEXT_PUBLIC_BUCKET_REGION as string,

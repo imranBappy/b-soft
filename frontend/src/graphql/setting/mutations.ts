@@ -137,3 +137,11 @@ mutation CreateOrder($input: CreateOrderInput!) {
   }
 }
 `
+
+export const CONTACT_US_MUTATION = gql`
+    mutation MyMutation($email: String!, $name: String!, $message: String!) {
+        contactUsCud(input: { email: $email, name: $name, message: $message }) {
+            success
+        }
+    }
+`;

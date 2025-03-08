@@ -109,7 +109,6 @@ export default function MyAccount() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            console.log({ values });
 
             let uploadedFiles: string | undefined = undefined;
 
@@ -122,7 +121,6 @@ export default function MyAccount() {
                 uploadedFiles = await uploadImageToS3(
                     renamedFile(values.photo)
                 );
-                console.log({ uploadedFiles });
 
                 if (!uploadedFiles) throw new Error('Failed to upload image');
             }
@@ -130,7 +128,7 @@ export default function MyAccount() {
             updateProfile({
                 variables: {
                     ...values,
-                    photo: uploadedFiles,
+                    photo: uploadedFiles ? uploadedFiles : data?.me?.photo,
                 },
             });
         } catch (error) {

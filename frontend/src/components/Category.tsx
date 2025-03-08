@@ -21,7 +21,7 @@ const Category = ({ data }: { data: CATEGORY_TYPE }) => {
             />
             <Button
                 variant="link"
-                className="text-blue font-playfairmd:text-lg text-base  w-full group-hover:underline"
+                className="text-blue font-playfair md:text-lg text-base  w-full group-hover:underline"
             >
                 {data.name}
             </Button>

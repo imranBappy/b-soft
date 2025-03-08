@@ -26,7 +26,7 @@ const ProductLoader = () => {
             <CardFooter className="px-3 pb-3 flex gap-[0.5px]">
                 <Button
                     disabled
-                    className=" font-playfairrounded-r-none  w-full"
+                    className=" font-playfair rounded-r-none  w-full"
                     variant={'secondary'}
                 >
                     {' '}

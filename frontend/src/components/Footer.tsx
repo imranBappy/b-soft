@@ -25,7 +25,7 @@ const Footer = () => {
                         <ul className=' mt-5'>
                             <li className='flex  gap-1 items-center'>
                                 <Phone size={15} />
-                                <Button variant={'link'} className=' px-1  font-playfairtext-gray dark:text-gray-light'>
+                                <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
                                     <a href={
                                         `tel:${data?.websiteinfo?.phone}`
                                     }>  {
@@ -36,7 +36,7 @@ const Footer = () => {
                             </li>
                             <li className='flex  gap-1 items-center'>
                                 <MapPinHouse size={15} />
-                                <Button variant={'link'} className=' px-1  font-playfairtext-gray dark:text-gray-light '>
+                                <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light '>
                                       {
                                         data?.websiteinfo?.location
                                       }
@@ -44,7 +44,7 @@ const Footer = () => {
                             </li>
                             <li className='flex  gap-1 items-center'>
                                 <Mail size={15} />
-                                <Button variant={'link'} className=' px-1  font-playfairtext-gray dark:text-gray-light'>
+                                <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
                                     <a 
                                         href={`mailto:${data?.websiteinfo?.email}`}
                                     >
@@ -60,18 +60,18 @@ const Footer = () => {
                         <h4 className=' font-playfair font-semibold  text-lg mt-5'>User Area</h4>
                         <ul className=' mt-2'>
                             <li className='flex  gap-1 items-center'>
-                                <Button variant={'link'} className=' px-1  font-playfairtext-gray dark:text-gray-light'>
+                                <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
                                     <Link href={"/shop"}>  All Products   </Link>
                                 </Button>
 
                             </li>
                             <li className='flex  gap-1 items-center'>
-                                <Button variant={'link'} className=' px-1  font-playfairtext-gray dark:text-gray-light'>
+                                <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
                                     <Link href={"/account"}>  My Account  </Link>
                                 </Button>
                             </li>
                             <li className='flex  gap-1 items-center'>
-                                <Button variant={'link'} className=' px-1  font-playfairtext-gray dark:text-gray-light'>
+                                <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
                                     <Link href={"/cart"}>  Cart  </Link>
                                 </Button>
                             </li>
@@ -81,18 +81,18 @@ const Footer = () => {
                         <h4 className=' font-playfair font-semibold  text-lg mt-5'>Useful Links</h4>
                         <ul className=' mt-2'>
                             <li className='flex  gap-1 items-center'>
-                                <Button variant={'link'} className=' px-1  font-playfairtext-gray dark:text-gray-light'>
-                                    <Link href={"/contact"}> Contact Us   </Link>
+                                <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
+                                    <Link href={"/contact-us"}> Contact Us   </Link>
                                 </Button>
 
                             </li>
                             <li className='flex  gap-1 items-center'>
-                                <Button variant={'link'} className=' px-1  font-playfairtext-gray dark:text-gray-light'>
+                                <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
                                     <Link href={"/privicy"}> Privicy Policy   </Link>
                                 </Button>
                             </li>
                             <li className='flex  gap-1 items-center'>
-                                <Button variant={'link'} className=' px-1  font-playfairtext-gray dark:text-gray-light'>
+                                <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
                                     <Link href={"/terms"}>  Terms and Conditions </Link>
                                 </Button>
                             </li>

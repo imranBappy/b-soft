@@ -21,7 +21,8 @@ import { useToast } from '@/hooks/use-toast';
 import { ME_QUERY } from '@/graphql/accounts/queries';
 import Loading from '@/components/ui/loading';
 import { useRouter } from 'next/navigation';
-// import { Form } from "@/components/ui/form"
+
+
 const orderForm = z.object({
     name: z.string().min(2, {
         message: "name must be at least 2 characters.",
@@ -57,6 +58,7 @@ const {  loading:meLoading } = useQuery(ME_QUERY, {
             form.setValue('email', email || '');
             if (phone) form.setValue('phone', phone || '');
         },
+        fetchPolicy:'network-only'
     });
 
     const [createOrder, { loading }] = useMutation(CREATE_ORDER_MUTATION, {
@@ -100,11 +102,13 @@ const {  loading:meLoading } = useQuery(ME_QUERY, {
 
        
     }
-    if (meLoading)  return <Loading/>
+    if (meLoading)  return <div className="  md:h-[600px] h-[300px]  flex items-center justify-center">
+                <Loading />
+            </div>
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleOrder)} className='w-full container flex flex-col gap-5' >
-                <div className="w-full mt-5  flex gap-5 ">
+                <div className="w-full mt-5  flex gap-5 flex-wrap md:flex-nowrap ">
 
                     <Card className="w-full rounded">
                         <CardHeader>
@@ -203,8 +207,6 @@ const {  loading:meLoading } = useQuery(ME_QUERY, {
                     <Button disabled={loading} type='submit'>Confirm Order</Button>
                 </div>
             </form>
-
-
 
         </Form>
 

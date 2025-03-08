@@ -45,3 +45,15 @@ class StaticPage(models.Model):
 
     def __str__(self):
         return dict(self.PAGE_CHOICES).get(self.page_type, 'Static Page')
+    
+
+class ContactUs(models.Model):
+    email = models.EmailField()
+    name = models.CharField(max_length=255)
+    message = models.TextField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.email}"
