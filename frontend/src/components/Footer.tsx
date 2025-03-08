@@ -67,12 +67,12 @@ const Footer = () => {
                             </li>
                             <li className='flex  gap-1 items-center'>
                                 <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
-                                    <Link href={"/account"}>  My Account  </Link>
+                                    <Link href={"/customer/profile"}>  My Account  </Link>
                                 </Button>
                             </li>
                             <li className='flex  gap-1 items-center'>
                                 <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
-                                    <Link href={"/cart"}>  Cart  </Link>
+                                    <Link href={"/customer/orders"}>  My Orders  </Link>
                                 </Button>
                             </li>
                         </ul>
