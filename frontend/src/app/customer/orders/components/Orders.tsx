@@ -5,6 +5,40 @@ import { ORDER_TYPE, ORDERS_QUERY } from '@/graphql/product';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import Loading from '@/components/ui/loading';
+
+// components/NotFound.tsx
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+interface NotFoundProps {
+  message?: string;
+  actionText?: string;
+  onActionClick?: () => void;
+}
+
+ function NotFound({
+  message = "No orders found yet.",
+  actionText = "Start Shopping",
+  onActionClick,
+}: NotFoundProps) {
+  return (
+    <div className="flex items-center justify-center min-h-[50vh]">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-center">Nothing Here Yet</CardTitle>
+        </CardHeader>
+        <CardContent className="text-center">
+          <p className="text-muted-foreground mb-4">{message}</p>
+          {actionText && onActionClick && (
+            <Button onClick={onActionClick}>{actionText}</Button>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+
 export const getStatusStyle = (status: string) => {
     const statuses = {
         COMPLETED:
@@ -66,6 +100,10 @@ const Orders = () => {
             </div>
         </div>
     ));
+
+    if (!content?.length) {
+        return <NotFound/>
+    }
 
     if (loading) return <Loading />;
 

@@ -5,6 +5,8 @@ from apps.base.models import BaseModelWithoutID
 from django.conf import settings
 from django.utils import timezone
 from apps.accounts.tasks import send_email_on_delay
+from decouple import config
+base_url = settings.WEBSITE_URL
 
 class GenderChoices(models.TextChoices):
     MALE = 'MALE', 'Male'
@@ -85,7 +87,7 @@ class User(
         self.save()
         context = {
             'company_name':'Bsoft',
-            'logo_url':'https://s3.ap-south-1.amazonaws.com/b-soft-s3.xyz/1740737012867-product-1740737012865-bosft.png',
+            'logo_url': config("LOGO_URL", None),
             'first_name':self.name,
             'email':self.email,
             'verification_link':f'{base_url}/otp-verification/?otp={otp}&email={self.email}',
@@ -97,7 +99,23 @@ class User(
         subject = 'Email Verification'
         send_email_on_delay.delay(template, context, subject, self.email)
         
-    
+    def send_reset_password_mail(self, otp, verification_link):
+        self.is_verified = False
+        self.save()
+        context = {
+            'site_name':'Bsoft',
+            'logo_url': config("LOGO_URL", None),
+            'first_name':self.name,
+            'email':self.email,
+            'verification_link':f'{verification_link}',
+            'support_email':'support@b-soft.xyz',
+            'site_url':f'{base_url}',
+            'name':self.name,
+            
+        }
+        template = 'activation_mail.html'
+        subject = 'Email Verification'
+        send_email_on_delay.delay(template, context, subject, self.email)
 
     def __str__(self):
         return f"{self.id} - {self.name}"

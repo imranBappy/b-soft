@@ -398,6 +398,7 @@ class CreateOrder(graphene.Mutation):
 
                 order.total_price = total_price + extra_price
                 order.save()
+                order.send_email()
                 Payment.objects.create(
                         order=order,
                         amount=order.total_price,

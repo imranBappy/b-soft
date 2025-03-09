@@ -131,7 +131,7 @@ class PasswordResetMail(graphene.Mutation):
             otp.save()
         
         verification_link = f"{base_url}/reset-password?otp={otp.otp}&email={user.email}"
-        user.send_email_verification(otp.otp, verification_link)
+        user.send_reset_password_mail(otp.otp, verification_link)
         return PasswordResetMail(
             message='Successfully send mail',
             success=True

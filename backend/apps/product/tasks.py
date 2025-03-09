@@ -1,11 +1,7 @@
-from celery import shared_task
-from django.utils.timezone import now
-import logging
-from django.db.models import F
-logger = logging.getLogger(__name__)
-from apps.base.mail import send_mail
+from backend.celery import app
+from apps.base.mail import send_mail_from_template
 
 
-@shared_task
-def send_email(sub, body, to):
-    send_mail(sub, body, to)
+@app.task
+def send_email_on_delay(template, context, subject, email):
+    send_mail_from_template(template, context, subject, email)

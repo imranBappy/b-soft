@@ -17,6 +17,7 @@ import { RESET_PASSWORD_MUTATION } from "@/graphql/accounts"
 import { useToast } from "@/hooks/use-toast"
 import { TextField } from "@/components/input"
 import { useSearchParams, useRouter } from 'next/navigation'
+import PasswordField from "@/components/input/password-field"
 
 
 const formSchema = z.object({
@@ -84,35 +85,39 @@ function ResetForm() {
 
 
   return (
-    <Card className="mx-auto max-w-sm">
-      <CardHeader>
-        <CardTitle className="text-2xl">Reset Password</CardTitle>
-        <CardDescription>
-          Lost your password? Please enter your username r email address. You will receive a link to create a new password via email.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
-
-            <TextField
-              form={form}
-              name="password"
-              label="Passdow"
-              placeholder="Passdow"
-            />
-            <TextField
-              form={form}
-              name="password2"
-              label="Confirm Password"
-              placeholder="Confirm Password"
-            />
-            <Button disabled={loading} type="submit">Reset password</Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
-  )
+      <Card className="mx-auto max-w-sm">
+          <CardHeader>
+              <CardTitle className="text-2xl">Reset Password</CardTitle>
+              <CardDescription>
+                  Please enter your new password and confirm password.
+              </CardDescription>
+          </CardHeader>
+          <CardContent>
+              <Form {...form}>
+                  <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="grid gap-4"
+                  >
+                      <PasswordField
+                          form={form}
+                          name="password"
+                          label="Password"
+                          placeholder="Password"
+                      />
+                      <PasswordField
+                          form={form}
+                          name="password2"
+                          label="Confirm Password"
+                          placeholder="Confirm Password"
+                      />
+                      <Button disabled={loading} type="submit">
+                          Reset password
+                      </Button>
+                  </form>
+              </Form>
+          </CardContent>
+      </Card>
+  );
 }
 
 

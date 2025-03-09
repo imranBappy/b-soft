@@ -1,6 +1,9 @@
+from decimal import Decimal
 from django.db import models
 from apps.accounts.models import User 
-from datetime import timezone 
+from datetime import timezone
+from decouple import config
+from apps.product.tasks import send_email_on_delay 
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -172,6 +175,71 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    def send_email(self):
+
+        def serialize_order(self):
+            """Convert Order and related objects to a JSON-serializable dictionary."""
+            items = []
+            for item in self.items.all():
+                # Calculate variant extra price
+                variant_extra_price = sum(
+                    Decimal(str(attr.extra_price)) 
+                    for attr in item.order_product_attribute.all()
+                )
+                item_dict = {
+                    'id': str(item.id),
+                    'product': {
+                        'name': item.product.name,
+                        'image': item.product.photo,
+                    },
+                    'quantity': item.quantity,
+                    'price': float(item.price),  # Convert Decimal to float for JSON
+                    'variant_extra_price': float(variant_extra_price),
+                    'total_price': float((item.price + variant_extra_price) * item.quantity),
+                    'order_product_attribute': [
+                        {
+                            'attribute': attr.attribute.name,
+                            'option': attr.option.option,
+                            'extra_price': float(attr.extra_price)
+                        } for attr in item.order_product_attribute.all()
+                    ],
+                    'access':    {
+                        'note': item.access.note if item.access else None,
+                        'email': item.access.email if item.access else None,
+                        'username': item.access.username if item.access else None,
+                        'password': item.access.password if item.access else None,
+                        'download': item.access.download if item.access else None,
+                    } if self.status == "CONFIRMED" else None
+                }
+                items.append(item_dict)
+
+            return {
+                'order_id': self.order_id,
+                'created_at': self.created_at.isoformat(),  # Convert datetime to string
+                'status': self.status,
+                'total_price': float(self.total_price),
+                'items': items,
+            }
+        order_data = serialize_order(self)
+        # Email context
+        context = {
+            'company_name': 'Bsoft',
+            'logo_url': config("LOGO_URL", None),
+            'support_email': 'support@b-soft.xyz',
+            'order': order_data
+        }
+        print(context)
+        # Email subject
+        subject = f'Order Confirmation #{self.order_id}'
+        template = 'order_confirmation.html'
+        # Use Celery task for sending email
+        send_email_on_delay.delay(
+            template,
+            context,
+            subject,
+            self.user.email if self.user else 'default@example.com'  # Fallback email if user is None
+        )
+
     
     def __str__(self):
         return f"{self.id}"
@@ -199,6 +267,8 @@ class OrderProduct(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)    
+
+ 
     def __str__(self):
         return f"{self.id}"
 class ProductAccess(models.Model):
@@ -267,6 +337,8 @@ class Payment(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+   
     
     class Meta:
         ordering = ['-created_at']
