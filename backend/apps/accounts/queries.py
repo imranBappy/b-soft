@@ -1,15 +1,9 @@
 import graphene
-from apps.product.models import Category, Product
 from apps.base.utils import get_object_by_kwargs
 from .objectType import UserType, AddressType, RoleType
 from graphene_django.filter import DjangoFilterConnectionField
 from .models import User, Address
-from apps.base.utils import get_object_by_id
-from graphql_jwt.decorators import login_required
 from backend.authentication import isAuthenticated
-from django.db.models import Q
-from validate_email import validate_email
-from apps.accounts.models import UserRole
 from django.contrib.auth.models import Group
 
 class Query(graphene.ObjectType):
@@ -42,7 +36,7 @@ class Query(graphene.ObjectType):
                 return User.objects.get(phone=phone)
             raise User.DoesNotExist
         except User.DoesNotExist:
-            raise Exception(f"User  not found.")
+            raise Exception("User  not found.")
     
        
     def resolve_address(self, info, id=None, user=None):

@@ -45,7 +45,7 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
                 </p>
                 <p className=" mt-2 flex gap-2 items-center font-playfair">
                     {/* <span className='  text-gray-400 line-through text-sm '>$100</span> */}
-                    <span className="text-blue text-base">${price}</span>
+                    <span className="text-blue text-base">৳{price}</span>
                 </p>
             </CardContent>
 

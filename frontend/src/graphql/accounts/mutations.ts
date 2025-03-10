@@ -20,14 +20,26 @@ export const LOGIN_USER = gql`
 `;
 
 export const USER_REGISTER = gql`
-mutation MyMutation($email: String!, $name: String!, $password: String!, $phone: String) {
-  registerUser(email: $email, name: $name, password: $password, phone: $phone) {
-    message
-    success
-    id
-  }
-}
-`
+    mutation MyMutation(
+        $email: String!
+        $name: String!
+        $password: String!
+        $phone: String
+        $whatsApp: String!
+    ) {
+        registerUser(
+            email: $email
+            name: $name
+            password: $password
+            phone: $phone
+            whatsApp: $whatsApp
+        ) {
+            message
+            success
+            id
+        }
+    }
+`;
 
 
 
@@ -67,7 +79,6 @@ export const PROFILE_UPDATE_MUTATION = gql`
         $phone: String
         $photo: String
         $address: String
-        $country: String!
         $whatsApp: String!
     ) {
         profileUpdate(
@@ -80,7 +91,6 @@ export const PROFILE_UPDATE_MUTATION = gql`
                 photo: $photo
                 address: $address
                 isActive: true
-                country: $country
                 whatsApp: $whatsApp
             }
         ) {

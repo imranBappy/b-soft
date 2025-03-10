@@ -103,12 +103,12 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                             </div>
                                             <div className="  md:hidden   text-right">
                                                 <p className="text-lg font-semibold">
-                                                    ${toFixed(node.price)}
+                                                    ৳{toFixed(node.price)}
                                                 </p>
                                                 <p className="text-sm text-muted-foreground w-fit">
-                                                    (Base: ${' '}
+                                                    (Base: ৳{' '}
                                                     {toFixed(node.price)} +
-                                                    Variant: $ {itemExtraPrice}{' '}
+                                                    Variant: ৳ {itemExtraPrice}{' '}
                                                     ) * {node.quantity}
                                                 </p>
                                             </div>
@@ -133,12 +133,12 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                 </div>
                                                 <div className="  hidden md:block text-right">
                                                     <p className="text-lg font-semibold">
-                                                        ${toFixed(node.price)}
+                                                        ৳{toFixed(node.price)}
                                                     </p>
                                                     <p className="text-sm text-muted-foreground w-80">
-                                                        (Base: ${' '}
+                                                        (Base: ৳{' '}
                                                         {toFixed(node.price)} +
-                                                        Variant: ${' '}
+                                                        Variant: ৳{' '}
                                                         {itemExtraPrice} ) *{' '}
                                                         {node.quantity}
                                                     </p>
@@ -373,7 +373,7 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                     <div className="flex justify-between items-center">
                         <h2 className="text-2xl font-semibold">Total</h2>
                         <p className="text-2xl font-semibold">
-                            ${toFixed(myOrder.totalPrice)}
+                            ৳{toFixed(myOrder.totalPrice)}
                         </p>
                     </div>
                 </section>

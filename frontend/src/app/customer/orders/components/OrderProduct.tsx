@@ -31,7 +31,7 @@ const OrderProduct = ({ item }: { item: ORDER_ITEM_TYPE }) => {
                 </CardTitle>
                 <p className=" mt-2 flex gap-2 items-center font-playfair">
                     <span className="text-blue text-base">
-                        ${item.price} X {item.quantity}
+                        ৳{item.price} X {item.quantity}
                     </span>
                 </p>
             </CardContent>

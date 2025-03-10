@@ -9,13 +9,13 @@ const ProductPrice = ({ price = 0, offerPrice = 0, productId='' }) => {
 
     return (
         <div className="flex gap-2 items-center">
-            {
-                offerPrice ? <div className='  line-through dark:text-gray  text-gray-400  font-playfair font-semibold mt-3 text-3xl'>
-                    $120
-                </div> : null
-            }
-            <div className=' text-blue font-playfair font-semibold mt-3 text-3xl'>
-                ${showPrice}
+            {offerPrice ? (
+                <div className="  line-through dark:text-gray  text-gray-400  font-playfair font-semibold mt-3 text-3xl">
+                    ৳120
+                </div>
+            ) : null}
+            <div className=" text-blue font-playfair font-semibold mt-3 text-3xl">
+                ৳{showPrice}
             </div>
         </div>
     );

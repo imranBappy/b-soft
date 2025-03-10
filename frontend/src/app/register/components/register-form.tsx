@@ -19,10 +19,9 @@ import { useToast } from '@/hooks/use-toast';
 import { useEffect } from 'react';
 import useAuth from '@/hooks/use-auth';
 import Link from 'next/link';
-import { SwitchItem, TextareaField, TextField } from '@/components/input';
+import {  TextField } from '@/components/input';
 import PasswordField from '@/components/input/password-field';
 import { isValidPhoneNumber } from '@/lib/utils';
-import { countries } from '@/constants';
 
 const formSchema = z
     .object({
@@ -32,7 +31,6 @@ const formSchema = z
         email: z.string().email().toLowerCase().min(5, {
             message: 'Email must be valid',
         }),
-        country: z.string().nonempty('Country is required'),
         whatsApp: z.string().nonempty({
             message: 'WhatsApp number is required.',
         }),
@@ -46,13 +44,10 @@ const formSchema = z
         message: 'Passwords do not match',
         path: ['confirmPassword'],
     })
-    .refine(
-        (data) => isValidPhoneNumber(data.whatsApp as string, data.country),
-        {
-            message: 'Invalid WhatsApp number for the selected country',
-            path: ['whatsApp'],
-        }
-    );
+    .refine((data) => isValidPhoneNumber(data.whatsApp as string, 'BD'), {
+        message: 'Invalid WhatsApp number ',
+        path: ['whatsApp'],
+    });
 
 function RegisterForm() {
     const { toast } = useToast();
@@ -90,12 +85,13 @@ function RegisterForm() {
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        const { email, password, name } = values;
+        const { email, password, name, whatsApp } = values;
         userRegister({
             variables: {
                 name: name,
                 email: email,
                 password: password,
+                whatsApp: whatsApp,
             },
         });
     }
@@ -111,7 +107,7 @@ function RegisterForm() {
             <CardHeader>
                 <CardTitle className="text-2xl">Register</CardTitle>
                 <CardDescription>
-                    Enter your information below to create to your account
+                    Enter your information below to create your account
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -132,27 +128,16 @@ function RegisterForm() {
                             label="Email"
                             placeholder="Email"
                         />
-                        <div className="flex gap-2">
-                            <SwitchItem
-                                form={form}
-                                name="country"
-                                label="Country"
-                                options={countries}
-                                placeholder="Country"
-                            />
-                            <div className="w-full">
                                 <TextField
                                     form={form}
                                     name="whatsApp"
                                     label="WhatsApp Number"
                                     placeholder="e.g., +880170000000"
                                 />
-                            </div>
-                        </div>
-                        <TextareaField
+                        <TextField
                             form={form}
                             name="address"
-                            label="Address"
+                            label="Address ( Optional )"
                             placeholder="Full address"
                         />
                         <PasswordField

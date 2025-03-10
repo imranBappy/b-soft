@@ -70,7 +70,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                     </h1>
                     {product?.priceRange ? (
                         <div className=" my-3  font-playfair font-semibold mt-3 text-3xl">
-                            ${product.priceRange}
+                            ৳{product.priceRange}
                         </div>
                     ) : (
                         <>
@@ -99,7 +99,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                                 </div>
                                 <div className="flex gap-2 mt-2">
                                     {item.node?.attributeOptions?.edges?.map(
-                                        (op: { node: ATTRIBUTE_OPTION_TYPE }) => (
+                                        (op: {
+                                            node: ATTRIBUTE_OPTION_TYPE;
+                                        }) => (
                                             <ProductAttributeOptions
                                                 attributeId={item.node.id}
                                                 option={op.node}
@@ -162,7 +164,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                     ))}
                 </div>
             </div>
-            <ProductReview  productId={id} />
+            <ProductReview productId={id} />
             <ProductFAQ faqs={faqs || []} />
         </div>
     );

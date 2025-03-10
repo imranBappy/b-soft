@@ -19,7 +19,9 @@ class RegisterUser(graphene.Mutation):
     class Arguments:
         name = graphene.String(required=True)
         email = graphene.String(required=True)
+        whatsApp = graphene.String(required=True)
         password = graphene.String(required=True)
+
         phone = graphene.String(required=False)
 
     success = graphene.Boolean()
@@ -27,14 +29,14 @@ class RegisterUser(graphene.Mutation):
     id = graphene.ID()
 
     @transaction.atomic
-    def mutate(self, info, name, email,password, phone=None):
+    def mutate(self, info, name, email,password,whatsApp, phone=None):
         email = email.lower()
         find_user = get_object_or_none(CustomUser, email=email)
         if find_user is not None:
             raise GraphQLError(message="Email is already registered.")
         
         user = CustomUser.objects.create_user(
-            name=name, email=email, password=password, phone=phone
+            name=name, email=email, password=password,whatsApp=whatsApp, phone=phone
         )
         role = Group.objects.get(name="CUSTOMER")
         user.is_verified = False  

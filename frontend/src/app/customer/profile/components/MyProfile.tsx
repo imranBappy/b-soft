@@ -8,13 +8,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form } from '@/components/ui/form';
-import { SwitchItem, TextareaField, TextField } from '@/components/input';
+import {   TextField } from '@/components/input';
 import { useEffect, useState } from 'react';
 import { PROFILE_UPDATE_MUTATION } from '@/graphql/accounts';
 import { useToast } from '@/hooks/use-toast';
 import { getErrors, isValidPhoneNumber, renamedFile } from '@/lib/utils';
 import uploadImageToS3, { deleteImageFromS3 } from '@/lib/s3';
-import { countries } from '@/constants';
 
 const formSchema = z
     .object({
@@ -30,7 +29,6 @@ const formSchema = z
                 message: 'number must be at least 1 characters.',
             })
             .optional(),
-        country: z.string().nonempty('Country is required'),
         whatsApp: z.string().nonempty({
             message: 'WhatsApp number is required.',
         }),
@@ -38,14 +36,14 @@ const formSchema = z
         photo: z.instanceof(File).optional(),
     })
     .refine(
-        (data) => isValidPhoneNumber(data.whatsApp as string, data.country),
+        (data) => isValidPhoneNumber(data.whatsApp as string, "BD"),
         {
-            message: 'Invalid WhatsApp number for the selected country',
+            message: 'Invalid WhatsApp number!',
             path: ['whatsApp'],
         }
     )
-    .refine((data) => isValidPhoneNumber(data.phone as string, data.country), {
-        message: 'Invalid phone number for the selected country',
+    .refine((data) => isValidPhoneNumber(data.phone as string, "BD"), {
+        message: 'Invalid phone number!',
         path: ['phone'],
     });
 
@@ -58,13 +56,11 @@ export default function MyAccount() {
     const { toast } = useToast();
     const { data, loading } = useQuery(ME_QUERY, {
         onCompleted: (data) => {
-            const { name, email, phone, address, country, whatsApp } = data?.me;
+            const { name, email, phone, address, whatsApp } = data?.me;
             form.setValue('name', name || '');
             form.setValue('email', email || '');
             if (phone) form.setValue('phone', phone || '');
             if (address) form.setValue('address', address || '');
-            if (address) form.setValue('address', address || '');
-            if (country) form.setValue('country', country || '');
             if (whatsApp) form.setValue('whatsApp', whatsApp || '');
             if (data?.me?.photo) {
                 setImagePreviewUrl(data?.me?.photo);
@@ -72,7 +68,8 @@ export default function MyAccount() {
         },
         fetchPolicy:'network-only'
     });
-
+    console.log(form.formState.errors);
+    
     const [updateProfile, { loading: mutationLoading }] = useMutation(
         PROFILE_UPDATE_MUTATION,
         {
@@ -194,23 +191,13 @@ export default function MyAccount() {
                                 placeholder="Email"
                                 disabled={true}
                             />
-                            <div className="flex gap-2">
-                                <SwitchItem
-                                    form={form}
-                                    name="country"
-                                    label="Country"
-                                    options={countries}
-                                    placeholder="Country"
-                                />
-                                <div className="w-full">
-                                    <TextField
-                                        form={form}
-                                        name="whatsApp"
-                                        label="WhatsApp Number"
-                                        placeholder="e.g., +880170000000"
-                                    />
-                                </div>
-                            </div>
+
+                            <TextField
+                                form={form}
+                                name="whatsApp"
+                                label="WhatsApp Number"
+                                placeholder="e.g., +880170000000"
+                            />
                             <TextField
                                 form={form}
                                 name="phone"
@@ -218,10 +205,10 @@ export default function MyAccount() {
                                 placeholder="Phone Number"
                             />
 
-                            <TextareaField
+                            <TextField
                                 form={form}
                                 name="address"
-                                label="Address"
+                                label="Address ( Optional )"
                                 placeholder="Adress"
                             />
                         </div>
