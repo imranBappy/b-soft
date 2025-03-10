@@ -57,7 +57,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     const attributes = product.attributes?.edges
     const descriptions = product.descriptions?.edges
     const faqs = product.faqs?.edges
-    const reviews = product.reviews?.edges
 
     return (
         <div className="container px-5 mx-auto">
@@ -163,7 +162,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                     ))}
                 </div>
             </div>
-            <ProductReview reviews={reviews || []} productId={id} />
+            <ProductReview  productId={id} />
             <ProductFAQ faqs={faqs || []} />
         </div>
     );

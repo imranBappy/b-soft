@@ -11,6 +11,7 @@ class OrderProductAttributeFilter(BaseFilterOrderBy):
         fields = '__all__'
 
 class ReviewFilter(BaseFilterOrderBy):
+    product =filters.CharFilter( lookup_expr="exact",  field_name="product")
     class Meta:
         model = Review
         fields = '__all__'

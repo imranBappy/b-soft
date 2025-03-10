@@ -476,3 +476,22 @@ query MyQuery($id: ID!) {
   }
 }
 `
+export const PRODUCT_REVIEW = gql`
+    query MyQuery($first: Int, $offset: Int, $product: String!) {
+        reviews(first: $first, offset: $offset, product: $product) {
+            totalCount
+            edges {
+                node {
+                    content
+                    createdAt
+                    id
+                    rating
+                    user {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    }
+`;

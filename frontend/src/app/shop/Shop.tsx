@@ -36,7 +36,6 @@ const Shop = () => {
     const searchParams = useSearchParams();
     const category = searchParams.get('category');
     const [page, setPage] = useState(1);
-    // const limit = 1;
     const limit = parseInt(process.env.NEXT_PUBLIC_PAGE_LIMIT || '10');
 
     const [selectedCategory, setCategory] = useState<string[]>(

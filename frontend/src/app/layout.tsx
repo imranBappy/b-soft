@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 import { Oswald, Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";

@@ -1,7 +1,7 @@
 import { API } from "@/constants"
 
 const query = `
-query MyQuery($id: ID!, $first: Int, $offset: Int) {
+query MyQuery($id: ID!) {
   product(id: $id) {
     updatedAt
     tag
@@ -56,22 +56,6 @@ query MyQuery($id: ID!, $first: Int, $offset: Int) {
     }
     offerPrice
     priceRange
-    reviews(first: $first, offset: $offset) {
-      totalCount
-      edges {
-        node {
-          content
-          id
-          rating
-          user {
-            name
-            phone
-            id
-          }
-          createdAt
-        }
-      }
-    }
     faqs {
       edges {
         node {
@@ -83,7 +67,7 @@ query MyQuery($id: ID!, $first: Int, $offset: Int) {
     }
   }
 }
-`
+`;
 export default async function fetchProductDetails(id: string) {
     return await fetch(API, {
         method: "POST",

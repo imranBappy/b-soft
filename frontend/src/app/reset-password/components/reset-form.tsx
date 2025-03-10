@@ -15,7 +15,6 @@ import { Form } from "@/components/ui/form"
 import { useMutation } from '@apollo/client';
 import { RESET_PASSWORD_MUTATION } from "@/graphql/accounts"
 import { useToast } from "@/hooks/use-toast"
-import { TextField } from "@/components/input"
 import { useSearchParams, useRouter } from 'next/navigation'
 import PasswordField from "@/components/input/password-field"
 
