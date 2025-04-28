@@ -1,0 +1,12 @@
+
+export const ORDER_STATUSES_LIST = [
+    'PENDING', 'COMPLETED', 'DELIVERED', 'CANCELLED', 'DUE'
+];
+
+export const ORDER_TYPE_LIST = ['DELIVERY', 'PICKUP', 'DINE_IN']
+export const ORDER_STATUSES = {
+    PENDING: "PENDING",
+    COMPLETED: "COMPLETED",
+    CANCELLED: "CANCELLED",
+    DUE: "DUE",
+}   

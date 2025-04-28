@@ -1,0 +1,161 @@
+<!-- templates/emails/order_confirmation.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - {{ order.order_id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .header {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+        .item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        .item:last-child {
+            border-bottom: none;
+        }
+        .price-breakdown {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .variant-details, .access-details {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 3px;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.2em;
+            padding: 15px 0;
+            text-align: right;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 20px;
+        }
+        a.download-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+        a.download-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="https://s3.ap-south-1.amazonaws.com/b-soft-s3.xyz/bosft.png" alt="{{ company_name }}" style="max-width: 150px; height: auto;">
+            <h1>Order Confirmation #{{ order.order_id }}</h1>
+            <p>Placed on {{ order.created_at|date:"F d, Y" }}</p>
+            <p>Status: 
+                <span style="color: {% if order.status == 'completed' %}#28a745{% else %}#666{% endif %};">
+                    {{ order.status|capfirst }}
+                </span>
+            </p>
+        </div>
+
+        <!-- Order Items -->
+        <div class="items">
+            <h2 style="margin: 20px 0 10px;">Order Items</h2>
+            {% for item in order.items %}
+                <div class="item">
+                    <table width="100%">
+                        <tr>
+                            <td width="100" style="vertical-align: top;">
+                                <img src="{{ item.product.image }}" alt="{{ item.product.name }}" 
+                                     style="max-width: 100px; height: auto; border-radius: 5px;">
+                            </td>
+                            <td style="padding-left: 15px;">
+                                <h3>{{ item.product.name }}</h3>
+                                <p>Quantity: {{ item.quantity }}</p>
+                                <p class="price-breakdown">
+                                    Total: ${{ item.total_price|floatformat:2 }}<br>
+                                    (Base: ${{ item.price|floatformat:2 }} + 
+                                    Variant Extra: ${{ item.variant_extra_price|floatformat:2 }}) × {{ item.quantity }}
+                                </p>
+
+                                <!-- Variant Details -->
+                                <div class="variant-details">
+                                    <h4>Variant Details</h4>
+                                    {% for attr in item.order_product_attribute %}
+                                        <p>
+                                            {{ attr.attribute }}: {{ attr.option }}
+                                            (Extra: ${{ attr.extra_price|floatformat:2 }})
+                                        </p>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Product Access -->
+                                {% if order.status == 'CONFIRMED'  %}
+                                <!-- Product Access -->
+                                <div class="access-details">
+                                    <h4>Product Access</h4>
+                                    {% if item.access.note %}
+                                        <p>{{ item.access.note }}</p>
+                                    {% endif %}
+                                    {% if item.access.email %}
+                                        <p><strong>Email:</strong> {{ item.access.email }}</p>
+                                    {% endif %}
+                                    {% if item.access.username %}
+                                        <p><strong>Username:</strong> {{ item.access.username }}</p>
+                                    {% endif %}
+                                    {% if item.access.password %}
+                                        <p><strong>Password:</strong> {{ item.access.password }}</p>
+                                    {% endif %}
+                                    {% if item.access.download %}
+                                        <p style="margin-top: 10px;">
+                                            <a href="{{ item.access.download }}" class="download-link">Download Software</a>
+                                        </p>
+                                    {% endif %}
+                                </div>
+                                
+                            {% endif %}
+                               
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Total -->
+        <div class="total">
+            Total: ${{ order.total_price|floatformat:2 }}
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Thank you for your purchase from {{ company_name }}!</p>
+            <p>If you have any questions, contact us at {{ support_email }}</p>
+        </div>
+    </div>
+</body>
+</html>

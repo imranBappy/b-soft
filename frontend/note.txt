@@ -1,0 +1,8 @@
+price-range
+offer-price
+Note 
+Reset
+Review 
+QNA
+
+cd /home/ubuntu/b-soft/backend && chmod +x deploy.sh && ./deploy.sh
