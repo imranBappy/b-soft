@@ -36,10 +36,16 @@ const optionSchema = z.object({
     optionText: z.string().min(1, 'Option text is required'),
     message: z.string().optional(),
     extraPrice: z.number().min(0, 'Price is required'),
-    photo: z
-        .array(z.union([z.instanceof(File), z.string()]))
-        .max(5, 'Maximum 5 photos allowed')
-        .optional(),
+    // photo: z
+    //     .array(z.union([z.instanceof(File), z.string()]))
+    //     .max(5, 'Maximum 5 photos allowed')
+    //     .optional(),
+    photo:
+        typeof window === 'undefined'
+            ? z.any().optional()
+            : z.array(z.union([z.instanceof(File), z.string()]))
+                  .max(5, 'Maximum 5 photos allowed')
+                  .optional(),
 });
 
 const formSchema = z.object({

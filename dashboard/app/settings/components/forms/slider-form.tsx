@@ -31,7 +31,10 @@ import { SLIDER_MUTATION, SLIDER_QUERY, SLIDERS_QUERY } from "@/graphql/settings
 
 const productFormSchema = z.object({
     link: z.string().url().optional(),
-    image: z.instanceof(File),
+    // image: z.instanceof(File),
+    image: typeof window === 'undefined'
+                ? z.any().optional()
+                : z.instanceof(File).optional(),
 })
 
 type ProductFormValues = z.infer<typeof productFormSchema>
