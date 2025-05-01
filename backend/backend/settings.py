@@ -35,7 +35,8 @@ ALLOWED_HOSTS = [
     "https://b-soft.xyz",
     "https://www.b-soft.xyz",
     "https://api.b-soft.xyz",
-    "https://dashboard.b-soft.xyz"
+    "https://dashboard.b-soft.xyz",
+    "api.b-soft.xyz"
 ]
 # ALLOWED_HOSTS = [
 #    "*"

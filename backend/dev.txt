@@ -11,6 +11,8 @@ git clone <your-backend-repo>
 
 For Next Js
 pm2 start npm --name frontend -- start
+pm2 start npm --name dashboard -- run dev
+
 pm2 save
 
 For Django
