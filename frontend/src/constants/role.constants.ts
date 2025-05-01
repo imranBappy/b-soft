@@ -18,14 +18,5 @@ export const USER_ROLES = [
     {
         value: "CUSTOMER",
         label: "Customer"
-    },
-    {
-        value: "WAITER",
-        label: "Waiter"
-    },
-    {
-        value: "CHEF",
-        label: "Chef"
-    },
-
+    }
 ]

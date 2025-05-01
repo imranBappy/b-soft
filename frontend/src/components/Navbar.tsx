@@ -35,10 +35,10 @@ const Navbar = () => {
                             auth?.isAuthenticated ? (
                                 <Profile
                                 />
-                            ) : (<Button className='  font-playfair  px-3 text-base' variant={'ghost'}>
+                            ) : (<Button className='  font-playfair  text-white  px-3 text-base' variant={'ghost'}>
                                 <Link href={'/login'} className='flex items-center gap-2' >
                                     <User className="text-4xl" />
-                                    <span>Sign in </span>
+                                    <span className=''>Sign in </span>
                                 </Link>
                             </Button>)
                         }
