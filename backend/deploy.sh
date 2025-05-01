@@ -29,3 +29,5 @@ nohup celery -A backend worker --loglevel=info > celery_worker.log 2>&1 &
 nohup python3 manage.py  runserver > server.log 2>&1 &
 
 echo "Deployment completed!"
+
+
