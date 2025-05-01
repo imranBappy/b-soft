@@ -30,14 +30,16 @@ SECRET_KEY = config("SECRET_KEY", None)
 # DEBUG = config('DEBUG', default=False, cast=bool)
 DEBUG = True
 
-# ALLOWED_HOSTS = [
-#     "https://b-soft.vercel.app",
-#     "https://b-soft.xyz",
-#     "http://localhost:3000"  # Only for local development
-# ]
 ALLOWED_HOSTS = [
-   "*"
+    "http://localhost:3000" , # Only for local development
+    "https://b-soft.xyz",
+    "https://www.b-soft.xyz",
+    "https://api.b-soft.xyz",
+    "https://dashboard.b-soft.xyz"
 ]
+# ALLOWED_HOSTS = [
+#    "*"
+# ]
 
 
 
