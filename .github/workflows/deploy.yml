@@ -1,4 +1,4 @@
-name: Deploy Django App
+name: Deploy B-Soft to EC2
 
 on:
   push:
@@ -25,4 +25,4 @@ jobs:
 
           # SSH into the instance and run commands
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST \
-            "cd /home/ubuntu/b-soft/backend && chmod +x deploy.sh && ./deploy.sh"
+            "cd /home/ubuntu/b-soft && chmod +x deploy.sh && ./deploy.sh"
