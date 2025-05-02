@@ -51,22 +51,22 @@ const Checkout = () => {
 
     const { toast } = useToast()
 
-const {  loading:meLoading } = useQuery(ME_QUERY, {
+    const { loading: meLoading, data: meDate } = useQuery(ME_QUERY, {
         onCompleted: (data) => {
             const { name, email, phone } = data?.me;
             form.setValue('name', name || '');
             form.setValue('email', email || '');
             if (phone) form.setValue('phone', phone || '');
         },
-        fetchPolicy:'network-only'
+        fetchPolicy: 'network-only'
     });
 
     const [createOrder, { loading }] = useMutation(CREATE_ORDER_MUTATION, {
         onCompleted: () => {
             toast({ description: "Order successfully  created!" })
-             form.reset();
-             clearCart();
-             router.push('/customer/orders')
+            form.reset();
+            clearCart();
+            router.push('/customer/orders')
         },
         onError: (e) => {
             toast({ variant: "destructive", description: e.message })
@@ -99,18 +99,17 @@ const {  loading:meLoading } = useQuery(ME_QUERY, {
                 }
             }
         })
-
-       
     }
-    if (meLoading)  return <div className="  md:h-[600px] h-[300px]  flex items-center justify-center">
-                <Loading />
-            </div>
+
+    if (meLoading) return <div className="  md:h-[600px] h-[300px]  flex items-center justify-center">
+        <Loading />
+    </div>
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleOrder)} className='w-full container flex flex-col gap-5' >
                 <div className="w-full mt-5  flex gap-5 flex-wrap md:flex-nowrap ">
 
-                    <Card className="w-full rounded">
+                    <Card className={meDate?.me?.id ? `hidden` : `w-full rounded`}>
                         <CardHeader>
                             <CardTitle>Customer Information</CardTitle>
                             <CardDescription>Enter you information bellow.</CardDescription>
@@ -150,6 +149,7 @@ const {  loading:meLoading } = useQuery(ME_QUERY, {
                         </CardContent>
                     </Card>
 
+
                     <Card className="w-full rounded">
                         <CardHeader>
                             <CardTitle>Payment Information</CardTitle>
@@ -158,23 +158,6 @@ const {  loading:meLoading } = useQuery(ME_QUERY, {
                         <CardContent>
                             <form>
                                 <div className="grid w-full items-center gap-4">
-
-                                    <div className="flex flex-col space-y-1.5">
-                                        <TextField
-                                            form={form}
-                                            name="accountNumber"
-                                            label="Account Number"
-                                            placeholder="Account Number"
-                                        />
-                                    </div>
-                                    <div className="flex flex-col space-y-1.5">
-                                        <TextField
-                                            form={form}
-                                            name="trxId"
-                                            label="Transaction ID"
-                                            placeholder="Transaction ID"
-                                        />
-                                    </div>
                                     <div className="flex flex-col space-y-1.5">
                                         <SwitchItem
                                             form={form}
@@ -197,6 +180,23 @@ const {  loading:meLoading } = useQuery(ME_QUERY, {
                                             ]}
                                         />
                                     </div>
+                                    <div className="flex flex-col space-y-1.5">
+                                        <TextField
+                                            form={form}
+                                            name="accountNumber"
+                                            label="Account Number"
+                                            placeholder="Account Number"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col space-y-1.5">
+                                        <TextField
+                                            form={form}
+                                            name="trxId"
+                                            label="Transaction ID"
+                                            placeholder="Transaction ID"
+                                        />
+                                    </div>
+
                                 </div>
                             </form>
                         </CardContent>

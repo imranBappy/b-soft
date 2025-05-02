@@ -60,7 +60,6 @@ class OTPVerification(graphene.Mutation):
         otp = graphene.String()
     
     def mutate(self, info, email, otp, **kwargs):
-        print(email, otp)
         try:
             user = CustomUser.objects.get(email=email)
         except CustomUser.DoesNotExist:

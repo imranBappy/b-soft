@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form } from '@/components/ui/form';
-import {   TextField } from '@/components/input';
+import { TextField } from '@/components/input';
 import { useEffect, useState } from 'react';
 import { PROFILE_UPDATE_MUTATION } from '@/graphql/accounts';
 import { useToast } from '@/hooks/use-toast';
@@ -68,10 +68,10 @@ export default function MyAccount() {
                 setImagePreviewUrl(data?.me?.photo);
             }
         },
-        fetchPolicy:'network-only'
+        fetchPolicy: 'network-only'
     });
     console.log(form.formState.errors);
-    
+
     const [updateProfile, { loading: mutationLoading }] = useMutation(
         PROFILE_UPDATE_MUTATION,
         {
@@ -175,8 +175,6 @@ export default function MyAccount() {
                                 {String(form.formState.errors.photo?.message)}
                             </p>
                         )}
-
-
                         <CardTitle>My Account</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -194,12 +192,12 @@ export default function MyAccount() {
                                 placeholder="Email"
                                 disabled={true}
                             />
-
                             <TextField
                                 form={form}
                                 name="whatsApp"
                                 label="WhatsApp Number"
                                 placeholder="e.g., +880170000000"
+                                disabled={true}
                             />
                             <TextField
                                 form={form}

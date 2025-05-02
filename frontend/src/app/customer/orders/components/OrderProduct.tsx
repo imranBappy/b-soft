@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
- 
+
 import prdImg from '@/assets/no-image.jpg'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { TimerReset } from "lucide-react";
@@ -36,10 +36,12 @@ const OrderProduct = ({ item }: { item: ORDER_ITEM_TYPE }) => {
                 </p>
             </CardContent>
             <CardFooter className="px-3 pb-3">
-                <Button className=" text-[#333333] font-playfair w-full">
-                    {' '}
-                    <TimerReset /> Renew Product{' '}
-                </Button>
+                <Link
+                    href={`/products/${item.product.id}`} className="w-full">
+                    <Button disabled={item?.access?.isExpired} className="text-[#333333] font-playfair w-full">
+                        <TimerReset /> Renew Product{' '}
+                    </Button>
+                    </Link>
             </CardFooter>
         </Card>
     );

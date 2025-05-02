@@ -20,14 +20,13 @@ import { ME_QUERY } from "@/graphql/accounts/queries";
 import { useQuery } from "@apollo/client";
 function Profile() {
     const auth = useAuth();
-
     const { data } = useQuery(ME_QUERY, {});
     const {
         me: { name, photo },
     } = data || { me: { name: '', photo: '' } };
 
 
-
+    
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -35,7 +34,7 @@ function Profile() {
                     <Avatar className="">
                         <AvatarImage src={photo} alt="Imran" />
                         <AvatarFallback className="bg-black text-white">
-                            {name || name[0]}
+                            {name?.charAt(0)?.toUpperCase()}
                         </AvatarFallback>
                     </Avatar>
                     <Button

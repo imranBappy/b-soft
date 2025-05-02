@@ -41,9 +41,7 @@ def send_mail(
     """
     recipient = recipient if type(recipient) == list else [recipient]
     recipient = get_cleaned_emails(recipient)
-    print("got recipient")
     for chunk in divide_chunks(recipient, 50):
-        print("sending mail to chunk", chunk, bcc)
         to_args = {}
         if bcc:
             to_args["bcc"] = chunk
@@ -81,5 +79,4 @@ def send_mail_from_template(
     template = get_template(template)
     context = context_data
     body = template.render(context)
-    print("got template")
     send_mail(subject, body, recipient_list, attachments, bcc=bcc)

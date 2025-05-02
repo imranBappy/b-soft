@@ -191,6 +191,9 @@ query MyQuery($first: Int, $orderBy: String, $offset: Int, $search: String, $sta
                 name
                 photo
               }
+              access {
+                isExpired
+              }
               createdAt
             }
           }
