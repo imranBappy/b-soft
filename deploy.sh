@@ -7,7 +7,7 @@ git pull origin master
 
 cd frontend
 echo "Installing frontend dependencies..."
-npm install
+npm install --force
 npm run build
 pm2 restart all
 pm2 save
