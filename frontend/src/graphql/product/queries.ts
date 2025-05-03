@@ -233,6 +233,7 @@ export const ORDER_QUERY = gql`
                             cookies
                             expiredDate
                             isExpired
+                            createdAt
                         }
                         orderProductAttribute {
                             totalCount
