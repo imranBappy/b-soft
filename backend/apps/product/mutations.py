@@ -1,6 +1,6 @@
 import graphene
 from apps.base.utils import generate_order_id, get_object_or_none, create_graphql_error
-from .objectType import CategoryType, ProductType, OrderType
+from .objectType import CategoryType, ProductType, OrderType, CredentialType
 from apps.base.utils import get_object_by_kwargs
 from backend.authentication import isAuthenticated
 
@@ -572,8 +572,7 @@ class DeleteDescription(graphene.Mutation):
 # Access Credential 
 class OrderProductCredentialAccess(graphene.Mutation):
     success = graphene.Boolean()
-    cookies = graphene.String()
-    accessTime = graphene.String()
+    access = graphene.Field(CredentialType)
 
     class Arguments:
         orderProductId = graphene.ID()
@@ -585,11 +584,14 @@ class OrderProductCredentialAccess(graphene.Mutation):
         if not orderProduct:
             raise GraphQLError("Order not found")
         # check order is valid
-        if orderProduct.product.status != "COMPLETED":
+        if orderProduct.order.status != "COMPLETED":
             raise GraphQLError("Order is not completed")
         # check order is valid
-        
-        productAccess = ProductAccess.objects.filter(order_product=orderProduct).first()
+
+        if orderProduct.order.user != info.context.User:
+            raise GraphQLError("Order is not valid")
+       
+        productAccess = ProductAccess.objects.filter(item=orderProduct).first()
 
         if not productAccess:
             raise GraphQLError("Product access not found")
@@ -600,25 +602,25 @@ class OrderProductCredentialAccess(graphene.Mutation):
             raise GraphQLError("Product access not found")
         
         # check cookies is expired
-        if productAccess.cookies:
-            if productAccess.cookies < timezone.now():
+        if productAccess.expired_date:
+            if productAccess.expired_date <= timezone.now():
+                productAccess.is_expired = True
+                productAccess.save()
+
                 raise GraphQLError("Product access cookies is expired")
         
         # check access time is valid
-        if productAccess.access_time:
-            if productAccess.access_time < timezone.now():
-                raise GraphQLError("Product access time is expired")
-        
-
-        # check access_count is valid
         if productAccess.access_count:
-            if productAccess.access_count < productAccess.access_limit:
-                raise GraphQLError("Product access count is expired")
-        
+            if productAccess.access_limit <= productAccess.access_count:
+
+                productAccess.is_expired = True
+                productAccess.save()
+
+                raise GraphQLError("Product access time is expired")
+
 
         return OrderProductCredentialAccess(
-            cookies=productAccess.cookies,
-            expired_date=productAccess.expired_date,
+            access=productAccess,
             success =True,
         )
 
@@ -647,15 +649,3 @@ class Mutation(graphene.ObjectType):
 
 
 
-"""
-Process of order creation:
-1. User selects products and adds them to the cart.
-2. User proceeds to checkout and provides payment information.
-3. The system validates the payment information and creates an order.
-4. The system calculates the total price based on the selected products and their quantities.
-5. The system creates order items for each product in the order.
-6. The system sends an email confirmation to the user with the order details.
-7. The system updates the order status to "PENDING" or "CONFIRMED" based on payment confirmation.
-8. The system generates a unique order ID for tracking purposes.
-9. The system may create product access credentials if order is confirm.
-"""

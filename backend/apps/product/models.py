@@ -289,7 +289,7 @@ class OrderProduct(models.Model):
 
  
     def __str__(self):
-        return f"{self.id}"
+        return f"{self.id} - {self.product.name} - {self.quantity}"
     
 
 class ProductAccess(models.Model):

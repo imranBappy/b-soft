@@ -34,7 +34,9 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(OrderProduct)
 class OrderProductAdmin(admin.ModelAdmin):
-    list_display = ('id','quantity','price')
+    list_display = ('id','quantity','price', 'order','product', )
+    search_fields = ['order__user__email', 'product__name']
+
 
 
 @admin.register(Payment)

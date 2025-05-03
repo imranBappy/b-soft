@@ -150,6 +150,8 @@ class Query(graphene.ObjectType):
 
     
         if product_access.access_count >= product_access.access_limit:
+            product_access.is_expired = True
+            product_access.save()  # Don't forget to save the updated is_expired field
             raise GraphQLError("You don't have any access limit left")
 
         now = timezone.now()
