@@ -30,6 +30,9 @@ SECRET_KEY = config("SECRET_KEY", None)
 # DEBUG = config('DEBUG', default=False, cast=bool)
 DEBUG = True
 
+TIME_ZONE = 'Asia/Dhaka'
+USE_TZ = True
+
 # ALLOWED_HOSTS = [
 #     "localhost:8000" , # Only for local development
 #     "http://localhost:3000" , # Only for local development
@@ -99,7 +102,9 @@ CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', 'redis://localhost:6379/
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
+CELERY_TIMEZONE = 'Asia/Dhaka'
+TIME_ZONE = 'Asia/Dhaka'
+USE_TZ = True
 
 CELERY_BEAT_SCHEDULE = {
     'release-expired-bookings': {
