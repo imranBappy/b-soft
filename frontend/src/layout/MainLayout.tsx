@@ -9,9 +9,9 @@ import WhatsApp from "@/components/WhatsApp";
 export default function MainLayout({ children }: { children: React.ReactNode }) {
     return (
         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
+            // attribute="class"
+            // defaultTheme="system"
+            // enableSystem
             disableTransitionOnChange
         >
             <ApolloClientProvider>
@@ -20,7 +20,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                     {children}
                 </main>
                 <Footer />
-                <WhatsApp/>
+                <WhatsApp />
                 <ButtomCart />
                 <Toaster />
             </ApolloClientProvider>

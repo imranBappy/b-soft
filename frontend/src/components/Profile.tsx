@@ -26,7 +26,7 @@ function Profile() {
     } = data || { me: { name: '', photo: '' } };
 
 
-    
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -59,6 +59,14 @@ function Profile() {
                             Orders
                         </Link>
                     </DropdownMenuItem>
+                    {
+                        !auth?.isAuthenticated && (
+                            <DropdownMenuItem  >
+                                <Link className="w-full" href={`/shop`}>
+                                    Shop
+                                </Link>
+                            </DropdownMenuItem>
+                        )}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => auth?.logout()}>

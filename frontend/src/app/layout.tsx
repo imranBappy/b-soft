@@ -10,21 +10,21 @@ import Head from "next/head";
 
 
 const playfairDisplay = Playfair_Display({ // for heading
-  variable: "--font-playfair-display",
-  subsets: ["latin", 'cyrillic', 'latin-ext', "vietnamese"],
+    variable: "--font-playfair-display",
+    subsets: ["latin", 'cyrillic', 'latin-ext', "vietnamese"],
 });
 
 const oswald = Oswald({ // for action btn
-  variable: "--font-oswald",
-  subsets: ["latin", "cyrillic", "cyrillic-ext", "latin-ext", "vietnamese"],
-  weight: ["300", "400", "700"],
+    variable: "--font-oswald",
+    subsets: ["latin", "cyrillic", "cyrillic-ext", "latin-ext", "vietnamese"],
+    weight: ["300", "400", "700"],
 });
 
 
 const lato = Lato({ // for body or text 
-  variable: "--font-lato",
-  subsets: ["latin", 'latin-ext'],
-  weight: ["100", "300", "400", "700", "900"],
+    variable: "--font-lato",
+    subsets: ["latin", 'latin-ext'],
+    weight: ["100", "300", "400", "700", "900"],
 });
 
 
@@ -41,7 +41,7 @@ export const metadata = {
         'digital products',
         'online software shop',
     ],
-    
+
     icons: {
         icon: favicon.src, // Path to your favicon
     },
@@ -71,25 +71,25 @@ export const metadata = {
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-      <html lang="en">
-          <Head>
-              <meta
-                  name="facebook-domain-verification"
-                  content="axanm867oa2gljplwh5p0vli7f4k11"
-              />
-          </Head>
-          <body
-              className={`${playfairDisplay.variable} ${oswald.variable} ${lato.variable} scroll-smooth  relative antialiased`}
-          >
-              <MainLayout>{children}</MainLayout>
+    return (
+        <html lang="en" className="dark">
+            <Head>
+                <meta
+                    name="facebook-domain-verification"
+                    content="axanm867oa2gljplwh5p0vli7f4k11"
+                />
+            </Head>
+            <body
+                className={`${playfairDisplay.variable} ${oswald.variable} ${lato.variable} scroll-smooth  relative antialiased`}
+            >
+                <MainLayout>{children}</MainLayout>
 
-              <Script id="facebook-pixel" strategy="afterInteractive">
-                  {`
+                <Script id="facebook-pixel" strategy="afterInteractive">
+                    {`
                     !function(f,b,e,v,n,t,s)
                     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
                     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -101,16 +101,16 @@ export default function RootLayout({
                     fbq('init', '850323950556537');
                     fbq('track', 'PageView');
                   `}
-                  <noscript>
-                      <img
-                          height="1"
-                          width="1"
-                          style={{ display: 'none' }}
-                          src="https://www.facebook.com/tr?id=850323950556537&ev=PageView&noscript=1"
-                      />
-                  </noscript>
-              </Script>
-          </body>
-      </html>
-  );
+                    <noscript>
+                        <img
+                            height="1"
+                            width="1"
+                            style={{ display: 'none' }}
+                            src="https://www.facebook.com/tr?id=850323950556537&ev=PageView&noscript=1"
+                        />
+                    </noscript>
+                </Script>
+            </body>
+        </html>
+    );
 }
