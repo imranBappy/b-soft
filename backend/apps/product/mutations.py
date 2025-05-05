@@ -584,10 +584,12 @@ class OrderProductCredentialAccess(graphene.Mutation):
         if not orderProduct:
             raise GraphQLError("Order not found")
         # check order is valid
+        print("status: ", orderProduct.order.status)
         if orderProduct.order.status != "COMPLETED":
             raise GraphQLError("Order is not completed")
         # check order is valid
-
+        print("user: ", orderProduct.order.user)
+        print("info: ", info.context.User)
         if orderProduct.order.user != info.context.User:
             raise GraphQLError("Order is not valid")
        
@@ -623,6 +625,7 @@ class OrderProductCredentialAccess(graphene.Mutation):
             access=productAccess,
             success =True,
         )
+
 
 
 

@@ -4,8 +4,9 @@ from apps.product.models import ProductAccess, FAQ, Review, Category,ProductDesc
 
 @admin.register(ProductAccess)
 class ProductAccessAdmin(admin.ModelAdmin):
-    list_display =['id']
-
+    list_display =['id','download',"is_expired","access_count"]
+    search_fields = ['download']
+    list_filter = ['is_expired']
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('id','content')

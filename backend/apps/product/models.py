@@ -105,8 +105,6 @@ class Credential(models.Model):
     def __str__(self):
         return f"{self.id}"
 
-
-
     
 ORDER_STATUS_CHOICES = [
         ("PENDING", "Pending"),
@@ -293,8 +291,11 @@ class OrderProduct(models.Model):
     
 
 class ProductAccess(models.Model):
+    prodduct = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, related_name='access')
+    attributeOption = models.ForeignKey(AttributeOption, on_delete=models.SET_NULL, null=True, blank=True, related_name='access')
+    
 
-    item = models.OneToOneField(OrderProduct, on_delete=models.CASCADE, related_name='access')
+    item = models.OneToOneField(OrderProduct, on_delete=models.SET_NULL, null=True, blank=True, related_name='access')
     username = models.CharField(max_length=255, null=True, blank= True)
     email = models.EmailField(max_length=255, null=True, blank= True)
     password = models.CharField(max_length=255, null=True, blank= True)
