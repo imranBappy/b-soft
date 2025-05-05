@@ -422,11 +422,12 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                             href={
                                                                 node?.access
                                                                     ?.download
-                                                                    ? `${node?.access?.download}?access=${accessToken}&itemId=${node?.access?.id}`
+                                                                    ? `${node?.access?.download}?access=${accessToken}&itemId=${node?.id}`
                                                                     : '#'
                                                             }
                                                             target="_blank"
                                                             rel="noopener noreferrer"
+                                                            className='w-full'
                                                         >
                                                             {/* <SquareAsterisk className="mr-2 h-4 w-4" /> */}
                                                             Access
