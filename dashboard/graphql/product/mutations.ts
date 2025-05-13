@@ -9,7 +9,15 @@ mutation MyMutation($category: ID , $id: String , $isActive: Boolean , $name: St
   }
 }
 `;
-
+export const PRODUCT_ACCESS_MUTATION = gql`
+mutation MyMutation($accessLimit: Int = 10, $accessCount: Int = 0, $attributeOption: ID, $cookies: String, $download: String, $email: String, $expiredDate: DateTime, $item: ID!, $note: String , $password: String, $prodduct: ID , $username: String) {
+  productAccessCud(
+    input: {accessCount: $accessCount, accessLimit: $accessLimit, attributeOption: $attributeOption, cookies: $cookies, download: $download, email: $email, expiredDate: $expiredDate, item: $item, note: $note, password: $password, prodduct: $prodduct, username: $username}
+  ) {
+    success
+  }
+}
+`
 
 export const CATEGORY_MUTATION = gql`
     mutation MyMutation(

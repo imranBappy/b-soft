@@ -48,6 +48,7 @@ interface ProductNode {
         };
         quantity: number;
         price: number;
+        access?: { id: string }
     };
 }
 export const OrderDetails = ({ orderId }: { orderId: string }) => {
@@ -266,9 +267,16 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                                     <TableCell className="py-4">${node?.price}</TableCell>
                                     <TableCell className="py-4 font-medium">${node?.price}</TableCell>
                                     <TableCell className="py-4 font-medium">
-                                        <Link href={`/orders/${orderId}/access?itemId=${node.id}`}>
-                                            <Button>Access</Button>
-                                        </Link>
+
+
+                                        <Button
+                                            disabled={!!node?.access?.id}
+                                        >
+                                            <Link href={`/orders/${orderId}/access?itemId=${node.id}`}>
+                                                Access
+                                            </Link>
+
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             ))}

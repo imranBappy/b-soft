@@ -67,6 +67,13 @@ class  CredentialType(DjangoObjectType):
         interfaces = (graphene.relay.Node,)
         connection_class = CountConnection  
 
+class  ProductAccessType(DjangoObjectType):
+    id = graphene.ID(required=True)
+    class Meta:
+        model =  ProductAccess
+        interfaces = (graphene.relay.Node,)
+        connection_class = CountConnection  
+
 class CouponType(DjangoObjectType):
     id = graphene.ID(required=True)
     class Meta:

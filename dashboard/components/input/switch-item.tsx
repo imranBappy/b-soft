@@ -24,22 +24,16 @@ interface SelectItemProps<T extends FieldValues> {
 export const SwitchItem = <T extends FieldValues>({ form, name, label, placeholder, options, disabled }: SelectItemProps<T>) => {
     return (
         <FormField
-
             control={form.control}
             name={name}
             render={({ field }) => (
-                <FormItem
-
-                >
+                <FormItem>
                     {label && <FormLabel>{label}</FormLabel>}
                     <Select
-
                         disabled={disabled}
                         value={field.value}
                         onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl
-                            className="min-h-11"
-                        >
+                        <FormControl className="min-h-11">
                             <SelectTrigger>
                                 <SelectValue placeholder={placeholder || "Enter value"} />
                             </SelectTrigger>

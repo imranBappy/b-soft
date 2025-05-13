@@ -211,6 +211,7 @@ export const ORDER_QUERY = gql`
                 totalCount
                 edges {
                     node {
+                        access { id }
                         price
                         quantity
                         id

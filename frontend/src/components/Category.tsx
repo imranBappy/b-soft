@@ -14,7 +14,7 @@ const Category = ({ data }: { data: CATEGORY_TYPE }) => {
         >
             <Image
                 src={data.image || noImage.src}
-                className="  h-32  md:w-44  md:h-44  rounded-full w-32  object-cover"
+                className=" !w-32 !h-32  md:w-44  md:h-44  rounded-full object-cover"
                 alt="Product Image"
                 width={200}
                 height={200}

@@ -30,7 +30,7 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
                     alt={name}
                     width={500}
                     height={500}
-                    className="rounded-md w-72"
+                    className="rounded-md w-72  h-72 object-cover"
                 />
             </CardHeader>
             <CardContent className="px-4">

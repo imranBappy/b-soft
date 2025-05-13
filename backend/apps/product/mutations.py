@@ -1,11 +1,11 @@
 import graphene
 from apps.base.utils import generate_order_id, get_object_or_none, create_graphql_error
-from .objectType import CategoryType, ProductType, OrderType, CredentialType
+from .objectType import CategoryType, ProductType, OrderType, CredentialType, ProductAccessType
 from apps.base.utils import get_object_by_kwargs
 from backend.authentication import isAuthenticated
 
 from graphene_django.forms.mutation import DjangoFormMutation
-from apps.product.forms import OrderProductAttributeForm, ReviewForm,FAQForm, ProductForm, CategoryForm, OrderForm, OrderProductForm, PaymentForm, CredentialForm, AttributeOptionForm, ProductDescriptionForm, AttributeForm
+from apps.product.forms import OrderProductAttributeForm, ReviewForm,FAQForm, ProductForm, CategoryForm, OrderForm, OrderProductForm, PaymentForm, ProductAccessForm, AttributeOptionForm, ProductDescriptionForm, AttributeForm
 from apps.product.models import OrderProductAttribute,FAQ, Review, Category, Product, Order, OrderProduct,  Payment, ProductAccess, AttributeOption, Attribute, ProductDescription
 from apps.accounts.models import  UserRole, User
 from graphql import GraphQLError
@@ -210,20 +210,27 @@ class AttributeOptionCUD(DjangoFormMutation):
         return AttributeOptionCUD(  success=True )  
     
 
-class CredentialCUD(DjangoFormMutation):
+class ProductAccessCUD(DjangoFormMutation):
     success = graphene.Boolean()
 
     class Meta:
-        form_class = CredentialForm
+        form_class = ProductAccessForm
 
+    @isAuthenticated([UserRole.ADMIN, UserRole.MANAGER])
     def mutate_and_get_payload(self, info, **input):
         instance = get_object_or_none(ProductAccess, id=input.get("id"))
-        form = CredentialForm(input, instance=instance)
+        form = ProductAccessForm(input, instance=instance)
         if not form.is_valid():
             create_graphql_error(form.errors) 
-            
         form.save()
-        return CredentialCUD(  success=True )  
+        
+        item = get_object_or_none(OrderProduct, id=input.get("item"))
+        print(item)
+        if item.order.status != 'COMPLETED':
+            item.order.status = 'COMPLETED'
+            item.order.save()
+            
+        return ProductAccessCUD(  success=True )  
 
 
 class ProductCUD(DjangoFormMutation):
@@ -572,7 +579,7 @@ class DeleteDescription(graphene.Mutation):
 # Access Credential 
 class OrderProductCredentialAccess(graphene.Mutation):
     success = graphene.Boolean()
-    access = graphene.Field(CredentialType)
+    access = graphene.Field(ProductAccessType)
 
     class Arguments:
         orderProductId = graphene.ID()
@@ -647,6 +654,7 @@ class Mutation(graphene.ObjectType):
     delete_attribute = DeleteAttribute.Field()
     delete_description = DeleteDescription.Field()
     order_product_credential_access = OrderProductCredentialAccess.Field()
+    product_access_cud = ProductAccessCUD.Field()
 
 
 

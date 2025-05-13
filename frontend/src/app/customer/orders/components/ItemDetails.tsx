@@ -109,8 +109,7 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                         node.product.photo
                                                     )}
                                                     alt={node.product.name}
-                                                    className="w-full object-cover rounded-md"
-                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                    className="max-h-24 object-contain rounded-md"
                                                 />
                                             </div>
                                             <div className="  md:hidden   text-right">
@@ -223,11 +222,11 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                                     Expire Date:{' '}
                                                                     {node?.access?.expiredDate
                                                                         ? moment(
-                                                                              node?.access
-                                                                                  ?.expiredDate
-                                                                          ).format(
-                                                                              'DD MMM YYYY'
-                                                                          )
+                                                                            node?.access
+                                                                                ?.expiredDate
+                                                                        ).format(
+                                                                            'DD MMM YYYY'
+                                                                        )
                                                                         : 'N/A'}
                                                                 </p>
                                                             </div>
@@ -246,8 +245,8 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                                         : 'Active'
                                                                 }
                                                             </Badge>
-                                                            </div>
-                                                      
+                                                        </div>
+
                                                         <p className="text-sm text-muted-foreground">
                                                             Activation Date:{' '}
                                                             {moment(
@@ -266,9 +265,9 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                                             ?.note
                                                                     }
                                                                 </p>
-)
+                                                            )
                                                         }
-                                                        
+
 
                                                     </div>
 

@@ -14,10 +14,10 @@ export function AccessForm({ id }: { id?: string }) {
                 className="flex items-center gap-4"
             >
                 <Switch onClick={() => setIsExtension((preState) => !preState)} />
-                <p>Access With Extension</p>
+                <p>Access With Email</p>
             </div>
             {
-                isExtension ? <AccessWithExtension /> : <AccessWithMail />
+                isExtension ? <AccessWithExtension id={id} /> : <AccessWithMail id={id} />
             }
         </div>
     );

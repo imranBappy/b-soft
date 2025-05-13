@@ -33,7 +33,7 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = "__all__"
 
-class CredentialForm(forms.ModelForm):
+class ProductAccessForm(forms.ModelForm):
     id = forms.CharField(required=False)
     class Meta:
         model = ProductAccess

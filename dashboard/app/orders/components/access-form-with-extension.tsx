@@ -5,65 +5,47 @@ import * as z from "zod"
 import Button from "@/components/button"
 import {
     Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
 } from "@/components/ui/form"
-import { Switch } from "@/components/ui/switch"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 import { useMutation, useQuery } from "@apollo/client"
 import { useToast } from "@/hooks/use-toast"
-import { CREDENTIAL_TYPE, CREDENTIALS_QUERY, PRODUCT_MUTATION, PRODUCT_QUERY, PRODUCTS_QUERY } from "@/graphql/product"
+import { CREDENTIAL_TYPE, CREDENTIALS_QUERY, ORDERS_QUERY, PRODUCT_ACCESS_MUTATION } from "@/graphql/product"
 import { OPTION_TYPE, SwitchItem } from "@/components/input/switch-item"
-import uploadImageToS3, { deleteImageFromS3, uploadImagesToS3 } from "@/lib/s3"
-import { useState } from "react"
+import { useEffect } from "react"
 import Loading from "@/components/ui/loading"
-import { FileInput } from "@/components/ui/file-input"
-
-import { renamedFile, jsonToImages, randomId } from "@/lib/utils"
 import { TextField } from "@/components/input"
-import { useRouter } from "next/navigation"
-import { TAGS_CHOOSE } from "@/constants/product.constants"
-import Editor from "@/components/Editor"
-import ProductImages from "@/app/product/components/forms/product-images"
+import { useRouter, useSearchParams } from "next/navigation"
 
 const productFormSchema = z.object({
     cookies: z.string(),
-    expireDate: z.date(),
+    expireDate: z.string(),
     accessLimit: z.number(),
     note: z.string().optional(),
-
+    download: z.string().optional(),
 })
 
 type ProductFormValues = z.infer<typeof productFormSchema>
 
-export interface IMAGE_TYPE {
-    id?: string;
-    file: File;
-    url: string;
-}
+
 export function AccessWithExtension({ id }: { id?: string }) {
     const { toast } = useToast()
     const router = useRouter()
+    const params = useSearchParams()
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(productFormSchema),
         defaultValues: {}
     })
-    const [createProduct, { loading: create_loading }] = useMutation(PRODUCT_MUTATION, {
+    const selectedCookie = form.watch("cookies")
+    const [productAccess, { loading: create_loading }] = useMutation(PRODUCT_ACCESS_MUTATION, {
         refetchQueries: [{
-            query: PRODUCTS_QUERY,
+            query: ORDERS_QUERY,
             variables: {
                 offset: 0,
                 first: 10,
-                search: "",
-                category: null,
-                tag: "",
-                price: 0,
-                priceLte: null,
-                orderBy: ""
+                search: '',
+                status: undefined,
+                type: undefined,
+                orderBy: undefined,
             }
         }]
     })
@@ -76,27 +58,27 @@ export function AccessWithExtension({ id }: { id?: string }) {
     })
 
 
-    const categories: OPTION_TYPE[] = credentials_res?.credentials.edges.map((edge: { node: CREDENTIAL_TYPE }) => ({
+    const credentials: OPTION_TYPE[] = credentials_res?.credentials.edges.map((edge: { node: CREDENTIAL_TYPE }) => ({
         value: edge.node.id,
         label: edge.node.name,
     }))
 
     async function onSubmit(data: ProductFormValues) {
         try {
-            await createProduct({
+            const selectedItemCookie = credentials_res?.credentials?.edges?.find((edge: { node: CREDENTIAL_TYPE }) => String(edge?.node?.id) === selectedCookie)
+            const itemId = params.get('itemId')
+            await productAccess({
                 variables: {
                     ...data,
-                    id: id || undefined
+                    cookies: selectedItemCookie?.node?.cookies,
+                    item: itemId,
                 },
             })
             toast({
                 title: "Success",
-                description: "Product created successfully",
+                description: "Product access created successfully",
             })
-            form.reset({
-
-            })
-            if (id) router.push('/product')
+           router.push('/orders')
         } catch (error) {
             console.log(error);
             toast({
@@ -106,6 +88,15 @@ export function AccessWithExtension({ id }: { id?: string }) {
             })
         }
     }
+
+    useEffect(() => {
+        const selectedItemCookie = credentials_res?.credentials?.edges?.find((edge: { node: CREDENTIAL_TYPE }) => `${edge?.node?.id}` === selectedCookie)
+        if (selectedItemCookie?.node) {
+            form.setValue('download', selectedItemCookie?.node?.download)
+            form.setValue('accessLimit', selectedItemCookie?.node?.accessLimit)
+            form.setValue('note', selectedItemCookie?.node?.note)
+        }
+    }, [selectedCookie, credentials_res, form])
 
 
     if (credentials_loading) return <Loading />
@@ -138,7 +129,7 @@ export function AccessWithExtension({ id }: { id?: string }) {
                                     form={form}
                                     name="cookies"
                                     label="Access"
-                                    options={categories}
+                                    options={credentials}
                                     placeholder="Select access"
                                 />
 
