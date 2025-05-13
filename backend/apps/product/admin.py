@@ -1,6 +1,13 @@
 from django.contrib import admin
 # Register your models here.
-from apps.product.models import Software, ProductAccess, FAQ, Review, Category,ProductDescription,Attribute,AttributeOption, Payment, Product, Order, OrderProduct
+from apps.product.models import Credential, Software, ProductAccess, FAQ, Review, Category,ProductDescription,Attribute,AttributeOption, Payment, Product, Order, OrderProduct
+# Credential
+
+@admin.register(Credential)
+class CredentialAdmin(admin.ModelAdmin):
+    list_display =['id','download',"note"]
+    search_fields = ['download']
+    
 
 @admin.register(Software)
 class SoftwareAccessAdmin(admin.ModelAdmin):

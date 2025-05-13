@@ -1,11 +1,14 @@
-from apps.product.models import Software, OrderProductAttribute, FAQ, Review, Product, Category,Coupon, Order,ProductAccess, ProductDescription,Attribute,AttributeOption, OrderProduct, Payment
+from apps.product.models import Credential, Software, OrderProductAttribute, FAQ, Review, Product, Category,Coupon, Order,ProductAccess, ProductDescription,Attribute,AttributeOption, OrderProduct, Payment
 import django_filters as filters
 from apps.base.filters import BaseFilterOrderBy
 from django.db.models import Q
 from datetime import timedelta
 from apps.accounts.models import  Address
 
- 
+class CredentialFilter(BaseFilterOrderBy):
+    class Meta:
+        model = Credential
+        fields = '__all__'
 class SoftwareFilter(BaseFilterOrderBy):
     class Meta:
         model = Software

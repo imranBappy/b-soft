@@ -1,5 +1,4 @@
 "use client"
-
 import OrderDetails from '../components/order-details';
 const page = ({ params }: { params: { id: string } }) => {
     return (

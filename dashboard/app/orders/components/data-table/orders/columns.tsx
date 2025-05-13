@@ -7,7 +7,6 @@ import { getStatusStyle, toFixed } from "@/lib/utils"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
-
 export const columns: ColumnDef<ORDER_TYPE>[] = [
     {
         accessorKey: "orderId",
@@ -33,7 +32,7 @@ export const columns: ColumnDef<ORDER_TYPE>[] = [
             <div className="capitalize">{toFixed(row.getValue("finalAmount"))}</div>
         ),
     },
-   
+
     {
         accessorKey: "status",
         header: "Status",
@@ -59,8 +58,8 @@ export const columns: ColumnDef<ORDER_TYPE>[] = [
         cell: ({ row }) => (
             <div className="capitalize">{`${moment(row.getValue("createdAt")).format("DD-MM-YYYY")} - ${moment(row.getValue("createdAt")).fromNow()}`}</div>
         ),
-    },
-   
+    }
+
 ]
 
 export default columns

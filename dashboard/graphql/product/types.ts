@@ -90,7 +90,7 @@ export interface DESCRIPTION_TYPE {
     id?: string;
     product?: PRODUCT_TYPE;
     label: string;
-    tag:string;
+    tag: string;
     createdAt: string;
     description: string;
 }
@@ -106,7 +106,16 @@ export interface ATTRIBUTE_TYPE {
     id: string;
     name: string;
     attributeOptions?: {
-        totalCount?:number;
+        totalCount?: number;
         edges: { node: ATTRIBUTE_OPTION_TYPE }[];
     };
+}
+
+export interface CREDENTIAL_TYPE {
+    id: number;
+    cookies: string;
+    accessLimit: number;
+    download: string;
+    note?: string;
+    name: string;
 }

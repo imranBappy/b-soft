@@ -1,10 +1,3 @@
 import Orders from './components/Orders';
-
-const page = () => {
-    return (
-     
-            <Orders />
-    );
-};
-
+const page = () => <Orders />
 export default page;

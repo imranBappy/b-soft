@@ -34,8 +34,8 @@ pkill -f python
 
 
 #$echo "Restarting Celery worker..."
-pkill -f "celery worker"
-nohup celery -A backend worker --loglevel=info > celery_worker.log 2>&1 &
+#pkill -f "celery worker"
+#nohup celery -A backend worker --loglevel=info > celery_worker.log 2>&1 &
 #nohup gunicorn --bind 0.0.0.0:8000 backend.wsgi:application > gunicorn.log 2>&1 &
 nohup python3 manage.py  runserver > server.log 2>&1 &
 

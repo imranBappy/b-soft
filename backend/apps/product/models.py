@@ -85,23 +85,15 @@ class  AttributeOption(models.Model):
     
 
 class Credential(models.Model):
-    prodduct = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='credentials')
-    attributeOption = models.ForeignKey(AttributeOption, on_delete=models.SET_NULL, null=True, blank=True, related_name='credentials')
-    
-    username = models.CharField(max_length=255, null=True, blank= True)
-    email = models.EmailField(max_length=255, null=True, blank= True)
-    password = models.CharField(max_length=255, null=True, blank= True)
+    name = models.CharField(max_length=255,)
     download = models.CharField(max_length=255, null=True, blank= True)
-    note = models.TextField(max_length=255, null=True, blank= True) 
-
     cookies = models.TextField(null=True, blank= True)         # cookies for the product
-    access_time = models.DateTimeField(null=True, blank=True)  # When the access will be expired
-    access_count = models.IntegerField(default=0)              # How many times the access will be used
     access_limit = models.IntegerField(default=0)              
-    is_expired = models.BooleanField(default=False)
-    
+    note = models.CharField(max_length=255, null=True, blank= True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    access_count = models.IntegerField(default=0, null=True, blank= True) 
+
     def __str__(self):
         return f"{self.id}"
 

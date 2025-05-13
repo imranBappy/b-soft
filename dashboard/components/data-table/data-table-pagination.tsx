@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-
 import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight } from 'lucide-react';
-
 import {
     Select,
     SelectContent,
@@ -30,7 +28,6 @@ export const DataTablePagination = <TData,>({ table, totalCount, pagination, set
                 {table.getFilteredSelectedRowModel().rows.length} of{" "}
                 {table.getFilteredRowModel().rows.length} row(s) selected.
             </div>
-
             <div className="flex flex-wrap items-center justify-end gap-2">
                 {/* Total  */}
                 <div className="flex items-center space-x-2 min-w-[120px]">

@@ -70,6 +70,7 @@ export const getStatusStyle = (status: string) => {
         'bg-gray-500/20 text-gray-600 dark:bg-gray-500/30 dark:text-gray-400'
     );
 };
+
 const Orders = () => {
     const [page, setPage] = useState(1);
     const limit = 6;
@@ -83,9 +84,11 @@ const Orders = () => {
         fetchPolicy: 'network-only',
     });
     const orders = data?.orders?.edges;
+
     const handlePageChange = (page: number) => {
         setPage(page);
     };
+
     const totalCount = data?.orders?.totalCount;
     const totalPages = Math.ceil(totalCount / limit);
 
@@ -107,7 +110,7 @@ const Orders = () => {
                             className={`${getStatusStyle(
                                 node.status.trim().toUpperCase()
                             )}
-                        border-none w-[90px]  flex justify-center items-center`}
+                                border-none w-[90px]  flex justify-center items-center`}
                         >
                             {node.status}
                         </Badge>
@@ -118,11 +121,10 @@ const Orders = () => {
                     </div>
                     <div className='flex gap-5 items-center mt-2'>
                         <Button variant={'outline'}>
-
                             <Youtube />
                             Watch Video
                         </Button>
-                        <Button  variant={'secondary'}>Download</Button>
+                        <Button variant={'secondary'}>Download</Button>
                     </div>
                 </div>
             </div>
@@ -143,7 +145,6 @@ const Orders = () => {
     return (
         <div className="w-full flex  gap-5 flex-col">
             <div className="flex   flex-col gap-10 my-10">{content}</div>
-
             <div
                 className=" flex justify-center w-full mt-5"
                 style={{ marginBottom: '100px' }}

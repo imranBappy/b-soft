@@ -1,8 +1,8 @@
 import graphene
 from apps.accounts.models import UserRole
-from apps.product.models import Software, ProductAccess, Attribute, OrderProductAttribute, FAQ, ProductDescription, Review, Product, Category, Order, OrderProduct, Payment
+from apps.product.models import Credential, Software, ProductAccess, Attribute, OrderProductAttribute, FAQ, ProductDescription, Review, Product, Category, Order, OrderProduct, Payment
 from apps.base.utils import get_object_by_kwargs
-from apps.product.objectType import SoftwareType, ProductAccessType, OrderProductAttributeType, ReviewType, FAQType, CredentialType, AttributeOptionType, AttributeType, ProductDescriptionType, CouponType, CategoryType, ProductType, SubCategoryType, PaymentType, OrderType, OrderProductType
+from apps.product.objectType import CredentialType, SoftwareType, ProductAccessType, OrderProductAttributeType, ReviewType, FAQType, CredentialType, AttributeOptionType, AttributeType, ProductDescriptionType, CouponType, CategoryType, ProductType, SubCategoryType, PaymentType, OrderType, OrderProductType
 from graphene_django.filter import DjangoFilterConnectionField
 from graphql import GraphQLError
 from django.utils import timezone
@@ -59,6 +59,17 @@ class Query(graphene.ObjectType):
 
     softwares = DjangoFilterConnectionField(SoftwareType )
     software  = graphene.Field(SoftwareType, id=graphene.ID(required=True))
+
+    credentials = DjangoFilterConnectionField(CredentialType )
+    credential  = graphene.Field(CredentialType, id=graphene.ID(required=True))
+
+    @isAuthenticated([UserRole.ADMIN]) 
+    def resolve_credential(self, info, id):
+        return get_object_by_kwargs(Credential, {"id": id})
+
+    @isAuthenticated([UserRole.ADMIN])  
+    def resolve_credentials(self, info, **kwargs):
+        return Credential.objects.all()
 
     def resolve_software(self, info, id):
         return get_object_by_kwargs(Software, {"id": id})

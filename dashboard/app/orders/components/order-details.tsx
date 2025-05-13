@@ -32,6 +32,8 @@ import { Loading } from '@/components/ui';
 import { toast } from '@/hooks/use-toast';
 import { getStatusStyle, getThumblain } from '@/lib/utils';
 import moment from 'moment';
+import Button from '@/components/button';
+import Link from 'next/link';
 
 
 
@@ -134,7 +136,7 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                         <div className="space-y-2">
                             <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">Status</p>
                             <Select
-                                
+
                                 defaultValue={order.status}
                                 value={order.status}
                                 onValueChange={handleStatusChange}
@@ -150,8 +152,8 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                                             {ORDER_STATUSES.COMPLETED}
                                         </Badge>
                                     </SelectItem>
-                                  
-                                    <SelectItem   value={ORDER_STATUSES.PENDING}>
+
+                                    <SelectItem value={ORDER_STATUSES.PENDING}>
                                         <Badge className={`${getStatusStyle(ORDER_STATUSES.PENDING)} border-0`}>
                                             {ORDER_STATUSES.PENDING}
                                         </Badge>
@@ -164,7 +166,7 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                                 </SelectContent>
                             </Select>
                         </div>
-                       
+
                         <div className="space-y-2">
                             <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">Total Price</p>
                             <p className="font-medium">${order?.totalPrice}</p>
@@ -241,6 +243,8 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                                 <TableHead className="text-[13px] font-medium uppercase tracking-wider">Quantity</TableHead>
                                 <TableHead className="text-[13px] font-medium uppercase tracking-wider">Price</TableHead>
                                 <TableHead className="text-[13px] font-medium uppercase tracking-wider">Total</TableHead>
+                                <TableHead className="text-[13px] font-medium uppercase tracking-wider">Access</TableHead>
+
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -261,6 +265,11 @@ export const OrderDetails = ({ orderId }: { orderId: string }) => {
                                     <TableCell className="py-4">{node?.quantity}</TableCell>
                                     <TableCell className="py-4">${node?.price}</TableCell>
                                     <TableCell className="py-4 font-medium">${node?.price}</TableCell>
+                                    <TableCell className="py-4 font-medium">
+                                        <Link href={`/orders/${orderId}/access?itemId=${node.id}`}>
+                                            <Button>Access</Button>
+                                        </Link>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

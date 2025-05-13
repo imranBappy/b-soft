@@ -579,3 +579,22 @@ export const DESCRIPTION_QUERY = gql`
         }
     }
 `;
+
+export const CREDENTIALS_QUERY = gql`
+query MyQuery($offset: Int!, $first: Int!) {
+  credentials(offset: $offset, first: $first) {
+    totalCount
+    edges {
+      node {
+        cookies
+        accessLimit
+        download
+        note
+        createdAt
+        name
+        id
+      }
+    }
+  }
+}
+`

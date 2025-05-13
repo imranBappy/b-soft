@@ -1,10 +1,17 @@
 from graphene_django.types import DjangoObjectType
-from apps.product.models import Software, OrderProductAttribute, FAQ, Review, Product, Category,Coupon, Order,ProductAccess, ProductDescription,Attribute,AttributeOption, OrderProduct, Payment
-from apps.product.filters import SoftwareFilter, OrderProductAttributeFilter, FAQFilter, ReviewFilter, CouponFilter, CredentialFilter, AttributeOptionFilter, AttributeFilter, ProductDescriptionFilter, ProductFilter, CategoryFilter, OrderFilter, OrderProductFilter ,  PaymentFilter
+from apps.product.models import Credential, Software, OrderProductAttribute, FAQ, Review, Product, Category,Coupon, Order,ProductAccess, ProductDescription,Attribute,AttributeOption, OrderProduct, Payment
+from apps.product.filters import CredentialFilter,SoftwareFilter, OrderProductAttributeFilter, FAQFilter, ReviewFilter, CouponFilter, CredentialFilter, AttributeOptionFilter, AttributeFilter, ProductDescriptionFilter, ProductFilter, CategoryFilter, OrderFilter, OrderProductFilter ,  PaymentFilter
 from backend.count_connection import CountConnection
 from apps.accounts.objectType import UserType
 import graphene
 
+class CredentialType(DjangoObjectType):
+    id = graphene.ID(required=True)
+    class Meta:
+        model = Credential
+        filterset_class =CredentialFilter
+        interfaces = (graphene.relay.Node,)
+        connection_class = CountConnection 
 class OrderProductAttributeType(DjangoObjectType):
     id = graphene.ID(required=True)
     class Meta:
@@ -55,7 +62,7 @@ class  AttributeOptionType(DjangoObjectType):
 class  CredentialType(DjangoObjectType):
     id = graphene.ID(required=True)
     class Meta:
-        model =  ProductAccess
+        model =  Credential
         filterset_class = CredentialFilter
         interfaces = (graphene.relay.Node,)
         connection_class = CountConnection  
