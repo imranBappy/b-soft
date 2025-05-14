@@ -1,10 +1,10 @@
 import React from 'react';
-import { CategoryForm } from '@/app/product/components/forms/category-form';
+import { SliderForm } from '../../components';
 
 const page = ({ params }: { params: { id: string } }) => {
     return (
         <div>
-            <CategoryForm id={params.id} />
+            <SliderForm id={params.id} />
         </div>
     );
 };

@@ -58,6 +58,7 @@ export interface PRODUCT_TYPE {
     subcategory: RELATED_TYPE | string;
     isTaxIncluded: boolean,
     attributes?: {
+        totalCount?:number
         edges: { node: ATTRIBUTE_TYPE }[]
     }
     descriptions?: {

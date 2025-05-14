@@ -33,8 +33,8 @@ const productFormSchema = z.object({
     link: z.string().url().optional(),
     // image: z.instanceof(File),
     image: typeof window === 'undefined'
-                ? z.any().optional()
-                : z.instanceof(File).optional(),
+        ? z.any().optional()
+        : z.instanceof(File).optional(),
 })
 
 type ProductFormValues = z.infer<typeof productFormSchema>
@@ -62,6 +62,8 @@ export function SliderForm({ id }: { id?: string }) {
             form.reset(slider);
         },
         onError: (error) => {
+            console.log({ error });
+
             toast({
                 title: "Error",
                 description: error instanceof Error ? error.message : "An unknown error occurred",

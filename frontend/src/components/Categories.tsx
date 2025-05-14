@@ -26,7 +26,7 @@ const Categories = ({ title = "All Products" }) => {
 
 
     return (
-        <div className="container mt-12">
+        <div className="container mt-8">
             <div className="flex mb-8 justify-between items-center">
                 <h3 className="title">{title}</h3>
                 {/* <Button variant={'link'} className=' text-blue'>

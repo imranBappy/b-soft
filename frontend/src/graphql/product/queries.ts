@@ -34,6 +34,11 @@ query PRODUCTS_QUERY($offset: Int, $search: String, $after: String, $before: Str
         offerPrice
         photo
         priceRange
+        
+        attributes {
+          totalCount
+        }
+
       }
     }
   }

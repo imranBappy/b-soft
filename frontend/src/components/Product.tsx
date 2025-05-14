@@ -6,10 +6,46 @@ import { Badge } from "@/components/ui/badge"
 import { PRODUCT_TYPE } from '@/graphql/product';
 import Link from 'next/link';
 import Image from './ui/image';
-import { getThumblain, underscoreToSpace } from '@/lib/utils';
+import { getThumblain, toFixed, underscoreToSpace } from '@/lib/utils';
+import useStore from '@/stores';
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 
 const Product = ({ data }: { data: PRODUCT_TYPE }) => {
-    const { name, price, photo, tag } = data;
+    const { name, price, photo, tag, id } = data;
+    const addToCart = useStore((store) => store.addCart)
+    const incrementItemQuantity = useStore((store) => store.incrementItemQuantity)
+    const carts = useStore((store) => store.cart)
+    const { toast } = useToast()
+    const router = useRouter()
+
+
+    const handleCart = async (isBuy = false) => {
+
+        const showPrice = toFixed(data.offerPrice ? Number(toFixed(data.offerPrice)) : data.price)
+        const findCart = carts.find((item) => item.productId === id)
+        if (findCart) {
+            incrementItemQuantity(findCart.productId)
+            return;
+        }
+        if (data?.attributes?.totalCount) {
+            router.push(`/products/${data.id}`);
+            return;
+        }
+        addToCart({
+            productId: data?.id || '',
+            quantity: 1,
+            productName: data.name,
+            productPrice: Number(showPrice),
+            productImg: await getThumblain(data.photo),
+        })
+        toast({ description: "Product added to cart!" })
+
+        if (isBuy) {
+            router.push(`/checkout`);
+        }
+
+    }
     return (
         <Card className=" h-fit basis-72 shadow-none hover:shadow dark:bg-gray-deep ">
             <CardHeader className="p-3 relative ">
@@ -50,22 +86,23 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
             </CardContent>
 
             <CardFooter className="px-3 pb-3">
-                <Link
-                    className="w-full  flex gap-[0.5px]"
-                    href={`/products/${data.id}`}
-                >
+                <div className="w-full  flex gap-[0.5px]"   >
+
                     <Button
+                        onClick={() => handleCart()}
                         className=" font-playfair rounded-r-none  w-full"
                         variant={'secondary'}
                     >
                         {' '}
                         <ShoppingCart /> Add To Cart{' '}
                     </Button>
-                    <Button className=" text-white bg-blue   rounded-l-none font-playfair w-full">
+
+                    <Button onClick={() => handleCart(true)} className=" text-white bg-blue   rounded-l-none font-playfair w-full">
                         {' '}
                         <ShoppingBasket /> Buy Now
                     </Button>
-                </Link>
+
+                </div>
             </CardFooter>
         </Card>
     );

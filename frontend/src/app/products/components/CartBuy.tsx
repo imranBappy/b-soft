@@ -19,11 +19,10 @@ const CartBuy = ({ product }: { product: PRODUCT_TYPE }) => {
     const extraPrice = useStore((store) => store.options.filter(item => item.productId === product.id).reduce((total, curr) => total + Number(curr.option.extraPrice), 0))
     const mainPrice = product.price + extraPrice
     const showPrice = toFixed(product.offerPrice ? Number(toFixed(product.offerPrice)) + extraPrice : mainPrice)
-    
-    const handleCart = async (isBuy=false) => {
+
+    const handleCart = async (isBuy = false) => {
         const findAttribute = options.find((op) => op.productId === product.id)
         const finderAttribute = options.filter((op) => op.productId === product.id)
-        
 
         const findCart = carts.find((item) => item.productId === product.id)
         if (findCart) {
@@ -55,8 +54,8 @@ const CartBuy = ({ product }: { product: PRODUCT_TYPE }) => {
 
     return (
         <div className='  mt-5 flex gap-[0.5px]'>
-            <Button onClick={()=>handleCart(false)} className=' font-playfair rounded-none w-40 ' variant={'secondary'} > <ShoppingCart /> Add To Cart </Button>
-            <Button onClick={()=>handleCart(true)} className=' text-white bg-blue rounded-none font-playfair w-40' > <ShoppingBasket /> Buy Now</Button>
+            <Button onClick={() => handleCart(false)} className=' font-playfair rounded-none w-40 ' variant={'secondary'} > <ShoppingCart /> Add To Cart </Button>
+            <Button onClick={() => handleCart(true)} className=' text-white bg-blue rounded-none font-playfair w-40' > <ShoppingBasket /> Buy Now</Button>
         </div>
     );
 };

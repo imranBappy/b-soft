@@ -40,7 +40,7 @@ export const SlidersDataTable = () => {
 
     return (
         <div className="w-full">
-            <div className="flex justify-end">
+            <div className="flex justify-end mb-5">
                 <Button variant={'secondary'} className="w-[95px] mr-2">
                     <Link href={`/settings/sliders/add`}>
                         Add</Link>

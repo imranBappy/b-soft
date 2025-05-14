@@ -22,8 +22,6 @@ export function ActionsDropdown({ item }: ActionsDropdownProps) {
     const { toast } = useToast()
 
     const handleUserIdCopy = () => {
-
-        navigator.clipboard.writeText(item?.id || "")
         toast({
             variant: "default",
             description: "Email Coppied!"

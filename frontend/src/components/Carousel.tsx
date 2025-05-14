@@ -24,7 +24,7 @@ function BannerCarousel() {
         variables: {},
     }
     );
-    
+
 
     const sliders: SLIDER_TYPE[] = res?.sliders?.edges?.map(({ node }: { node: SLIDER_TYPE }) => ({
         id: node.id,
@@ -32,20 +32,20 @@ function BannerCarousel() {
         image: node.image,
     })) || [];
 
-  if (loading) {
-      return (
-          <div className="container max-h-[500px] mt-3">
-              <div className="p-3 rounded border">
-                  <Skeleton className="w-full md:h-[475px] h-[130px] rounded" />
-              </div>
-          </div>
-      );
-  }
+    if (loading) {
+        return (
+            <div className="container max-h-[500px] mt-3">
+                <div className="p-3 rounded border">
+                    <Skeleton className="w-full md:h-[475px] h-[130px] rounded" />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <Carousel
             plugins={[plugin.current]}
-            className="container max-h-[500px]  mt-3 "
+            className="container max-h-[600px]  mt-3 "
             onMouseEnter={plugin.current.stop}
             onMouseLeave={plugin.current.reset}
         >
