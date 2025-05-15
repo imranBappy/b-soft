@@ -21,7 +21,6 @@ export interface CartState {
     clearCart: () => void;
     incrementItemQuantity: (id: string) => void;
     decrementItemQuantity: (id: string) => void;
-
 }
 
 export const createCartSlice: StateCreator<CartState, [], [], CartState> = (set) => ({

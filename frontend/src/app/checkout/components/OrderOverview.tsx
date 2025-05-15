@@ -11,10 +11,16 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import useStore from '@/stores';
+import { Button } from "@/components/ui/button";
 
 
 const OrderOverview = () => {
     const carts = useStore((store) => store.cart)
+    const incrementItemQuantity = useStore((store) => store.incrementItemQuantity)
+    const decrementItemQuantity = useStore(
+        (store) => store.decrementItemQuantity
+    );
+
     const totalPrice = carts.reduce((total, item) => total + (item.productPrice * item.quantity), 0)
     return (
         <Card className="w-full rounded">
@@ -36,6 +42,9 @@ const OrderOverview = () => {
                             <TableHead className="text-right md:w-[200px] w-11">
                                 Price
                             </TableHead>
+                            <TableHead className="text-right md:w-[200px] w-11">
+                                Action
+                            </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -50,6 +59,30 @@ const OrderOverview = () => {
                                 </TableCell>
                                 <TableCell className="text-right">
                                     {item.productPrice}
+                                </TableCell>
+                                <TableCell className="text-right flex justify-end items-center gap-2">
+                                    <Button
+                                        variant={'destructive'}
+                                        onClick={() =>
+                                            decrementItemQuantity(
+                                                item.productId
+                                            )
+                                        }
+                                    >
+                                        -
+                                    </Button>
+                                    <Button variant={'ghost'}>
+                                        {item.quantity}
+                                    </Button>
+                                    <Button
+                                        onClick={() =>
+                                            incrementItemQuantity(
+                                                item.productId
+                                            )
+                                        }
+                                    >
+                                        +
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}
