@@ -1,8 +1,8 @@
 import graphene
-from apps.base.utils import generate_order_id, get_object_or_none, create_graphql_error
+from apps.base.utils import generate_order_id, get_object_or_none, create_graphql_error, generate_otp
 from .objectType import CategoryType, ProductType, OrderType, CredentialType, ProductAccessType
 from apps.base.utils import get_object_by_kwargs
-from backend.authentication import isAuthenticated
+from backend.authentication import isAuthenticated,TokenManager
 
 from graphene_django.forms.mutation import DjangoFormMutation
 from apps.product.forms import OrderProductAttributeForm, ReviewForm,FAQForm, ProductForm, CategoryForm, OrderForm, OrderProductForm, PaymentForm, ProductAccessForm, AttributeOptionForm, ProductDescriptionForm, AttributeForm
@@ -14,7 +14,7 @@ import string
 from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
-from django.core.exceptions import ValidationError
+ 
 
 base_url = settings.WEBSITE_URL
 
@@ -319,7 +319,6 @@ class CreateOrder(graphene.Mutation):
 
     success = graphene.Boolean()
 
-    @isAuthenticated()
     def mutate(self, info, input):
        
         try:
@@ -337,13 +336,36 @@ class CreateOrder(graphene.Mutation):
                 raise GraphQLError("Enter payment account number")
 
             with transaction.atomic():
+                auth_header = info.context.META.get('HTTP_AUTHORIZATION')
+                
+
+                isUserAuthenticated = False
+                
+                try :
+                    if auth_header:
+                        parts = auth_header.split(" ")
+                        if len(parts) != 2 or parts[0].lower() != "bearer":
+                            raise GraphQLError("Invalid authorization header format.")
+                        
+                        token = parts[1]
+                        decoded_token  = TokenManager.decode_token(token)
+                        user_email = decoded_token.get('email')
+                        user = User.objects.get(email=user_email)
+                        isUserAuthenticated = True
+
+                except Exception as e:
+                    isUserAuthenticated = False
+                    raise GraphQLError(f"Authentication failed: {str(e)}")
+            
                 user = User.objects.filter(email=input.user_email).first()
 
-                # raise GraphQLError(f"Please login your account.")
-
-                # random_password = generate_random_password()
-
+                print({isUserAuthenticated})
+                
+                if(not isUserAuthenticated and user):
+                    return GraphQLError("User is exist already.")
+                
                 if not user:
+                    random_password = generate_random_password()
                     user = User.objects.create(
                         email=input.user_email,
                         name=input.user_name,
@@ -351,10 +373,10 @@ class CreateOrder(graphene.Mutation):
                         password=random_password,  
                         is_verified=True
                     )
-                    # gen_otp = generate_otp()
-                    # user.send_email_verification(
-                    #     gen_otp, base_url
-                    # )
+                    gen_otp = generate_otp()
+                    user.send_email_verification(
+                        gen_otp, base_url
+                    )
 
                 order = Order.objects.create(
                     user=user,

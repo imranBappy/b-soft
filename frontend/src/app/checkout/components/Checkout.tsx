@@ -108,7 +108,6 @@ const Checkout = () => {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleOrder)} className='w-full container flex flex-col gap-5' >
                 <div className="w-full mt-5  flex gap-5 flex-wrap md:flex-nowrap ">
-
                     <Card className={meDate?.me?.id ? `hidden` : `w-full rounded`}>
                         <CardHeader>
                             <CardTitle>Customer Information</CardTitle>

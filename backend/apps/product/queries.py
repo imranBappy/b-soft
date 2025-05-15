@@ -131,7 +131,6 @@ class Query(graphene.ObjectType):
         user = info.context.User
         if user.role:
             if user.role.name == UserRole.CUSTOMER:
-                print(Order.objects.all().values() )
                 return Order.objects.filter(user=user) 
             
             if user.role.name == UserRole.ADMIN:

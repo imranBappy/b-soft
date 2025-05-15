@@ -1,9 +1,8 @@
 import jwt
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 from graphql import GraphQLError
-from datetime import datetime, timedelta
+from datetime import datetime
 from functools import wraps
 from graphql import GraphQLError
 from apps.accounts.models import User
