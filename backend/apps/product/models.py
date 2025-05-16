@@ -242,7 +242,7 @@ class Order(models.Model):
         subject = f'Order Confirmation #{self.order_id}'
         template = 'order_confirmation.html'
         # Use Celery task for sending email
-        send_email_on_delay.delay(
+        send_email_on_delay(
             template,
             context,
             subject,

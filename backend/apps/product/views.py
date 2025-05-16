@@ -14,5 +14,5 @@ def generate_invoice(request, order_id):
         'order': order,
     }
     body = render_to_string('invoice_template.html', context)
-    send_email.delay(sub="Order Invoice", body=body, to=order.user.email)
+    send_email(sub="Order Invoice", body=body, to=order.user.email)
     return HttpResponse("Successfully send email")

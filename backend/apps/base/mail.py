@@ -62,6 +62,7 @@ def send_mail(
             msg.send()
             print("Successful")
         except Exception as e:
+            print("Email Error")
             print(e, flush=True)
     
     

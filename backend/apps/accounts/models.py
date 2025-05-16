@@ -7,6 +7,7 @@ from django.utils import timezone
 from apps.accounts.tasks import send_email_on_delay
 from decouple import config
 base_url = settings.WEBSITE_URL
+from apps.base.mail import send_mail_from_template
 
 class GenderChoices(models.TextChoices):
     MALE = 'MALE', 'Male'
@@ -97,7 +98,7 @@ class User(
         }
         template = 'activation_mail.html'
         subject = 'Email Verification'
-        send_email_on_delay.delay(template, context, subject, self.email)
+        send_email_on_delay(template, context, subject, self.email)
         
     def send_reset_password_mail(self, otp, verification_link):
         self.is_verified = False
@@ -115,7 +116,8 @@ class User(
         }
         template = 'activation_mail.html'
         subject = 'Email Verification'
-        send_email_on_delay.delay(template, context, subject, self.email)
+        send_email_on_delay(template, context, subject, self.email)
+        
 
     def __str__(self):
         return f"{self.id} - {self.name}"
