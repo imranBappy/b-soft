@@ -23,10 +23,10 @@ const OrderProduct = ({ item }: { item: ORDER_ITEM_TYPE }) => {
             <CardContent className="px-4 pb-2">
                 <CardTitle className=" font-playfair font-semibold leading-5 line-clamp-2		">
                     <Link
-                        href={`/products/${item.product.id}`}
+                        href={`/products/${item?.product?.id || "#"} `}
                         className="hover:underline"
                     >
-                        {item.product.name}
+                        {item?.product?.name || ""}
                     </Link>
                 </CardTitle>
                 <p className=" mt-2 flex gap-2 items-center font-playfair">
@@ -37,11 +37,11 @@ const OrderProduct = ({ item }: { item: ORDER_ITEM_TYPE }) => {
             </CardContent>
             <CardFooter className="px-3 pb-3">
                 <Link
-                    href={`/products/${item.product.id}`} className="w-full">
+                    href={`/products/${item?.product?.id || "#"}`} className="w-full">
                     <Button disabled={item?.access?.isExpired} className="text-[#333333] font-playfair w-full">
                         <TimerReset /> Renew Product{' '}
                     </Button>
-                    </Link>
+                </Link>
             </CardFooter>
         </Card>
     );
