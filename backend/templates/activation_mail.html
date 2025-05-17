@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Welcome to {{ company_name }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
+
 </head>
+
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
         <!-- Logo -->
         <div style="text-align: center; margin-bottom: 20px;">
-            <img src="https://s3.ap-south-1.amazonaws.com/b-soft-s3.xyz/bosft.png" alt="{{ company_name }} Logo" style="max-width: 150px; height: auto;">
+            <h1 style="
+            font-family: 'Anton', sans-serif;
+            font-weight: 900;
+            font-size: 50px;
+            color: #ffc107;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow:
+              1px 1px 0 #000,
+              2px 2px 3px rgba(0,0,0,0.5);
+          ">B-soft</h1>
         </div>
 
         <!-- Content -->
@@ -18,16 +32,23 @@
 
         <!-- Verification Button -->
         <div style="text-align: center; margin: 20px 0;">
-            <a href="{{ verification_link }}" style="background-color: #1a73e8; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Your Email</a>
+            <a href="{{ verification_link }}"
+                style="background-color: #1a73e8; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify
+                Your Email</a>
         </div>
 
-        <p>This link will expire in 24 hours. If it expires, you can request a new one at <a href="{{ resend_link }}">{{ resend_link }}</a>.</p>
+        <p>This link will expire in 24 hours. If it expires, you can request a new one at <a href="{{ resend_link }}">{{
+                resend_link }}</a>.</p>
         <p>Once verified, you’ll unlock full access to your account and all its features.</p>
-        <p>If you didn’t create this account, please ignore this email or contact us at <a href="mailto:{{ support_email }}">{{ support_email }}</a>.</p>
+        <p>If you didn’t create this account, please ignore this email or contact us at <a
+                href="mailto:{{ support_email }}">{{ support_email }}</a>.</p>
 
         <!-- Footer -->
         <hr style="border: 1px solid #eee; margin: 20px 0;">
-        <p style="font-size: 12px; color: #777;">Best regards,<br>The {{ company_name }} Team<br>{{ support_email }} | <a href="{{ website_url }}">{{ website_url }}</a></p>
+        <p style="font-size: 12px; color: #777;">Best regards,<br>The {{ company_name }} Team<br>{{ support_email }} |
+            <a href="{{ website_url }}">{{ website_url }}</a>
+        </p>
     </div>
 </body>
+
 </html>

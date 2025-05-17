@@ -3,7 +3,7 @@ from django.db import models
 from apps.accounts.models import User 
 from datetime import timezone
 from decouple import config
-from apps.product.tasks import send_email_on_delay 
+from apps.base.mail import send_mail_from_template
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -242,7 +242,7 @@ class Order(models.Model):
         subject = f'Order Confirmation #{self.order_id}'
         template = 'order_confirmation.html'
         # Use Celery task for sending email
-        send_email_on_delay(
+        send_mail_from_template(
             template,
             context,
             subject,
