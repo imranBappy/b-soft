@@ -1,0 +1,21 @@
+{
+    "name": "Bsoft",
+    "short_name": "Bsoft",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0D0D0D",
+    "theme_color": "#FFC400",
+    "description": "Buy Windows, Photoshop, ChatGPT Subscription & More at Best Prices",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

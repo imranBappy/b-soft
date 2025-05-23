@@ -3,10 +3,11 @@
 import { Oswald, Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";
 import MainLayout from "@/layout/MainLayout";
-import logo from '@/assets/logo.png';
-import favicon from '@/assets/favicon.ico';
+// import logo from '@/assets/logo.png';
+// import favicon from '@/assets/favicon.ico';
 import Script from 'next/script';
 import Head from "next/head";
+import InstallPWAButton from "@/components/InstallPWAButton";
 
 
 const playfairDisplay = Playfair_Display({ // for heading
@@ -32,6 +33,21 @@ export const metadata = {
     title: 'Bsoft - Buy Windows, Photoshop, ChatGPT Subscription & More at Best Prices',
     description:
         'Bsoft is your one-stop shop for genuine software products, including Windows, Adobe Photoshop, ChatGPT subscriptions, and more. Get instant delivery and secure payments.',
+  
+    manifest: "/site.webmanifest",
+    icons: [
+        {
+            url: "/favicon-32x32.png",
+            type: "image/png",
+            sizes: "32x32",
+        },
+        {
+            url: "/android-chrome-192x192.png",
+            type: "image/png",
+            sizes: "192x192",
+        },
+    ],
+    themeColor: "#FFC400",
     keywords: [
         'buy software',
         'Windows 11 key',
@@ -42,9 +58,7 @@ export const metadata = {
         'online software shop',
     ],
 
-    icons: {
-        icon: favicon.src, // Path to your favicon
-    },
+   
     openGraph: {
         title: 'Bsoft - Your Trusted Software Marketplace',
         description:
@@ -52,7 +66,7 @@ export const metadata = {
         url: 'https://bsoft.xyz',
         images: [
             {
-                url: logo.src,
+                url: '/favicon-512x512.png', // or logo.src if you import it
                 width: 800,
                 height: 600,
                 alt: 'Bsoft Logo',
@@ -65,7 +79,7 @@ export const metadata = {
         title: 'Bsoft - Buy Genuine Software Online',
         description:
             'Purchase authentic software products like Windows, Photoshop, and ChatGPT subscriptions at Bsoft.',
-        image: logo.src,
+        image: '/favicon-512x512.png', // replace with your logo image path
     },
 
 };
@@ -78,6 +92,29 @@ export default function RootLayout({
     return (
         <html lang="en" className="dark">
             <Head>
+                <title>{metadata.title}</title>
+                <meta name="description" content={metadata.description} />
+                <meta name="keywords" content={metadata.keywords.join(', ')} />
+                <meta property="og:title" content={metadata.openGraph.title} />
+                <meta property="og:description" content={metadata.openGraph.description} />
+                <meta property="og:url" content={metadata.openGraph.url} />
+                <meta property="og:type" content="website" />
+                <meta property="og:image" content={metadata.openGraph.images[0].url} />
+                <meta property="og:image:width" content={metadata.openGraph.images[0].width.toString()} />
+                <meta property="og:image:height" content={metadata.openGraph.images[0].height.toString()} />
+                <meta name="twitter:card" content={metadata.twitter.card} />
+                <meta name="twitter:site" content={metadata.twitter.site} />
+                <meta name="twitter:title" content={metadata.twitter.title} />
+                <meta name="twitter:description" content={metadata.twitter.description} />
+                <meta name="twitter:image" content={metadata.twitter.image} />
+
+                {/* Favicon and Icons */}
+                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+                <link rel="shortcut icon" href="/favicon.ico" />
+                <link rel="manifest" href="/site.webmanifest" />
+
                 <meta
                     name="facebook-domain-verification"
                     content="axanm867oa2gljplwh5p0vli7f4k11"
@@ -110,6 +147,7 @@ export default function RootLayout({
                         />
                     </noscript>
                 </Script>
+                <InstallPWAButton />
             </body>
         </html>
     );

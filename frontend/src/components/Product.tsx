@@ -44,17 +44,16 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
         if (isBuy) {
             router.push(`/checkout`);
         }
-
     }
     return (
-        <Card className=" h-fit basis-72 shadow-none hover:shadow dark:bg-gray-deep ">
+        <Card className="  h-fit    basis-44 md:basis-72 shadow-none hover:shadow dark:bg-gray-deep ">
             <CardHeader className="p-3 relative ">
                 {tag && (
                     <div className=" absolute top-6 left-5 flex flex-col gap-2">
                         {/* <Badge className=" text-white justify-center items-center font-oswald">
                         -50%
                     </Badge> */}
-                        <Badge className="bg-orange text-white justify-center items-center font-oswald">
+                        <Badge className="bg-orange/90 text-[10px] md:text-[12px] text-white justify-center items-center font-oswald">
                             {underscoreToSpace(tag)}
                         </Badge>
                         {/* <Badge className='bg-blue text-white justify-center items-center'>NEW</Badge> */}
@@ -64,28 +63,27 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
                 <Image
                     src={getThumblain(photo)}
                     alt={name}
-                    width={500}
-                    height={500}
-                    className="rounded-md w-72  h-72 object-cover"
+                    width={288}
+                    height={288}
+                    className="rounded-md   w-36 h-36 md:w-72  md:h-72 object-cover"
                 />
             </CardHeader>
-            <CardContent className="px-4">
+            <CardContent className="px-4 pb-2 md:pb-4 ">
                 <Link href={`/products/${data.id}`}>
-                    <CardTitle className=" font-playfair font-semibold leading-5 line-clamp-2		">
+                    <CardTitle className=" text-sm md:text-base font-medium leading-5 line-clamp-2		">
                         {name}
                     </CardTitle>
                 </Link>
-                <p className=" mt-4 flex gap-2 items-center ">
+                <p className=" mt-2 md:mt-4 flex gap-2 items-center ">
                     <CheckCheck size={20} className="text-blue " />
                     <span className=" font-oswald">In stock</span>{' '}
                 </p>
-                <p className=" mt-2 flex gap-2 items-center font-playfair">
+                <p className=" mt-1 md:mt-2   items-center font-playfair">
                     {/* <span className='  text-gray-400 line-through text-sm '>$100</span> */}
                     <span className="text-blue text-base">৳{price}</span>
                 </p>
             </CardContent>
-
-            <CardFooter className="px-3 pb-3">
+            <CardFooter className="px-3 pb-3 ">
                 <div className="w-full  flex gap-[0.5px]"   >
 
                     <Button
@@ -94,12 +92,22 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
                         variant={'secondary'}
                     >
                         {' '}
-                        <ShoppingCart /> Add To Cart{' '}
+                        <ShoppingCart /> <span
+                            className=' hidden md:flex'
+                        >
+                            Add To Cart
+                        </span>
                     </Button>
 
                     <Button onClick={() => handleCart(true)} className=" text-white bg-blue   rounded-l-none font-playfair w-full">
                         {' '}
-                        <ShoppingBasket /> Buy Now
+                        <ShoppingBasket />
+
+                        <span
+                            className=' hidden md:flex'
+                        >
+                            Buy Now
+                        </span>
                     </Button>
 
                 </div>
