@@ -96,8 +96,10 @@ const Filter = ({
                 </div>
                 <ScrollArea className="h-72  w-full ">
                     <div className="p-4">
-                        {filteredItems.map((item) => (
-                            <>
+                        {filteredItems.map((item, i) => (
+                            <div
+                                key={`${item.value}-${i}`}
+                            >
                                 <div className="flex items-center space-x-2">
                                     <Checkbox
                                         checked={
@@ -119,7 +121,7 @@ const Filter = ({
                                     </label>
                                 </div>
                                 <Separator className="my-2" />
-                            </>
+                            </div>
                         ))}
                     </div>
                 </ScrollArea>

@@ -72,7 +72,7 @@ const Footer = () => {
                             </li>
                             <li className='flex  gap-1 items-center'>
                                 <Button variant={'link'} className=' px-1  font-playfair text-gray dark:text-gray-light'>
-                                    <Link href={"/softwares"}>  Softwares  </Link>
+                                    <Link href={"/softwares"}>  Download Center  </Link>
                                 </Button>
                             </li>
                         </ul>

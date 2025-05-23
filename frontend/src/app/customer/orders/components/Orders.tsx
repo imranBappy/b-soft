@@ -18,6 +18,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Youtube } from 'lucide-react'
+import DownloadExtension from '@/components/DownloadExtension';
+import moment from 'moment';
 
 interface NotFoundProps {
     message?: string;
@@ -105,7 +107,7 @@ const Orders = () => {
                     ({node?.items?.edges?.length} items)
                 </h6>
                 <div className="flex items-center flex-wrap justify-between">
-                    <div className='flex gap-5 items-center mt-2'>
+                    <div className='flex gap-5 items-center mt-2 flex-wrap '>
                         <Badge
                             className={`${getStatusStyle(
                                 node.status.trim().toUpperCase()
@@ -114,17 +116,22 @@ const Orders = () => {
                         >
                             {node.status}
                         </Badge>
-
-                        <p className=" font-lato text-lg">
+                        <p
+                            className=' text-nowrap'
+                        >Order Date: {
+                                moment(node.createdAt).format('D/M/Y')
+                            }</p>
+                        <p className=' text-nowrap'>
                             Total: {node.totalPrice}
                         </p>
+
                     </div>
                     <div className='flex gap-5 items-center mt-2'>
                         <Button variant={'outline'}>
                             <Youtube />
                             Watch Video
                         </Button>
-                        <Button variant={'secondary'}>Download</Button>
+                        <DownloadExtension />
                     </div>
                 </div>
             </div>

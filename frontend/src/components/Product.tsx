@@ -46,8 +46,8 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
         }
     }
     return (
-        <Card className="  h-fit    basis-44 md:basis-72 shadow-none hover:shadow dark:bg-gray-deep ">
-            <CardHeader className="p-3 relative ">
+        <Card className="  h-fit    basis-40 md:basis-72 shadow-none hover:shadow dark:bg-gray-deep ">
+            <CardHeader className="p-2 md:p-3 relative ">
                 {tag && (
                     <div className=" absolute top-6 left-5 flex flex-col gap-2">
                         {/* <Badge className=" text-white justify-center items-center font-oswald">
@@ -65,10 +65,10 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
                     alt={name}
                     width={288}
                     height={288}
-                    className="rounded-md   w-36 h-36 md:w-72  md:h-72 object-cover"
+                    className="rounded-md   w-36 !h-36 md:!w-72  md:!h-72 object-cover"
                 />
             </CardHeader>
-            <CardContent className="px-4 pb-2 md:pb-4 ">
+            <CardContent className="px-2 md:px-4 pb-2 md:pb-4 ">
                 <Link href={`/products/${data.id}`}>
                     <CardTitle className=" text-sm md:text-base font-medium leading-5 line-clamp-2		">
                         {name}
@@ -83,7 +83,7 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
                     <span className="text-blue text-base">৳{price}</span>
                 </p>
             </CardContent>
-            <CardFooter className="px-3 pb-3 ">
+            <CardFooter className=" px-2 md:px-3 pb-2 md:pb-3 ">
                 <div className="w-full  flex gap-[0.5px]"   >
 
                     <Button

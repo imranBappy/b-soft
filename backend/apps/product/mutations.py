@@ -318,7 +318,6 @@ class CreateOrder(graphene.Mutation):
         input = CreateOrderInput(required=True)
 
     success = graphene.Boolean()
-
     def mutate(self, info, input):
        
         try:
@@ -337,10 +336,7 @@ class CreateOrder(graphene.Mutation):
 
             with transaction.atomic():
                 auth_header = info.context.META.get('HTTP_AUTHORIZATION')
-                
-
                 isUserAuthenticated = False
-                
                 try :
                     if auth_header:
                         parts = auth_header.split(" ")
@@ -359,7 +355,6 @@ class CreateOrder(graphene.Mutation):
             
                 user = User.objects.filter(email=input.user_email).first()
 
-                print({isUserAuthenticated})
                 
                 if(not isUserAuthenticated and user):
                     return GraphQLError("User is exist already.")

@@ -1,10 +1,10 @@
 {
-    "name": "Bsoft",
-    "short_name": "Bsoft",
+    "name": "B-soft",
+    "short_name": "B-soft",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#0D0D0D",
-    "theme_color": "#FFC400",
+    "theme_color": "#0D0D0D",
     "description": "Buy Windows, Photoshop, ChatGPT Subscription & More at Best Prices",
     "icons": [
         {

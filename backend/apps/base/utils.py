@@ -303,7 +303,7 @@ def generate_otp():
         otp += str(random.randint(1, 9))
     return otp
 
-def generate_order_id(prefix="ORD", length=8):
+def generate_order_id(prefix="B", length=3):
     """
     Generates a random order ID.
     :param prefix: Optional prefix for the order ID.
