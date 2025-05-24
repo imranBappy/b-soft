@@ -57,16 +57,16 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     const attributes = product.attributes?.edges
     const descriptions = product.descriptions?.edges
     const faqs = product.faqs?.edges
-    
+
 
     return (
         <div className="container px-5 mx-auto">
             <div className="mt-5 flex  gap-10 flex-wrap md:flex-nowrap">
                 <div className="md:w-[500px] w-[350px] m-auto md:m-0">
-                    <ProductPhoto productId={product.id||""} photo={product.photo||""} alt={product.name||""} />
+                    <ProductPhoto productId={product.id || ""} photo={product.photo || ""} alt={product.name || ""} />
                 </div>
                 <div className="100%">
-                    <h1 className="font-playfair font-semibold leading-7  md:text-2xl text-xl  ">
+                    <h1 className="font-playfair font-semibold leading-7  md:text-2xl text-lg  ">
                         {product.name}
                     </h1>
                     {product?.priceRange ? (
@@ -80,7 +80,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                     )}
 
                     <div
-                        className="text-gray-600! dark:text-gray-300! font-lato text-lg mt-2 "
+                        className="text-gray-600! dark:text-gray-300! font-lato md:text-lg text-sm  md:mt-2 "
                         dangerouslySetInnerHTML={{
                             __html: product.shortDescription,
                         }}
@@ -126,15 +126,15 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             </div>
             <div>
                 <div>
-                    <div className=" p-1 flex gap-5 items-center mt-5 flex-wrap">
+                    <div className=" p-1 flex  md:gap-2 gap-1   mt-5 flex-wrap">
                         {descriptions?.map((item) => (
                             <Link
-                                className="font-playfair font-semibold leading-7 "
+                                className="font-playfair font-semibold leading-7  "
                                 href={`#${item.node?.tag}`}
                                 key={item.node.id}
                             >
                                 <Button
-                                    className="px-0 rounded-sm font-playfair text-white text-xl"
+                                    className="px-0 underline rounded-sm font-playfair text-left text-white md:text-xl text-base  text-wrap  "
                                     variant={'link'}
                                 >
                                     {item.node?.label}
@@ -156,7 +156,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                                 ''
                             )}
                             <div
-                                className=" overflow-x-hidden w-full text-gray-600  dark:text-gray-300 font-lato text-lg mt-5 "
+                                className=" overflow-x-hidden w-full text-gray-600  dark:text-gray-300 font-lato md:text-lg text-sm mt-5 "
                                 dangerouslySetInnerHTML={{
                                     __html: item.node.description,
                                 }}

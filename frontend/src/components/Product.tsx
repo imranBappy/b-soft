@@ -78,7 +78,7 @@ const Product = ({ data }: { data: PRODUCT_TYPE }) => {
                     <CheckCheck size={20} className="text-blue " />
                     <span className=" font-oswald">In stock</span>{' '}
                 </p>
-                <p className=" mt-1 md:mt-2   items-center font-playfair">
+                <p className=" mt-1 md:mt-2   items-center ">
                     {/* <span className='  text-gray-400 line-through text-sm '>$100</span> */}
                     <span className="text-blue text-base">৳{price}</span>
                 </p>
