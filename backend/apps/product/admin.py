@@ -5,8 +5,12 @@ from apps.product.models import Credential, Software, ProductAccess, FAQ, Review
 
 @admin.register(Credential)
 class CredentialAdmin(admin.ModelAdmin):
-    list_display =['id','download',"note"]
+    list_display =['id','name','download',"note"]
     search_fields = ['download']
+    list_filter = ['name']
+    list_per_page = 10
+    list_editable = ['name']
+
     
 
 @admin.register(Software)
