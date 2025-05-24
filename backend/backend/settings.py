@@ -60,7 +60,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 WEBSITE_URL = config('WEBSITE_URL', 'http://b-soft.xyz')
 
 # OTP life time
-OTP_TIMESTAMP = config('OTP_TIMESTAMP', default=5440, cast=int)
+OTP_TIMESTAMP = config('OTP_TIMESTAMP', default=10440, cast=int)
 
 
 # templates

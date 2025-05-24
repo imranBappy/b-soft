@@ -166,7 +166,7 @@ class PasswordChange(graphene.Mutation):
         password = graphene.String()
         new_password = graphene.String()
     
-    # @login_required
+    @isAuthenticated()
     def mutate(self, info, password, new_password):
         user = info.context.user
         if not user.check_password(password):

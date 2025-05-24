@@ -4,6 +4,7 @@ from apps.accounts.models import User
 from datetime import timezone
 from decouple import config
 from apps.base.mail import send_mail_from_template
+from django.contrib.auth.models import Group
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)

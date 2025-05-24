@@ -14,6 +14,7 @@ import string
 from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
+from django.contrib.auth.models import Group
  
 
 base_url = settings.WEBSITE_URL
@@ -361,12 +362,14 @@ class CreateOrder(graphene.Mutation):
                 
                 if not user:
                     random_password = generate_random_password()
+                    role = Group.objects.get(name="CUSTOMER")
                     user = User.objects.create(
                         email=input.user_email,
                         name=input.user_name,
                         phone=input.phone,
                         password=random_password,  
-                        is_verified=True
+                        is_verified=True,
+                        role=role
                     )
                     gen_otp = generate_otp()
                     user.send_email_verification(
@@ -406,6 +409,7 @@ class CreateOrder(graphene.Mutation):
                         product=product,
                         quantity=item.quantity,
                         price=price
+                        
                     )
 
                     # Handle product attributes (variants)
