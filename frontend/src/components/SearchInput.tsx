@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
- 
+
 const useDebounce = (value: string, delay: number = 500) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -25,7 +25,7 @@ const useDebounce = (value: string, delay: number = 500) => {
 };
 
 const SearchInput = () => {
-    
+
     const addSearchQuery = useStore((store) => store.addSearchQuery);
     const value = useStore((store) => store.query);
     const [search, setSearch] = useState(value);
@@ -50,9 +50,10 @@ const SearchInput = () => {
                 onFocus={handleSearchPage}
                 onChange={(e) => setSearch(e.target.value)}
                 value={search}
-                className="w-full pl-4 py-5 flex bottom-0 shadow-none outline-none rounded-full pr-12 border-gray-700 text-gray-300"
+                className="w-full pl-4 py-5 flex bottom-0 shadow-none outline-none md:rounded-full pr-12 border-0 md:border md:border-gray-700 text-gray-300"
+
                 type="text"
-                placeholder="Search"
+                placeholder="Search products (e.g. ChatGPT, Photoshop, etc.)"
             />
             <Button
                 variant={'ghost'}

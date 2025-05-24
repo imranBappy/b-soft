@@ -126,7 +126,7 @@ const Orders = () => {
                         </p>
 
                     </div>
-                    <div className='flex gap-5 items-center mt-2'>
+                    <div className='flex gap-5 items-center mt-2 flex-wrap'>
                         <Button variant={'outline'}>
                             <Youtube />
                             Watch Video
@@ -142,12 +142,14 @@ const Orders = () => {
             </div>
         </div>
     ));
+    if (loading) return <div className='flex justify-center items-center h-[50vh]'  >
+        <Loading />
+    </div>;
 
     if (!content?.length) {
         return <NotFound />;
     }
 
-    if (loading) return <Loading />;
 
     return (
         <div className="w-full flex  gap-5 flex-col">

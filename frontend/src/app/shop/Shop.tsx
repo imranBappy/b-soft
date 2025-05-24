@@ -31,13 +31,14 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination';
+import SearchInput from '@/components/SearchInput';
+import ProductsNotFound from './ProductsNotFound';
 
 const Shop = () => {
     const searchParams = useSearchParams();
     const category = searchParams.get('category');
     const [page, setPage] = useState(1);
     const limit = parseInt(process.env.NEXT_PUBLIC_PAGE_LIMIT || '9');
-
     const [selectedCategory, setCategory] = useState<string[]>(
         category ? [category] : []
     );
@@ -95,6 +96,9 @@ const Shop = () => {
     if (productLoading) {
         content = new Array(6).fill(1).map((_, i) => <ProductLoader key={i} />);
     }
+    if (productRes?.products?.edges?.length === 0) {
+        content = <ProductsNotFound />;
+    }
     if (loading) return (
         <div className='  h-[300px] flex items-center justify-center'>
             <Loading />
@@ -106,15 +110,19 @@ const Shop = () => {
     return (
         <div className="container">
             <Sheet>
-                <SheetTrigger asChild>
-                    <Button
-                        className="  md:hidden flex gap-2  mt-5 rounded-sm font-playfair text-base"
-                        variant={'outline'}
-                    >
-                        <FilterIcon size={22} />
-                        Filter
-                    </Button>
-                </SheetTrigger>
+                <div className='md:hidden  flex  items-center border mt-2'>
+                    <SheetTrigger asChild className=''>
+                        <Button
+                            className="  border-none   rounded-sm font-playfair text-base"
+                            variant={'outline'}
+                        >
+                            <FilterIcon size={22} />
+                            Filter
+                        </Button>
+                    </SheetTrigger>
+                    <SearchInput />
+                </div>
+
                 <SheetContent>
                     <div className="  w-full mt-10  flex  flex-col gap-5">
                         <RangeFilter

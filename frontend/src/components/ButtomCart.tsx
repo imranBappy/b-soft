@@ -49,14 +49,14 @@ const ButtomCart = () => {
                                 {/* <div className=' border-y py-2 px-4 font-lato text-base flex justify-between'>
                                     <p>Sub Total </p> <p>$100</p>
                                 </div> */}
-                                <div className="px-4  pt-2 font-lato text-base flex justify-between">
-                                    <p>Total </p> <p>৳{totalPrice}</p>
+                                <div className="px-4 pb-2 pt-2 font-lato text-lg flex justify-between">
+                                    <p>Total Price : </p> <p>৳{totalPrice}</p>
                                 </div>
                             </div>
                             <SheetClose asChild>
                                 <Link href={`/checkout`}>
                                     <Button
-                                        className=" rounded-none w-full  font-playfair text-base !py-5 "
+                                        className=" rounded-none w-full  h-12 font-playfair text-base !py-5 "
                                         type="submit"
                                     >
                                         Checkout
