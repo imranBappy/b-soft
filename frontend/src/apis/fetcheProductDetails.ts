@@ -1,8 +1,10 @@
-import { API } from "@/constants"
+import { API } from '@/constants';
 
 const query = `
-query MyQuery($id: ID!) {
-  product(id: $id) {
+query MyQuery($id: ID ,$slug: String) {
+   product(id: $id, slug: $slug) {
+    id
+    slug
     updatedAt
     tag
     shortDescription
@@ -10,7 +12,6 @@ query MyQuery($id: ID!) {
     photo
     name
     isActive
-    id
     createdAt
     descriptions {
       totalCount
@@ -68,18 +69,17 @@ query MyQuery($id: ID!) {
   }
 }
 `;
-export default async function fetchProductDetails(id: string) {
+export default async function fetchProductDetails(slug: string) {
     return await fetch(API, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({
             query: query,
             variables: {
-                id: id
-            }
+                slug: slug,
+            },
         }),
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
         },
-    }
-    ).then((res) => res.json())
+    }).then((res) => res.json());
 }

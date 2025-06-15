@@ -42,7 +42,7 @@ class Query(graphene.ObjectType):
     subcategory = graphene.Field(CategoryType, id=graphene.ID(required=True))
     subcategories = DjangoFilterConnectionField(SubCategoryType, parent_id=graphene.ID(required=True))
     
-    product = graphene.Field(ProductType, id=graphene.ID(required=True))
+    product = graphene.Field(ProductType, id=graphene.ID(required=False), slug=graphene.String(required=False))
     products = DjangoFilterConnectionField(ProductType)
     
     order = graphene.Field(OrderType, id=graphene.ID(required=True))
@@ -116,8 +116,12 @@ class Query(graphene.ObjectType):
     def resolve_subcategories(self, info, **kwargs):
         return Category.objects.filter(parent=kwargs.get("parent_id"))
 
-    def resolve_product(self, info, id):
-        return get_object_by_kwargs(Product, {"id": id})
+    def resolve_product(self, info, id=None, slug=None):
+        if slug:
+            return get_object_by_kwargs(Product, {"slug": slug})
+        elif id:
+            return get_object_by_kwargs(Product, {"id": id})
+        return None
      
     def resolve_products(self, info, **kwargs):
         return Product.objects.all()

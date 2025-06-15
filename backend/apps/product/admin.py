@@ -41,8 +41,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id','name')
+    list_display = ['id', 'name', 'slug', 'price', 'is_active']
     search_fields = ['name']
+    prepopulated_fields = {'slug': ('name',)}  # Optional auto-fill on admin add
+
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):

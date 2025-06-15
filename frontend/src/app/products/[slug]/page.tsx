@@ -1,29 +1,31 @@
-
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata, ResolvingMetadata } from 'next';
 type Props = {
-    params: Promise<{ id: string }>
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-import { notFound } from 'next/navigation'
-import fetchProductDetails from '@/apis/fetcheProductDetails'
-import ProductPrice from '../components/ProductPrice'
-import ProductAttributeOptions from '../components/ProductAttributeOptions'
-import { ATTRIBUTE_OPTION_TYPE, PRODUCT_TYPE } from '@/graphql/product'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import CartBuy from '../components/CartBuy'
-import ProductPhoto from '../components/ProductPhoto'
-import ProductFAQ from '../components/ProductFAQ'
-import ProductReview from '../components/ProductReview'
-import ProductAttributeOptionsRemove from '../components/ProductAttributeOptionsRemove'
-import ProductAttributeOptionsMes from '../components/ProductAttributeOptionsMes'
-import { getThumblain } from '@/lib/utils'
+    params: Promise<{ slug: string }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+import { notFound } from 'next/navigation';
+import fetchProductDetails from '@/apis/fetcheProductDetails';
+import ProductPrice from '../components/ProductPrice';
+import ProductAttributeOptions from '../components/ProductAttributeOptions';
+import { ATTRIBUTE_OPTION_TYPE, PRODUCT_TYPE } from '@/graphql/product';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import CartBuy from '../components/CartBuy';
+import ProductPhoto from '../components/ProductPhoto';
+import ProductFAQ from '../components/ProductFAQ';
+import ProductReview from '../components/ProductReview';
+import ProductAttributeOptionsRemove from '../components/ProductAttributeOptionsRemove';
+import ProductAttributeOptionsMes from '../components/ProductAttributeOptionsMes';
+import { getThumblain } from '@/lib/utils';
 
+export async function generateMetadata(
+    { params }: Props,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+    const slug = (await params).slug;
+    console.log({ slug });
 
-
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
-    const id = (await params).id;
-    const data = await fetchProductDetails(id);
+    const data = await fetchProductDetails(slug);
     const product = data?.data?.product;
     const previousImages = (await parent).openGraph?.images || [];
     return {
@@ -46,24 +48,35 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     };
 }
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-    const id = (await params).id
+export default async function Page({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) {
+    const productSlug = (await params).slug;
 
-    const data = await fetchProductDetails(id)
+    const data = await fetchProductDetails(productSlug);
     if (data?.errors) {
-        notFound()
+        notFound();
     }
-    const product: PRODUCT_TYPE = data?.data?.product;
-    const attributes = product.attributes?.edges
-    const descriptions = product.descriptions?.edges
-    const faqs = product.faqs?.edges
+    console.log({ data });
 
+    const product: PRODUCT_TYPE = data?.data?.product;
+    const attributes = product.attributes?.edges;
+    const descriptions = product.descriptions?.edges;
+    const faqs = product.faqs?.edges;
+
+    return <></>;
 
     return (
         <div className="container px-5 mx-auto">
             <div className="mt-5 flex  gap-10 flex-wrap md:flex-nowrap">
                 <div className="md:w-[500px] w-[350px] m-auto md:m-0">
-                    <ProductPhoto productId={product.id || ""} photo={product.photo || ""} alt={product.name || ""} />
+                    <ProductPhoto
+                        productId={product.id || ''}
+                        photo={product.photo || ''}
+                        alt={product.name || ''}
+                    />
                 </div>
                 <div className="100%">
                     <h1 className="font-playfair font-semibold leading-7  md:text-2xl text-lg  ">
@@ -165,7 +178,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                     ))}
                 </div>
             </div>
-            <ProductReview productId={id} />
+            <ProductReview productId={productSlug} />
             <ProductFAQ faqs={faqs || []} />
         </div>
     );

@@ -83,7 +83,10 @@ class CouponType(DjangoObjectType):
         connection_class = CountConnection      
 
 class ProductType(DjangoObjectType):
-    id = graphene.ID(required=True)
+    # id = graphene.ID(required=False)
+    slug=graphene.String(),
+
+
     price = graphene.Float()
     class Meta:
         model = Product

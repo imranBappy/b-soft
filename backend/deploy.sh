@@ -16,6 +16,8 @@ python3 manage.py migrate
 echo "Collecting static files..."
 python3 manage.py collectstatic --noinput
 
+python3 generate_slugs.py
+
 echo "Restarting Gunicorn..."
 # pkill gunicorn
 #  kill python

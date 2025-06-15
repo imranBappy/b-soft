@@ -4,7 +4,8 @@ from apps.accounts.models import User
 from datetime import timezone
 from decouple import config
 from apps.base.mail import send_mail_from_template
-from django.contrib.auth.models import Group
+from django.utils.text import slugify
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -29,13 +30,15 @@ class Product(models.Model):
         ("POPULAR", "Popular"),
         ("FEATURED", "Featured")
     ]
+    slug = models.SlugField(max_length=255, blank=True, null=True, unique=True)  # no unique=True yet
+
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=12, decimal_places=8)
     price_range = models.CharField(max_length=100, null=True, blank=True)
     offer_price =models.DecimalField(max_digits=12, decimal_places=8, null=True, blank=True)
     short_description = models.TextField(null=True, blank=True)
     
-    photo =  models.CharField(max_length=1000,null=True, blank=True)
+    photo =  models.CharField(max_length=1000, null=True, blank=True)
     tag = models.CharField(max_length=50, choices=TAGS_CHOOSE,
         null=True, blank=True
     )
@@ -51,6 +54,15 @@ class Product(models.Model):
     
     class Meta:
         ordering = ['-created_at']
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super().save(*args, **kwargs)  # First save to get the ID
+            base_slug = slugify(self.name.lower())
+            self.slug = f"{base_slug}-{self.pk}"
+            Product.objects.filter(pk=self.pk).update(slug=self.slug)
+        else:
+            super().save(*args, **kwargs)
 
 
 class ProductDescription(models.Model):
@@ -284,9 +296,9 @@ class OrderProduct(models.Model):
     
 
 class ProductAccess(models.Model):
+
     prodduct = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, related_name='access')
     attributeOption = models.ForeignKey(AttributeOption, on_delete=models.SET_NULL, null=True, blank=True, related_name='access')
-    
 
     item = models.OneToOneField(OrderProduct, on_delete=models.SET_NULL, null=True, blank=True, related_name='access')
     username = models.CharField(max_length=255, null=True, blank= True)
@@ -308,6 +320,9 @@ class ProductAccess(models.Model):
     
     class Meta:
         ordering = ['-created_at']
+
+
+
   
 class OrderProductAttribute(models.Model):
     attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, related_name='order_product_attribute')

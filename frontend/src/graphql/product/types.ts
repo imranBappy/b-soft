@@ -1,4 +1,4 @@
-import { USER_TYPE } from "../accounts/types";
+import { USER_TYPE } from '../accounts/types';
 
 interface RELATED_TYPE {
     id: string;
@@ -6,42 +6,43 @@ interface RELATED_TYPE {
 }
 
 export interface DESCRIPTIONS {
-    id: number,
-    label: string
-    description: string
-    tag: string
+    id: number;
+    label: string;
+    description: string;
+    tag: string;
 }
 export interface FAQ_TYPE {
-    id: string,
-    answer: string
-    question: string
-    product: PRODUCT_TYPE
+    id: string;
+    answer: string;
+    question: string;
+    product: PRODUCT_TYPE;
 }
 export interface REVIEW_TYPE {
-    id: string,
-    rating: number
-    content: string
-    createdAt: Date
-    product: PRODUCT_TYPE
-    user: USER_TYPE
+    id: string;
+    rating: number;
+    content: string;
+    createdAt: Date;
+    product: PRODUCT_TYPE;
+    user: USER_TYPE;
 }
 export interface ATTRIBUTE_OPTION_TYPE {
-    id: number,
-    option: string
-    extraPrice: number
-    message?: string
-    photo?: string
+    id: number;
+    option: string;
+    extraPrice: number;
+    message?: string;
+    photo?: string;
 }
 export interface ATTRIBUTE_TYPE {
-    id: string,
-    name: string,
+    id: string;
+    name: string;
     attributeOptions?: {
-        edges: { node: ATTRIBUTE_OPTION_TYPE }[]
-    }
+        edges: { node: ATTRIBUTE_OPTION_TYPE }[];
+    };
 }
 
 export interface PRODUCT_TYPE {
     id?: string;
+    slug?: string;
     name: string;
     price: number;
     photo: string;
@@ -51,25 +52,25 @@ export interface PRODUCT_TYPE {
     isActive?: boolean;
     createdAt?: string;
     tax: number;
-    priceRange?: string
+    priceRange?: string;
     offerPrice?: number;
 
     category: RELATED_TYPE | string;
     subcategory: RELATED_TYPE | string;
-    isTaxIncluded: boolean,
+    isTaxIncluded: boolean;
     attributes?: {
-        totalCount?:number
-        edges: { node: ATTRIBUTE_TYPE }[]
-    }
+        totalCount?: number;
+        edges: { node: ATTRIBUTE_TYPE }[];
+    };
     descriptions?: {
-        edges: { node: DESCRIPTIONS }[]
-    }
+        edges: { node: DESCRIPTIONS }[];
+    };
     faqs?: {
-        edges: { node: FAQ_TYPE }[]
-    }
+        edges: { node: FAQ_TYPE }[];
+    };
     reviews?: {
-        edges: { node: REVIEW_TYPE }[]
-    }
+        edges: { node: REVIEW_TYPE }[];
+    };
 }
 export interface CATEGORY_TYPE {
     id: string;
@@ -93,8 +94,8 @@ export interface ORDER_PRODUCT_ATTRIBUTE_TYPE {
     attribute: ATTRIBUTE_TYPE;
     option: ATTRIBUTE_OPTION_TYPE;
     order_product: ORDER_ITEM_TYPE;
-    extraPrice: number
-    id: string
+    extraPrice: number;
+    id: string;
 }
 
 export interface PRODUCT_ACCESS_TYPE {
@@ -121,8 +122,6 @@ export interface ORDER_ITEM_TYPE {
     };
 }
 
-
-
 export interface ORDER_TYPE {
     id: string;
     paymentMethod: string;
@@ -130,12 +129,10 @@ export interface ORDER_TYPE {
     status: string;
     createdAt: string;
     items?: {
-        edges: { node: ORDER_ITEM_TYPE }[]
-    }
-    orderId: string
+        edges: { node: ORDER_ITEM_TYPE }[];
+    };
+    orderId: string;
 }
-
-
 
 export interface PAYMENT_TYPE {
     id: string;
@@ -149,7 +146,6 @@ export interface PAYMENT_TYPE {
     order: ORDER_TYPE[];
 }
 
-
 export interface SOFTWARE_TYPE {
     id: string;
     name: string;
@@ -158,5 +154,3 @@ export interface SOFTWARE_TYPE {
     officialSite: string;
     tutorialLink: string;
 }
-
-
