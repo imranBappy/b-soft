@@ -19,7 +19,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useEffect } from 'react';
 import useAuth from '@/hooks/use-auth';
 import Link from 'next/link';
-import {  TextField } from '@/components/input';
+import { TextField } from '@/components/input';
 import PasswordField from '@/components/input/password-field';
 import { isValidPhoneNumber } from '@/lib/utils';
 
@@ -128,16 +128,16 @@ function RegisterForm() {
                             label="Email"
                             placeholder="Email"
                         />
-                                <TextField
-                                    form={form}
-                                    name="whatsApp"
-                                    label="WhatsApp Number"
-                                    placeholder="e.g., +880170000000"
-                                />
+                        <TextField
+                            form={form}
+                            name="whatsApp"
+                            label="WhatsApp Number"
+                            placeholder="e.g., +880170000000"
+                        />
                         <TextField
                             form={form}
                             name="address"
-                            label="Address ( Optional )"
+                            label="Address (Optional)"
                             placeholder="Full address"
                         />
                         <PasswordField

@@ -30,7 +30,7 @@ python3 manage.py collectstatic --noinput
 echo "Restarting Gunicorn..."
 # pkill gunicorn
 #  kill python
-pkill -f python
+sudo pkill -f python
 
 
 #$echo "Restarting Celery worker..."

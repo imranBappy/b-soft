@@ -34,17 +34,16 @@ const formSchema = z
         }),
         address: z.string().optional(),
         // photo: z.instanceof(File).optional(),
-        photo: typeof window === 'undefined' ? z.any().optional() : z.instanceof(File).optional(),
-
+        photo:
+            typeof window === 'undefined'
+                ? z.any().optional()
+                : z.instanceof(File).optional(),
     })
-    .refine(
-        (data) => isValidPhoneNumber(data.whatsApp as string, "BD"),
-        {
-            message: 'Invalid WhatsApp number!',
-            path: ['whatsApp'],
-        }
-    )
-    .refine((data) => isValidPhoneNumber(data.phone as string, "BD"), {
+    .refine((data) => isValidPhoneNumber(data.whatsApp as string, 'BD'), {
+        message: 'Invalid WhatsApp number!',
+        path: ['whatsApp'],
+    })
+    .refine((data) => isValidPhoneNumber(data.phone as string, 'BD'), {
         message: 'Invalid phone number!',
         path: ['phone'],
     });
@@ -68,7 +67,7 @@ export default function MyAccount() {
                 setImagePreviewUrl(data?.me?.photo);
             }
         },
-        fetchPolicy: 'network-only'
+        fetchPolicy: 'network-only',
     });
     console.log(form.formState.errors);
 
@@ -108,7 +107,6 @@ export default function MyAccount() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-
             let uploadedFiles: string | undefined = undefined;
 
             if (values.photo && data?.me?.photo) {
@@ -209,8 +207,8 @@ export default function MyAccount() {
                             <TextField
                                 form={form}
                                 name="address"
-                                label="Address ( Optional )"
-                                placeholder="Adress"
+                                label="Address (Optional)"
+                                placeholder="Address"
                             />
                         </div>
                         <Button
