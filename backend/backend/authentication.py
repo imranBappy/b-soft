@@ -79,6 +79,7 @@ def isAuthenticated(roles=None):
     def decorator(func):
         @wraps(func)
         def wrapper(root, info, *args, **kwargs):
+
             # Extract the authorization header
             auth_header = info.context.headers.get("Authorization")
             if not auth_header:

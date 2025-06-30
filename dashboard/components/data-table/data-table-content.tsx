@@ -1,12 +1,18 @@
-import { DataTableContentProps } from "./types"
-import Loading from "@/components/ui/loading"
+import { DataTableContentProps } from './types';
+import Loading from '@/components/ui/loading';
+import { flexRender } from '@tanstack/react-table';
 import {
-    flexRender,
-} from "@tanstack/react-table"
-import { Table, TableCell, TableBody, TableHead, TableHeader, TableRow } from "../ui/table";
+    Table,
+    TableCell,
+    TableBody,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '../ui/table';
 
-
-export const DataTableContent = <TData,>(props: DataTableContentProps<TData>) => {
+export const DataTableContent = <TData,>(
+    props: DataTableContentProps<TData>
+) => {
     const { loading, table, columns } = props;
     return (
         <div className="rounded-md border relative">
@@ -23,9 +29,10 @@ export const DataTableContent = <TData,>(props: DataTableContentProps<TData>) =>
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
+                                                  header.column.columnDef
+                                                      .header,
+                                                  header.getContext()
+                                              )}
                                     </TableHead>
                                 ))}
                             </TableRow>
@@ -36,7 +43,9 @@ export const DataTableContent = <TData,>(props: DataTableContentProps<TData>) =>
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
                                     key={row.id}
-                                    data-state={row.getIsSelected() && "selected"}
+                                    data-state={
+                                        row.getIsSelected() && 'selected'
+                                    }
                                     className="hover:bg-muted/50 data-[state=selected]:bg-muted"
                                 >
                                     {row.getVisibleCells().map((cell) => (
@@ -52,28 +61,24 @@ export const DataTableContent = <TData,>(props: DataTableContentProps<TData>) =>
                                     ))}
                                 </TableRow>
                             ))
+                        ) : !loading ? (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className=" h-32  text-center"
+                                >
+                                    No results.
+                                </TableCell>
+                            </TableRow>
                         ) : (
-                            !loading ?
-                                (
-                                    <TableRow>
-                                        <TableCell
-                                            colSpan={columns.length}
-                                            className=" h-32  text-center"
-                                        >
-                                            No results.
-                                        </TableCell>
-                                    </TableRow>
-                                ) : (
-
-                                    <TableRow>
-                                        <TableCell
-                                            colSpan={columns.length}
-                                            className=" h-32  text-center relative "
-                                            >
-                                            <Loading />
-                                        </TableCell>
-                                    </TableRow>
-                                )
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className=" h-32  text-center relative "
+                                >
+                                    <Loading />
+                                </TableCell>
+                            </TableRow>
                         )}
                     </TableBody>
                 </Table>

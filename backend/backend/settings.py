@@ -83,7 +83,8 @@ INSTALLED_APPS = [
     # public apps
     'apps.product', 
     'apps.accounts',
-    'apps.core'
+    'apps.core',
+    'apps.blog'
 ]
 
 # Email setup
