@@ -1,136 +1,126 @@
 // frontend/src/app/blog/[slug]/page.tsx
 'use client';
 
-import React, { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
-import {
-    GET_BLOG_POST_BY_SLUG,
-    CREATE_COMMENT_MUTATION,
-    TOGGLE_LIKE_MUTATION,
-} from '@/graphql/blog/queries';
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card'; //
-import { Button } from '@/components/ui/button'; //
-import { Textarea } from '@/components/ui/textarea'; //
-import { useToast } from '@/hooks/use-toast'; //
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_BLOG_POST_BY_SLUG } from '@/graphql/blog/queries';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; //
 import { format } from 'date-fns';
 import Image from 'next/image'; //
 import Link from 'next/link';
-import { ThumbsUp, MessageCircle, Loader2 } from 'lucide-react';
 import useAuth from '@/hooks/use-auth';
 
-interface CommentProps {
-    comment: any;
-    onReply: (commentId: string) => void;
-    isLoggedIn: boolean;
+// interface CommentProps {
+//     comment: any;
+//     onReply: (commentId: string) => void;
+//     isLoggedIn: boolean;
+// }
+
+// const CommentItem: React.FC<CommentProps> = ({
+//     comment,
+//     onReply,
+//     isLoggedIn,
+// }) => {
+//     return (
+//         <div className="mb-4 p-4 border rounded-lg bg-gray-50">
+//             <p className="text-sm text-gray-600 font-semibold">
+//                 {comment.user?.name || comment.user?.email || 'Anonymous'}
+//             </p>
+//             <p className="text-xs text-gray-500 mb-2">
+//                 {format(new Date(comment.createdAt), 'MMMM dd, yyyy HH:mm')}
+//             </p>
+//             <p className="text-gray-800">{comment.text}</p>
+//             {isLoggedIn && (
+//                 <Button
+//                     variant="link"
+//                     size="sm"
+//                     onClick={() => onReply(comment.id)}
+//                     className="px-0 mt-2"
+//                 >
+//                     Reply
+//                 </Button>
+//             )}
+//             {comment.replies && comment.replies.length > 0 && (
+//                 <div className="ml-6 mt-4 border-l-2 pl-4">
+//                     {comment.replies.map((reply: any) => (
+//                         <CommentItem
+//                             key={reply.id}
+//                             comment={reply}
+//                             onReply={onReply}
+//                             isLoggedIn={isLoggedIn}
+//                         />
+//                     ))}
+//                 </div>
+//             )}
+//         </div>
+//     );
+// };
+
+interface BlogPostDetailPageProps {
+    slug: string;
 }
 
-const CommentItem: React.FC<CommentProps> = ({
-    comment,
-    onReply,
-    isLoggedIn,
-}) => {
-    return (
-        <div className="mb-4 p-4 border rounded-lg bg-gray-50">
-            <p className="text-sm text-gray-600 font-semibold">
-                {comment.user?.name || comment.user?.email || 'Anonymous'}
-            </p>
-            <p className="text-xs text-gray-500 mb-2">
-                {format(new Date(comment.createdAt), 'MMMM dd, yyyy HH:mm')}
-            </p>
-            <p className="text-gray-800">{comment.text}</p>
-            {isLoggedIn && (
-                <Button
-                    variant="link"
-                    size="sm"
-                    onClick={() => onReply(comment.id)}
-                    className="px-0 mt-2"
-                >
-                    Reply
-                </Button>
-            )}
-            {comment.replies && comment.replies.length > 0 && (
-                <div className="ml-6 mt-4 border-l-2 pl-4">
-                    {comment.replies.map((reply: any) => (
-                        <CommentItem
-                            key={reply.id}
-                            comment={reply}
-                            onReply={onReply}
-                            isLoggedIn={isLoggedIn}
-                        />
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-};
-
-const BlogPostDetailPage = ({ slug }) => {
+const BlogPostDetailPage: React.FC<BlogPostDetailPageProps> = ({ slug }) => {
     const checkAuth = useAuth();
-    const isLoggedIn = checkAuth?.isAuthenticated;
+    // const isLoggedIn = checkAuth?.isAuthenticated;
     const authLoading = checkAuth?.isLoading;
-    const { toast } = useToast(); //
+    // const { toast } = useToast(); //
 
-    const [commentText, setCommentText] = useState('');
-    const [replyToCommentId, setReplyToCommentId] = useState<string | null>(
-        null
-    );
+    // const [commentText, setCommentText] = useState('');
+    // const [replyToCommentId, setReplyToCommentId] = useState<string | null>(
+    //     null
+    // );
 
-    const { data, loading, error, refetch } = useQuery(GET_BLOG_POST_BY_SLUG, {
+    const { data, loading, error } = useQuery(GET_BLOG_POST_BY_SLUG, {
         variables: { slug },
         fetchPolicy: 'cache-and-network',
     });
 
-    const [createComment, { loading: commentLoading }] = useMutation(
-        CREATE_COMMENT_MUTATION,
-        {
-            onCompleted: () => {
-                toast({
-                    title: 'Comment added!',
-                    description: 'Your comment has been posted.',
-                }); //
-                setCommentText('');
-                setReplyToCommentId(null);
-                refetch(); // Re-fetch comments to update UI
-            },
-            onError: (err) => {
-                toast({
-                    title: 'Error adding comment.', //
-                    description: err.message,
-                    variant: 'destructive',
-                });
-            },
-        }
-    );
+    // const [createComment, { loading: commentLoading }] = useMutation(
+    //     CREATE_COMMENT_MUTATION,
+    //     {
+    //         onCompleted: () => {
+    //             toast({
+    //                 title: 'Comment added!',
+    //                 description: 'Your comment has been posted.',
+    //             }); //
+    //             setCommentText('');
+    //             setReplyToCommentId(null);
+    //             refetch(); // Re-fetch comments to update UI
+    //         },
+    //         onError: (err) => {
+    //             toast({
+    //                 title: 'Error adding comment.', //
+    //                 description: err.message,
+    //                 variant: 'destructive',
+    //             });
+    //         },
+    //     }
+    // );
 
-    const [toggleLike, { loading: likeLoading }] = useMutation(
-        TOGGLE_LIKE_MUTATION,
-        {
-            onCompleted: (data) => {
-                toast({
-                    title: data.toggleLike.liked ? 'Liked!' : 'Unliked.', //
-                    description: data.toggleLike.liked
-                        ? 'You liked this post.'
-                        : 'You unliked this post.',
-                });
-            },
-            onError: (err) => {
-                toast({
-                    title: 'Error liking post.', //
-                    description: err.message,
-                    variant: 'destructive',
-                });
-            },
-            refetchQueries: [
-                { query: GET_BLOG_POST_BY_SLUG, variables: { slug } },
-            ], // Ensure likesCount updates
-        }
-    );
+    // const [toggleLike, { loading: likeLoading }] = useMutation(
+    //     TOGGLE_LIKE_MUTATION,
+    //     {
+    //         onCompleted: (data) => {
+    //             toast({
+    //                 title: data.toggleLike.liked ? 'Liked!' : 'Unliked.', //
+    //                 description: data.toggleLike.liked
+    //                     ? 'You liked this post.'
+    //                     : 'You unliked this post.',
+    //             });
+    //         },
+    //         onError: (err) => {
+    //             toast({
+    //                 title: 'Error liking post.', //
+    //                 description: err.message,
+    //                 variant: 'destructive',
+    //             });
+    //         },
+    //         refetchQueries: [
+    //             { query: GET_BLOG_POST_BY_SLUG, variables: { slug } },
+    //         ], // Ensure likesCount updates
+    //     }
+    // );
 
     if (loading || authLoading)
         return <p className="text-center py-10">Loading post details...</p>;
@@ -144,46 +134,46 @@ const BlogPostDetailPage = ({ slug }) => {
         return <p className="text-center py-10">Blog post not found.</p>;
 
     const blogPost = data.blogPostBySlug;
-    const rootComments = blogPost.comments.filter(
-        (comment: any) => !comment.parentComment
-    );
+    // const rootComments = blogPost.comments.filter(
+    //     (comment: any) => !comment.parentComment
+    // );
 
-    const handleCommentSubmit = async () => {
-        if (!isLoggedIn) {
-            toast({
-                title: 'Please log in to comment.',
-                variant: 'destructive',
-            }); //
-            return;
-        }
-        if (!commentText.trim()) {
-            toast({
-                title: 'Comment cannot be empty.',
-                variant: 'destructive',
-            }); //
-            return;
-        }
-        await createComment({
-            variables: {
-                blogPostSlug: slug,
-                text: commentText,
-                parentCommentId: replyToCommentId,
-            },
-        });
-    };
+    // const handleCommentSubmit = async () => {
+    //     if (!isLoggedIn) {
+    //         toast({
+    //             title: 'Please log in to comment.',
+    //             variant: 'destructive',
+    //         }); //
+    //         return;
+    //     }
+    //     if (!commentText.trim()) {
+    //         toast({
+    //             title: 'Comment cannot be empty.',
+    //             variant: 'destructive',
+    //         }); //
+    //         return;
+    //     }
+    //     await createComment({
+    //         variables: {
+    //             blogPostSlug: slug,
+    //             text: commentText,
+    //             parentCommentId: replyToCommentId,
+    //         },
+    //     });
+    // };
 
-    const handleLikeToggle = async () => {
-        if (!isLoggedIn) {
-            toast({
-                title: 'Please log in to like a post.',
-                variant: 'destructive',
-            }); //
-            return;
-        }
-        await toggleLike({
-            variables: { blogPostSlug: slug },
-        });
-    };
+    // const handleLikeToggle = async () => {
+    //     if (!isLoggedIn) {
+    //         toast({
+    //             title: 'Please log in to like a post.',
+    //             variant: 'destructive',
+    //         }); //
+    //         return;
+    //     }
+    //     await toggleLike({
+    //         variables: { blogPostSlug: slug },
+    //     });
+    // };
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-3xl">

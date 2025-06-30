@@ -23,7 +23,6 @@ import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast'; // Import useToast hook
 // Import the Quill type if available in your project's @types/react-quill
-import type Quill from 'quill'; // Import Quill's type for better ref typing
 import type { ReactQuillProps } from 'react-quill'; // Import ReactQuillProps type
 
 // Dynamically import ReactQuill to prevent SSR issues, as it relies on browser APIs
@@ -33,7 +32,7 @@ const ReactQuill = dynamic<ReactQuillProps>(() => import('react-quill'), {
 });
 
 // Define the Zod schema for form validation
-const formSchema = z.object({
+export const formSchema = z.object({
     categoryId: z
         .string()
         .optional()

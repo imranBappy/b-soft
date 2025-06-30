@@ -13,7 +13,6 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 
 // Define a default image URL for blog posts without a cover image
 // Changed to a local static asset to avoid SVG issues with external services
