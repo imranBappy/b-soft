@@ -1,35 +1,50 @@
-"use client";
+'use client';
 
-import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
+import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 interface EditorProps {
-    onChange: (value: string) => void,
-    value: string
+    onChange: (value: string) => void;
+    value: string;
 }
 export default function Editor(props: EditorProps) {
-
-
-
     const modules = {
-        toolbar: [
-            [{ header: [1, 2, 3, false] }],
-            ["bold", "italic", "underline"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["link", "image"],
-        ],
+        toolbar: {
+            container: [
+                [{ header: '1' }, { header: '2' }, { font: [] }],
+                [{ size: [] }],
+                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                [
+                    { list: 'ordered' },
+                    { list: 'bullet' },
+                    { indent: '-1' },
+                    { indent: '+1' },
+                ],
+                ['link', 'image', 'video'], // 'video' button for YouTube
+                ['clean'],
+            ],
+        },
+        clipboard: {
+            matchVisual: false,
+        },
     };
 
     const formats = [
-        "header",
-        "bold",
-        "italic",
-        "underline",
-        "list",
-        "bullet",
-        "link",
-        "image",
+        'header',
+        'font',
+        'size',
+        'bold',
+        'italic',
+        'underline',
+        'strike',
+        'blockquote',
+        'list',
+        'bullet',
+        'indent',
+        'link',
+        'image',
+        'video',
     ];
 
     return (

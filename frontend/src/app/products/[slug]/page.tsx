@@ -59,14 +59,12 @@ export default async function Page({
     if (data?.errors) {
         notFound();
     }
-    console.log({ data });
+    // console.log({ data });
 
     const product: PRODUCT_TYPE = data?.data?.product;
     const attributes = product.attributes?.edges;
     const descriptions = product.descriptions?.edges;
     const faqs = product.faqs?.edges;
-
-    return <></>;
 
     return (
         <div className="container px-5 mx-auto">

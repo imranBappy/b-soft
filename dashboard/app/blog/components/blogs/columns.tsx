@@ -2,9 +2,9 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import moment from 'moment';
 import { ActionsDropdown } from './actions-dropdown';
-import { PRODUCT_TYPE } from '@/graphql/product';
+import { BLOG_TYPE } from '@/graphql/blog/types';
 
-export const columns: ColumnDef<PRODUCT_TYPE>[] = [
+export const columns: ColumnDef<BLOG_TYPE>[] = [
     {
         accessorKey: 'title',
         header: 'Title',

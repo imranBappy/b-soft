@@ -102,6 +102,9 @@ export function ProductForm({ id }: { id?: string }) {
         }
     );
     const router = useRouter();
+    console.log({
+        id,
+    });
 
     const { loading: product_loading, data: product_res } = useQuery(
         PRODUCT_QUERY,
@@ -127,10 +130,17 @@ export function ProductForm({ id }: { id?: string }) {
 
                     tag: data?.product?.tag || undefined,
                     photo: undefined,
+                    shortDescription:
+                        typeof data.product.shortDescription === 'string'
+                            ? data.product.shortDescription
+                            : '',
                 };
 
                 setImagePreviewUrls(photo);
-                form.reset(product);
+                setTimeout(() => {
+                    form.reset(product);
+                }, 0);
+                // form.reset(product);
             },
             onError: (error) => {
                 console.error(error);
@@ -176,6 +186,7 @@ export function ProductForm({ id }: { id?: string }) {
                 // Case 3: Both new photo and preview URLs are present
                 const uploadPromises = imagePreviewUrls.map(async (item) => {
                     if (item.url) return item.url; // Use existing URL
+                    if (item.url.startsWith('http')) return item.url; // Existing URL from backend
                     const url = await uploadImageToS3(renamedFile(item.file)); // Upload new file
                     return url;
                 });
@@ -362,13 +373,13 @@ export function ProductForm({ id }: { id?: string }) {
                             <Separator />
                             <div>
                                 <Editor
+                                    value={form.watch('shortDescription') || ''}
                                     onChange={(value) => {
                                         form.setValue(
                                             'shortDescription',
                                             value
                                         );
                                     }}
-                                    value={form.watch('shortDescription') ?? ''}
                                 />
                             </div>
                         </div>

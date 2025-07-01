@@ -17,11 +17,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Combobox } from '@/components/input/combobox';
 import { Switch } from '@/components/ui/switch';
-import { ImageInput } from '@/components/ui/file-input'; // Assuming this is your file input component
+import { ImageInput } from '@/components/ui/file-input2'; // Assuming this is your file input component
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 import { Loader2 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast'; // Import useToast hook
+// import { useToast } from '@/hooks/use-toast'; // Import useToast hook
 // Import the Quill type if available in your project's @types/react-quill
 import type { ReactQuillProps } from 'react-quill'; // Import ReactQuillProps type
 
@@ -87,7 +87,7 @@ const BlogPostForm: React.FC<BlogPostFormProps> = ({
         },
     });
 
-    const { toast } = useToast(); // Initialize useToast
+    // const { toast } = useToast(); // Initialize useToast
 
     const currentCoverImage = form.watch('coverImage');
     // Correctly type the quillRef for ReactQuill component
@@ -130,7 +130,6 @@ const BlogPostForm: React.FC<BlogPostFormProps> = ({
         'image',
         'video',
     ];
-    console.log({ categories });
 
     return (
         <Form {...form}>

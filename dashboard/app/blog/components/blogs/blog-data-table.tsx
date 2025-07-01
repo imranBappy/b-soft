@@ -32,7 +32,7 @@ export const Blogs = () => {
         pageSize: 10,
     });
 
-    const [filters, setFilters] = useState<FilterState>({
+    const [filters] = useState<FilterState>({
         search: '',
         category: null,
     });
