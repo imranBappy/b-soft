@@ -111,7 +111,7 @@ export const Blogs = () => {
         <div className="w-full">
             <div className="flex justify-end mb-5">
                 <Button variant={'secondary'} className="w-[95px] mr-2">
-                    <Link href={`/product/add`}>Add</Link>
+                    <Link href={`/blog/add`}>Add</Link>
                 </Button>
             </div>
             {/* Filters - Updated grid layout */}
