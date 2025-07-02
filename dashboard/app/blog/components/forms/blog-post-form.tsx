@@ -44,7 +44,7 @@ export const formSchema = z.object({
     coverImage: z
         .union([
             z.string().url('Invalid URL format').optional().nullable(),
-            z.instanceof(File),
+            z.any(),
         ])
         .optional()
         .nullable(),

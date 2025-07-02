@@ -18,15 +18,21 @@ export const GET_BLOG_CATEGORIES_ADMIN = gql`
     }
 `;
 
-export const GET_BLOG_CATEGORY_BY_ID = gql`
-    query GetBlogCategoryById($id: ID!) {
-        blogCategoryById(id: $id) {
+export const GET_BLOG_CATEGORY_BY_SLUG = gql`
+    query GetBlogCategoryById($slug: String!) {
+        blogPostBySlug(slug: $slug) {
             id
-            name
+            title
             slug
-            description
+            coverImage
+            isPublished
             createdAt
-            updatedAt
+            content
+            category {
+                id
+                name
+                slug
+            }
         }
     }
 `;

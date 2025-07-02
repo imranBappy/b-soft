@@ -66,7 +66,7 @@ export function ActionsDropdown({ item }: ActionsDropdownProps) {
                 </DropdownMenuItem>
 
                 <DropdownMenuItem>
-                    <Link className="w-full" href={`/product/${item.id}`}>
+                    <Link className="w-full" href={`/blog/${item.slug}`}>
                         Edit
                     </Link>
                 </DropdownMenuItem>

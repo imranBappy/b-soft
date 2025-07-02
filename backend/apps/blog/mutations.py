@@ -112,10 +112,9 @@ class UpdateBlogPost(graphene.Mutation):
 
     blog_post = graphene.Field(BlogPostType)
 
-    @login_required
+    @isAuthenticated([UserRole.ADMIN])
     def mutate(self, info, id, categoryId=None, title=None, coverImage=None, content=None, youtubeVideoUrl=None, isPublished=None):
-        if not info.context.user.is_staff:
-            raise Exception("Permission denied: You must be an admin to update blog posts.")
+        
         try:
             blog_post = BlogPost.objects.get(pk=id)
         except BlogPost.DoesNotExist:
