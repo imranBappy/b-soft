@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 export default {
     darkMode: ['class'],
@@ -72,6 +72,26 @@ export default {
                 playfair: ['var(--font-playfair-display)', 'serif'], // title
                 oswald: ['var(--font-oswald)', 'sans-serif'], //
                 lato: ['var(--font-lato)', 'sans-serif'], //body
+            },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        color: 'inherit', // Inherit text color from parent
+                        a: {
+                            color: '#1e40af',
+                            '&:hover': {
+                                color: '#1d4ed8',
+                            },
+                        },
+                        strong: { color: 'inherit' },
+                        h1: { color: 'inherit' },
+                        h2: { color: 'inherit' },
+                        h3: { color: 'inherit' },
+                        h4: { color: 'inherit' },
+                        code: { color: 'inherit' },
+                        blockquote: { color: 'inherit' },
+                    },
+                },
             },
         },
     },
