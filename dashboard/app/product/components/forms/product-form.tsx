@@ -102,9 +102,6 @@ export function ProductForm({ id }: { id?: string }) {
         }
     );
     const router = useRouter();
-    console.log({
-        id,
-    });
 
     const { loading: product_loading, data: product_res } = useQuery(
         PRODUCT_QUERY,
@@ -134,13 +131,13 @@ export function ProductForm({ id }: { id?: string }) {
                         typeof data.product.shortDescription === 'string'
                             ? data.product.shortDescription
                             : '',
+                    ...(product_res?.product?.slug
+                        ? { slug: product_res?.product?.slug }
+                        : {}),
                 };
 
                 setImagePreviewUrls(photo);
-                setTimeout(() => {
-                    form.reset(product);
-                }, 0);
-                // form.reset(product);
+                form.reset(product);
             },
             onError: (error) => {
                 console.error(error);
@@ -214,6 +211,9 @@ export function ProductForm({ id }: { id?: string }) {
                     price: parseFloat(data.price).toFixed(8),
                     photo: JSON.stringify(uploadedFiles),
                     id: id || undefined,
+                    ...(product_res?.product?.slug
+                        ? { slug: product_res?.product?.slug }
+                        : {}),
                 },
             });
             toast({

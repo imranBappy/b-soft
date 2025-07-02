@@ -1,13 +1,37 @@
 import { gql } from "@apollo/client";
 
 export const PRODUCT_MUTATION = gql`
-mutation MyMutation($category: ID , $id: String , $isActive: Boolean , $name: String! , $offerPrice: Decimal, $photo: String, $price: Decimal! , $priceRange: String, $shortDescription: String, $tag: String ) {
-  productCud(
-    input: {name: $name, price: $price, category: $category, id: $id, isActive: $isActive, offerPrice: $offerPrice, photo: $photo, priceRange: $priceRange, shortDescription: $shortDescription, tag: $tag}
-  ) {
-    success
-  }
-}
+    mutation MyMutation(
+        $category: ID
+        $id: String
+        $isActive: Boolean
+        $name: String!
+        $offerPrice: Decimal
+        $photo: String
+        $price: Decimal!
+        $priceRange: String
+        $shortDescription: String
+        $tag: String
+        $slug: String
+    ) {
+        productCud(
+            input: {
+                name: $name
+                price: $price
+                category: $category
+                id: $id
+                isActive: $isActive
+                offerPrice: $offerPrice
+                photo: $photo
+                priceRange: $priceRange
+                shortDescription: $shortDescription
+                tag: $tag
+                slug: $slug
+            }
+        ) {
+            success
+        }
+    }
 `;
 export const PRODUCT_ACCESS_MUTATION = gql`
 mutation MyMutation($accessLimit: Int = 10, $accessCount: Int = 0, $attributeOption: ID, $cookies: String, $download: String, $email: String, $expiredDate: DateTime, $item: ID!, $note: String , $password: String, $prodduct: ID , $username: String) {

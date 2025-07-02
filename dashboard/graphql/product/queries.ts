@@ -1,43 +1,58 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const PRODUCTS_QUERY = gql`
-query PRODUCTS_QUERY($offset: Int, $search: String, $after: String, $before: String, $first: Int, $price: Decimal, $orderBy: String, $isActive: Boolean, $name: String, $priceLte: Decimal, $tag: String, $createdAtEnd: Date, $createdAtStart: Date, $category: String) {
-  products(
-    offset: $offset
-    after: $after
-    before: $before
-    first: $first
-    price: $price
-    orderBy: $orderBy
-    isActive: $isActive
-    name: $name
-    priceLte: $priceLte
-    search: $search
-    tag: $tag
-    createdAtEnd: $createdAtEnd
-    createdAtStart: $createdAtStart
-    category: $category
-  ) {
-    totalCount
-    edges {
-      node {
-        id
-        name
-        price
-        tag
-        isActive
-        createdAt
-        category {
-          name
-          id
+    query PRODUCTS_QUERY(
+        $offset: Int
+        $search: String
+        $after: String
+        $before: String
+        $first: Int
+        $price: Decimal
+        $orderBy: String
+        $isActive: Boolean
+        $name: String
+        $priceLte: Decimal
+        $tag: String
+        $createdAtEnd: Date
+        $createdAtStart: Date
+        $category: String
+    ) {
+        products(
+            offset: $offset
+            after: $after
+            before: $before
+            first: $first
+            price: $price
+            orderBy: $orderBy
+            isActive: $isActive
+            name: $name
+            priceLte: $priceLte
+            search: $search
+            tag: $tag
+            createdAtEnd: $createdAtEnd
+            createdAtStart: $createdAtStart
+            category: $category
+        ) {
+            totalCount
+            edges {
+                node {
+                    id
+                    name
+                    price
+                    tag
+                    isActive
+                    createdAt
+                    category {
+                        name
+                        id
+                    }
+                    offerPrice
+                    photo
+                    priceRange
+                }
+            }
         }
-        offerPrice
-        photo
-        priceRange
-      }
     }
-  }
-}
 `;
 export const PRODUCT_QUERY = gql`
     query PRODUCT_QUERY($id: ID!) {
@@ -48,6 +63,7 @@ export const PRODUCT_QUERY = gql`
             priceRange
             offerPrice
             shortDescription
+            slug
             photo
             tag
             isActive
@@ -61,61 +77,77 @@ export const PRODUCT_QUERY = gql`
 `;
 
 export const CATEGORIES_QUERY = gql`
-query CATEGORIES_QUERY($search: String, $orderBy: String, $first: Int $isActive: Boolean, $isCategory: Boolean, $offset: Int, $parent: Decimal ) {
-  categories(
-    search: $search
-    orderBy: $orderBy
-    first: $first
-    isActive: $isActive
-    isCategory: $isCategory
-    offset: $offset
-    parent: $parent
-  ) {
-    totalCount
-    edges {
-      node {
-        id
-        name
-        isActive
-        products {
-          totalCount
+    query CATEGORIES_QUERY(
+        $search: String
+        $orderBy: String
+        $first: Int
+        $isActive: Boolean
+        $isCategory: Boolean
+        $offset: Int
+        $parent: Decimal
+    ) {
+        categories(
+            search: $search
+            orderBy: $orderBy
+            first: $first
+            isActive: $isActive
+            isCategory: $isCategory
+            offset: $offset
+            parent: $parent
+        ) {
+            totalCount
+            edges {
+                node {
+                    id
+                    name
+                    isActive
+                    products {
+                        totalCount
+                    }
+                }
+            }
         }
-       
-      }
     }
-  }
-}
-`
+`;
 
 export const CATEGORY_QUERY = gql`
-query MyQuery($id: ID!) {
-  category(id: $id) {
-    id
-    description
-    image
-    isActive
-    name
-   
-  }
-}
-`
+    query MyQuery($id: ID!) {
+        category(id: $id) {
+            id
+            description
+            image
+            isActive
+            name
+        }
+    }
+`;
 
 export const SUBCATEGORIES_QUERY = gql`
- query SUBCATEGORIES_QUERY($offset: Int , $first: Int, $search: String, $parentId:ID!) {
-    subcategories(offset: $offset, first: $first, search: $search, parentId:$parentId) {
-      totalCount
-      edges {
-        node {
-          id
-          name
-          image
-          description
-          isActive
+    query SUBCATEGORIES_QUERY(
+        $offset: Int
+        $first: Int
+        $search: String
+        $parentId: ID!
+    ) {
+        subcategories(
+            offset: $offset
+            first: $first
+            search: $search
+            parentId: $parentId
+        ) {
+            totalCount
+            edges {
+                node {
+                    id
+                    name
+                    image
+                    description
+                    isActive
+                }
+            }
         }
-      }
     }
-  }
-`
+`;
 
 export const ORDERS_QUERY = gql`
     query MyQuery(
@@ -211,7 +243,9 @@ export const ORDER_QUERY = gql`
                 totalCount
                 edges {
                     node {
-                        access { id }
+                        access {
+                            id
+                        }
                         price
                         quantity
                         id
@@ -228,146 +262,162 @@ export const ORDER_QUERY = gql`
 `;
 
 export const FLOORS_QUERY = gql`
-query MyQuery($after: String, $first: Int, $offset: Int, $name: String, $search: String, $isActive: Boolean, $orderBy: String ) {
-  floors(
-    after: $after
-    first: $first
-    offset: $offset
-    name: $name
-    search: $search
-    isActive: $isActive
-    orderBy: $orderBy
-  ) {
-    totalCount
-    edges {
-      node {
-        name
-        id
-        createdAt
-        floorTables {
-          totalCount
+    query MyQuery(
+        $after: String
+        $first: Int
+        $offset: Int
+        $name: String
+        $search: String
+        $isActive: Boolean
+        $orderBy: String
+    ) {
+        floors(
+            after: $after
+            first: $first
+            offset: $offset
+            name: $name
+            search: $search
+            isActive: $isActive
+            orderBy: $orderBy
+        ) {
+            totalCount
+            edges {
+                node {
+                    name
+                    id
+                    createdAt
+                    floorTables {
+                        totalCount
+                    }
+                    isActive
+                }
+            }
         }
-        isActive
-      }
     }
-  }
-}
-`
+`;
 export const FLOOR_QUERY = gql`
-query MyQuery($id: ID!) {
-  floor(id: $id) {
-    name
-    isActive
-    id
-  }
-}
-`
+    query MyQuery($id: ID!) {
+        floor(id: $id) {
+            name
+            isActive
+            id
+        }
+    }
+`;
 
 export const FLOOR_TABLES_QUERY = gql`
-query MyQuery($first: Int, $floor: Decimal, $name: String, $offset: Int, $orderBy: String, $search: String, $isActive: Boolean, $isBooked: Boolean ) {
-  floorTables(
-    first: $first
-    floor: $floor
-    name: $name
-    offset: $offset
-    orderBy: $orderBy
-    search: $search
-    isActive: $isActive
-    isBooked: $isBooked
-  ) {
-    totalCount
-    edges {
-      node {
-        createdAt
-        id
-        name
-        isActive
-        isBooked
-        floor {
-          id
-          name
+    query MyQuery(
+        $first: Int
+        $floor: Decimal
+        $name: String
+        $offset: Int
+        $orderBy: String
+        $search: String
+        $isActive: Boolean
+        $isBooked: Boolean
+    ) {
+        floorTables(
+            first: $first
+            floor: $floor
+            name: $name
+            offset: $offset
+            orderBy: $orderBy
+            search: $search
+            isActive: $isActive
+            isBooked: $isBooked
+        ) {
+            totalCount
+            edges {
+                node {
+                    createdAt
+                    id
+                    name
+                    isActive
+                    isBooked
+                    floor {
+                        id
+                        name
+                    }
+                }
+            }
         }
-      }
     }
-  }
-} 
-`
+`;
 
 export const FLOOR_TABLE_QUERY = gql`
-query MyQuery($id: ID!) {
-  floorTable(id: $id) {
-    id
-    isActive
-    name
-    floor {
-      id
-      name
+    query MyQuery($id: ID!) {
+        floorTable(id: $id) {
+            id
+            isActive
+            name
+            floor {
+                id
+                name
+            }
+        }
     }
-  }
-}
-`
+`;
 
 export const ADDRESS_QUERY = gql`
-query MyQuery($id: ID, $user: ID, $addressType: String!) {
-  address(id: $id, user: $user, addressType: $addressType) {
-    id
-    user {
-      id
-      name
-      email
-      phone
-    }
-    street
-    state
-    house
-    createdAt
-    country
-    city
-    area
-    address
-    addressType
-    default
-    buildins {
-      edges {
-        node {
-          floor
-          id
-          latitude
-          longitude
-          name
-          photo
+    query MyQuery($id: ID, $user: ID, $addressType: String!) {
+        address(id: $id, user: $user, addressType: $addressType) {
+            id
+            user {
+                id
+                name
+                email
+                phone
+            }
+            street
+            state
+            house
+            createdAt
+            country
+            city
+            area
+            address
+            addressType
+            default
+            buildins {
+                edges {
+                    node {
+                        floor
+                        id
+                        latitude
+                        longitude
+                        name
+                        photo
+                    }
+                }
+            }
         }
-      }
     }
-  }
-}
-`
+`;
 
 export const PAYMENT_QUERY = gql`
-query MyQuery($id: ID, $order: ID) {
-  payment(id: $id, order: $order) {
-    amount
-    createdAt
-    id
-    paymentMethod
-    order {
-      amount
-      type
-      status
-      id
-      discountApplied
-      createdAt
-      finalAmount
-      updatedAt
-      orderId
+    query MyQuery($id: ID, $order: ID) {
+        payment(id: $id, order: $order) {
+            amount
+            createdAt
+            id
+            paymentMethod
+            order {
+                amount
+                type
+                status
+                id
+                discountApplied
+                createdAt
+                finalAmount
+                updatedAt
+                orderId
+            }
+            remarks
+            status
+            trxId
+        }
     }
-    remarks
-    status
-    trxId
-  }
-}
-  
-  `
+`;
 export const PAYMENTS_QUERY = gql`
     query MyQuery(
         $order: ID
@@ -419,85 +469,85 @@ export const PAYMENTS_QUERY = gql`
     }
 `;
 export const ADDRESS_PAYMENT_QUERY = gql`
-query PAYMENT_QUERY($user:ID, $orderId:ID!){
-   address( user: $user) {
-    id
-    user {
-      id
-      name
-      email
-    }
-    street
-    state
-    house
-    createdAt
-    country
-    city
-    area
-    address
-  }
-    order(id: $orderId) {
-    user {
-      id
-      name
-      email
-    }
-    address {
-      city
-      state
-      street
-      zipCode
-      id
-    }
-    status
-    finalAmount
-    type
-    id
-    outlet {
-      email
-      id
-      address
-      name
-      phone
-      manager {
-        email
-        id
-        name
-      }
-    }
-    items {
-      totalCount
-      edges {
-        node {
-          price
-          quantity
-          id
-          product {
+    query PAYMENT_QUERY($user: ID, $orderId: ID!) {
+        address(user: $user) {
             id
-            images
-            name
-          }
+            user {
+                id
+                name
+                email
+            }
+            street
+            state
+            house
+            createdAt
+            country
+            city
+            area
+            address
         }
-      }
+        order(id: $orderId) {
+            user {
+                id
+                name
+                email
+            }
+            address {
+                city
+                state
+                street
+                zipCode
+                id
+            }
+            status
+            finalAmount
+            type
+            id
+            outlet {
+                email
+                id
+                address
+                name
+                phone
+                manager {
+                    email
+                    id
+                    name
+                }
+            }
+            items {
+                totalCount
+                edges {
+                    node {
+                        price
+                        quantity
+                        id
+                        product {
+                            id
+                            images
+                            name
+                        }
+                    }
+                }
+            }
+        }
     }
-  }
-}
-`
+`;
 
 export const BUILDING_QUERY = gql`
-query MyQuery($id: ID , $address: ID) {
-  building(id: $id, address: $address) {
-    createdAt
-    floor
-    id
-    latitude
-    longitude
-    name
-    photo
-    updatedAt
-  }
-}
-`
+    query MyQuery($id: ID, $address: ID) {
+        building(id: $id, address: $address) {
+            createdAt
+            floor
+            id
+            latitude
+            longitude
+            name
+            photo
+            updatedAt
+        }
+    }
+`;
 export const ATTRIBUTE_QUERY = gql`
     query MyQuery($id: ID!) {
         attribute(id: $id) {
@@ -582,20 +632,20 @@ export const DESCRIPTION_QUERY = gql`
 `;
 
 export const CREDENTIALS_QUERY = gql`
-query MyQuery($offset: Int!, $first: Int!) {
-  credentials(offset: $offset, first: $first) {
-    totalCount
-    edges {
-      node {
-        cookies
-        accessLimit
-        download
-        note
-        createdAt
-        name
-        id
-      }
+    query MyQuery($offset: Int!, $first: Int!) {
+        credentials(offset: $offset, first: $first) {
+            totalCount
+            edges {
+                node {
+                    cookies
+                    accessLimit
+                    download
+                    note
+                    createdAt
+                    name
+                    id
+                }
+            }
+        }
     }
-  }
-}
-`
+`;

@@ -91,9 +91,12 @@ export default async function Page({
                     )}
 
                     <div
-                        className="text-gray-600! dark:text-gray-300! font-lato md:text-lg text-sm  md:mt-2 "
+                        className="prose max-w-none text-gray-600! dark:text-gray-300! font-lato md:text-lg text-sm  md:mt-2 "
                         dangerouslySetInnerHTML={{
                             __html: product.shortDescription,
+                        }}
+                        style={{
+                            color: '#FAF9F6',
                         }}
                     />
                     <ProductPrice
@@ -167,9 +170,12 @@ export default async function Page({
                                 ''
                             )}
                             <div
-                                className=" overflow-x-hidden w-full text-gray-600  dark:text-gray-300 font-lato md:text-lg text-sm mt-5 "
+                                className="prose max-w-none overflow-x-hidden w-full text-gray-600  dark:text-gray-300 font-lato md:text-lg text-sm mt-5 "
                                 dangerouslySetInnerHTML={{
                                     __html: item.node.description,
+                                }}
+                                style={{
+                                    color: '#FAF9F6',
                                 }}
                             ></div>
                         </section>
