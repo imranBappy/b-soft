@@ -209,7 +209,7 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
 
                                             {/* Product Access */}
                                             {node.access ? (
-                                                node?.access?.cookies ? (
+                                                node?.access?.credential?.cookies ? (
                                                     <div>
                                                         {/* Expire expire date, active date and isExpire status */}
                                                         <div className="flex justify-between items-center">
@@ -289,119 +289,108 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                                         </p>
                                                                     </div>
                                                                 )}
-                                                            {node.access
-                                                                .email && (
-                                                                    <div className="flex items-center justify-between">
-                                                                        <div>
-                                                                            <p className="font-medium">
-                                                                                Email
-                                                                            </p>
-                                                                            <p>
-                                                                                {
-                                                                                    node
-                                                                                        .access
-                                                                                        .email
-                                                                                }
-                                                                            </p>
-                                                                        </div>
+                                                            {node.access?.credential?.email && (
+                                                                <div className="flex items-center justify-between">
+                                                                    <div>
+                                                                        <p className="font-medium">
+                                                                            Email
+                                                                        </p>
+                                                                        <p>
+                                                                            {
+                                                                                node
+                                                                                    .access
+                                                                                    .credential?.email
+                                                                            }
+                                                                        </p>
+                                                                    </div>
+                                                                    <Button
+                                                                        variant="ghost"
+                                                                        size="sm"
+                                                                        onClick={() =>
+                                                                            copyToClipboard(
+                                                                                node
+                                                                                    .access
+                                                                                    .credential?.email || ""
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <Copy className="h-4 w-4" />
+                                                                    </Button>
+                                                                </div>
+                                                            )}
+                                                            {node.access?.credential?.username && (
+                                                                <div className="flex items-center justify-between">
+                                                                    <div>
+                                                                        <p className="font-medium">
+                                                                            Username
+                                                                        </p>
+                                                                        <p>
+                                                                            {
+                                                                                node.access?.credential?.username
+                                                                            }
+                                                                        </p>
+                                                                    </div>
+                                                                    <Button
+                                                                        variant="ghost"
+                                                                        size="sm"
+                                                                        onClick={() =>
+                                                                            copyToClipboard(
+                                                                                node.access?.credential?.username || ""
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <Copy className="h-4 w-4" />
+                                                                    </Button>
+                                                                </div>
+                                                            )}
+                                                            {node.access?.credential?.password && (
+                                                                <div className="flex items-center justify-between">
+                                                                    <div>
+                                                                        <p className="font-medium">
+                                                                            Password
+                                                                        </p>
+                                                                        <p>
+                                                                            {showPasswords[
+                                                                                node
+                                                                                    .id
+                                                                            ]
+                                                                                ? node.access?.credential?.password
+                                                                                : '••••••••'}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className="flex gap-2">
+                                                                        <Button
+                                                                            variant="ghost"
+                                                                            size="sm"
+                                                                            onClick={() =>
+                                                                                togglePasswordVisibility(
+                                                                                    node.id
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            {showPasswords[
+                                                                                node
+                                                                                    .id
+                                                                            ] ? (
+                                                                                <EyeOff className="h-4 w-4" />
+                                                                            ) : (
+                                                                                <Eye className="h-4 w-4" />
+                                                                            )}
+                                                                        </Button>
                                                                         <Button
                                                                             variant="ghost"
                                                                             size="sm"
                                                                             onClick={() =>
                                                                                 copyToClipboard(
-                                                                                    node
-                                                                                        .access
-                                                                                        .email!
+                                                                                    node.access?.credential?.password || ""
                                                                                 )
                                                                             }
                                                                         >
                                                                             <Copy className="h-4 w-4" />
                                                                         </Button>
                                                                     </div>
-                                                                )}
-                                                            {node.access
-                                                                .username && (
-                                                                    <div className="flex items-center justify-between">
-                                                                        <div>
-                                                                            <p className="font-medium">
-                                                                                Username
-                                                                            </p>
-                                                                            <p>
-                                                                                {
-                                                                                    node
-                                                                                        .access
-                                                                                        .username
-                                                                                }
-                                                                            </p>
-                                                                        </div>
-                                                                        <Button
-                                                                            variant="ghost"
-                                                                            size="sm"
-                                                                            onClick={() =>
-                                                                                copyToClipboard(
-                                                                                    node
-                                                                                        .access
-                                                                                        .username!
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            <Copy className="h-4 w-4" />
-                                                                        </Button>
-                                                                    </div>
-                                                                )}
-                                                            {node.access
-                                                                .password && (
-                                                                    <div className="flex items-center justify-between">
-                                                                        <div>
-                                                                            <p className="font-medium">
-                                                                                Password
-                                                                            </p>
-                                                                            <p>
-                                                                                {showPasswords[
-                                                                                    node
-                                                                                        .id
-                                                                                ]
-                                                                                    ? node
-                                                                                        .access
-                                                                                        .password
-                                                                                    : '••••••••'}
-                                                                            </p>
-                                                                        </div>
-                                                                        <div className="flex gap-2">
-                                                                            <Button
-                                                                                variant="ghost"
-                                                                                size="sm"
-                                                                                onClick={() =>
-                                                                                    togglePasswordVisibility(
-                                                                                        node.id
-                                                                                    )
-                                                                                }
-                                                                            >
-                                                                                {showPasswords[
-                                                                                    node
-                                                                                        .id
-                                                                                ] ? (
-                                                                                    <EyeOff className="h-4 w-4" />
-                                                                                ) : (
-                                                                                    <Eye className="h-4 w-4" />
-                                                                                )}
-                                                                            </Button>
-                                                                            <Button
-                                                                                variant="ghost"
-                                                                                size="sm"
-                                                                                onClick={() =>
-                                                                                    copyToClipboard(
-                                                                                        node
-                                                                                            .access
-                                                                                            .password!
-                                                                                    )
-                                                                                }
-                                                                            >
-                                                                                <Copy className="h-4 w-4" />
-                                                                            </Button>
-                                                                        </div>
-                                                                    </div>
-                                                                )}
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 )
@@ -409,7 +398,7 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
 
                                             {/* Download Button */}
                                             <div className="flex items-center gap-5">
-                                                {node?.access?.cookies ? (
+                                                {node?.access?.credential?.cookies ? (
                                                     <Button
                                                         className="font-oswal font-semibold"
                                                         disabled={
@@ -420,8 +409,8 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                         <a
                                                             href={
                                                                 node?.access
-                                                                    ?.download
-                                                                    ? `${node?.access?.download}?access=${accessToken}&itemId=${node?.id}`
+                                                                    ?.credential?.download
+                                                                    ? `${node?.access?.credential?.download}?access=${accessToken}&itemId=${node?.id}`
                                                                     : '#'
                                                             }
                                                             target="_blank"
@@ -433,7 +422,7 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                         </a>
                                                     </Button>
                                                 ) : (
-                                                    node?.access?.download && (
+                                                    node?.access?.credential?.download && (
                                                         <Button
                                                             asChild
                                                             className="font-oswal"
@@ -443,8 +432,7 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                                                         >
                                                             <a
                                                                 href={
-                                                                    node?.access
-                                                                        ?.download ||
+                                                                    node?.access?.credential?.download ||
                                                                     '#'
                                                                 }
                                                                 target="_blank"

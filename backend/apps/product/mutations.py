@@ -221,17 +221,17 @@ class ProductAccessCUD(DjangoFormMutation):
     def mutate_and_get_payload(self, info, **input):
         instance = get_object_or_none(ProductAccess, id=input.get("id"))
         form = ProductAccessForm(input, instance=instance)
+      
         if not form.is_valid():
             create_graphql_error(form.errors) 
         form.save()
         
         item = get_object_or_none(OrderProduct, id=input.get("item"))
-        print(item)
         if item.order.status != 'COMPLETED':
             item.order.status = 'COMPLETED'
             item.order.save()
             
-        return ProductAccessCUD(  success=True )  
+        return ProductAccessCUD(success=True )  
 
 
 class ProductCUD(DjangoFormMutation):

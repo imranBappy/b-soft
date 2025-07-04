@@ -262,13 +262,17 @@ export const ORDER_QUERY = gql`
                             photo
                         }
                         access {
-                            download
-                            email
+                            credential{
+                              download
+                              email
+                              password
+                              username
+                              cookies
+                            }
+                          
                             id
                             note
-                            password
-                            username
-                            cookies
+
                             expiredDate
                             isExpired
                             createdAt

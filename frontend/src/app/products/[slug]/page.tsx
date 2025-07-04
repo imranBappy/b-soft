@@ -59,7 +59,6 @@ export default async function Page({
     if (data?.errors) {
         notFound();
     }
-    // console.log({ data });
 
     const product: PRODUCT_TYPE = data?.data?.product;
     const attributes = product.attributes?.edges;

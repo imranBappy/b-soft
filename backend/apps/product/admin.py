@@ -20,8 +20,8 @@ class SoftwareAccessAdmin(admin.ModelAdmin):
 
 @admin.register(ProductAccess)
 class ProductAccessAdmin(admin.ModelAdmin):
-    list_display =['id','download',"is_expired","access_count"]
-    search_fields = ['download']
+    list_display =['id',"is_expired","access_count"]
+
     list_filter = ['is_expired']
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):

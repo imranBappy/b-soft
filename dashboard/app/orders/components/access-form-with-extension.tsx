@@ -67,18 +67,29 @@ export function AccessWithExtension({ id }: { id?: string }) {
         try {
             const selectedItemCookie = credentials_res?.credentials?.edges?.find((edge: { node: CREDENTIAL_TYPE }) => String(edge?.node?.id) === selectedCookie)
             const itemId = params.get('itemId')
+            console.log({
+                ...data,
+                credential: selectedItemCookie?.node?.id,
+                item: itemId,
+                accessCount: 0,
+                isExpired: false,
+                expireDate: (new Date(data.expireDate)).toISOString()
+            },);
+
             await productAccess({
                 variables: {
                     ...data,
-                    cookies: selectedItemCookie?.node?.cookies,
+                    credential: selectedItemCookie?.node?.id,
                     item: itemId,
+                    accessCount: 0,
+                    isExpired: false,
                 },
             })
             toast({
                 title: "Success",
                 description: "Product access created successfully",
             })
-           router.push('/orders')
+            router.push('/orders')
         } catch (error) {
             console.log(error);
             toast({

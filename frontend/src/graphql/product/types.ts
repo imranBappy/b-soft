@@ -97,15 +97,18 @@ export interface ORDER_PRODUCT_ATTRIBUTE_TYPE {
     extraPrice: number;
     id: string;
 }
-
-export interface PRODUCT_ACCESS_TYPE {
-    item: ORDER_ITEM_TYPE;
-    username?: string;
+export interface CREDENTIAL_TYPE {
+    id?: string;
     email?: string;
     password?: string;
+    username?: string;
     download?: string;
-    note?: string;
     cookies?: string;
+}
+export interface PRODUCT_ACCESS_TYPE {
+    item: ORDER_ITEM_TYPE;
+    credential?: CREDENTIAL_TYPE,
+    note?: string;
     expiredDate?: string;
     createdAt?: string;
     isExpired?: boolean;

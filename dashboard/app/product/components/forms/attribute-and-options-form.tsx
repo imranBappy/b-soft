@@ -37,7 +37,7 @@ const optionSchema = z.object({
     message: z.string().optional(),
     extraPrice: z.number().min(0, 'Price is required'),
     photo: z
-        .array(z.union([z.instanceof(File), z.string()]))
+        .array(z.union([z.any(), z.string()]))
         .max(5, 'Maximum 5 photos allowed')
         .optional(),
     // photo:
@@ -64,11 +64,11 @@ export default function AttributeAndOptionForm() {
     const attributeId = searchParams.get('attributeId');
     const router = useRouter()
 
-    const {toast} = useToast()
+    const { toast } = useToast()
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            id:attributeId||"",
+            id: attributeId || "",
             product: productId || "",
             attributeName: '',
             options: [
@@ -92,22 +92,22 @@ export default function AttributeAndOptionForm() {
         {
             onCompleted() {
                 toast({
-                    description:"Successfully created!"
+                    description: "Successfully created!"
                 })
                 router.push(`/product/attribute?productId=${productId}`);
             },
-            onError:(err)=>{
+            onError: (err) => {
                 toast({
                     description: err.message,
-                    variant:'destructive'
+                    variant: 'destructive'
                 });
-            
+
             }
         }
     );
 
     // ATTRIBUTE_QUERY;
-    const {loading: attributeLoading } = useQuery(
+    const { loading: attributeLoading } = useQuery(
         ATTRIBUTE_QUERY,
         {
             variables: {
@@ -131,7 +131,7 @@ export default function AttributeAndOptionForm() {
                     options: options,
                 };
                 console.log({ attributedefaultValues });
-                
+
                 form.reset(attributedefaultValues);
             },
         }
@@ -169,7 +169,7 @@ export default function AttributeAndOptionForm() {
         const deletedPhoto = currentPhotos.find((_, idx) => idx === photoIndex);
 
         if (typeof deletedPhoto === 'string') {
-            setDeletedPhoto(deletedPhoto ? [...deletedPhotos??[] , deletedPhoto] : []);
+            setDeletedPhoto(deletedPhoto ? [...deletedPhotos ?? [], deletedPhoto] : []);
         }
 
         form.setValue(`options.${optionIndex}.photo`, updatedPhotos, {
@@ -178,39 +178,39 @@ export default function AttributeAndOptionForm() {
     };
 
 
- 
-   
+
+
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         console.log('Hello');
-        
-            const variables: {
-                input: {
+
+        const variables: {
+            input: {
+                id?: string;
+                product: string;
+                name: string;
+                options: {
                     id?: string;
-                    product: string;
-                    name: string;
-                    options: {
-                        id?: string;
-                        option: string;
-                        message?: string;
-                        extraPrice: number;
-                        photo: string;
-                    }[];
-                };
-            } = {
-                input: {
-                    id: data?.id,
-                    product: productId || '',
-                    name: data.attributeName,
-                    options: [],
-                },
+                    option: string;
+                    message?: string;
+                    extraPrice: number;
+                    photo: string;
+                }[];
             };
-        const options = data.options.map( async (op) => {
+        } = {
+            input: {
+                id: data?.id,
+                product: productId || '',
+                name: data.attributeName,
+                options: [],
+            },
+        };
+        const options = data.options.map(async (op) => {
             const uploadPromises = op?.photo?.map(async (item) => {
-                   if (typeof item === 'string') return item; 
-                   const url = await uploadImageToS3(renamedFile(item));
-                   return url;
-              });
+                if (typeof item === 'string') return item;
+                const url = await uploadImageToS3(renamedFile(item));
+                return url;
+            });
             const uploadedFiles = await Promise.all(uploadPromises ?? []);
             return {
                 id: op.id,
@@ -234,9 +234,9 @@ export default function AttributeAndOptionForm() {
         });
     };
 
-    
+
     console.log(form.formState.errors);
-    
+
 
 
     if (attributeLoading) return <Loading />;
@@ -360,14 +360,14 @@ export default function AttributeAndOptionForm() {
                                         />
                                         {form.formState.errors.options?.[index]
                                             ?.photo && (
-                                            <FormMessage>
-                                                {
-                                                    form.formState.errors
-                                                        .options[index].photo
-                                                        .message
-                                                }
-                                            </FormMessage>
-                                        )}
+                                                <FormMessage>
+                                                    {
+                                                        form.formState.errors
+                                                            .options[index].photo
+                                                            .message
+                                                    }
+                                                </FormMessage>
+                                            )}
                                     </FormItem>
 
                                     {/* Photo Previews */}
@@ -384,11 +384,11 @@ export default function AttributeAndOptionForm() {
                                                         width={200}
                                                         src={
                                                             typeof photo ===
-                                                            'string'
+                                                                'string'
                                                                 ? photo
                                                                 : URL.createObjectURL(
-                                                                      photo
-                                                                  )
+                                                                    photo
+                                                                )
                                                         }
                                                         alt={`Preview ${photoIndex}`}
                                                         className="h-24 w-24 object-contain"

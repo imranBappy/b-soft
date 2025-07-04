@@ -34,9 +34,9 @@ export const PRODUCT_MUTATION = gql`
     }
 `;
 export const PRODUCT_ACCESS_MUTATION = gql`
-mutation MyMutation($accessLimit: Int = 10, $accessCount: Int = 0, $attributeOption: ID, $cookies: String, $download: String, $email: String, $expiredDate: DateTime, $item: ID!, $note: String , $password: String, $prodduct: ID , $username: String) {
+mutation MyMutation($accessCount: Int!, $accessLimit: Int!, $attributeOption: ID , $credential: ID!, $expireDate: DateTime!,  $isExpired: Boolean!, $item: ID!, $note: String, $prodduct: ID ) {
   productAccessCud(
-    input: {accessCount: $accessCount, accessLimit: $accessLimit, attributeOption: $attributeOption, cookies: $cookies, download: $download, email: $email, expiredDate: $expiredDate, item: $item, note: $note, password: $password, prodduct: $prodduct, username: $username}
+    input: {credential: $credential, accessCount: $accessCount, accessLimit: $accessLimit, attributeOption: $attributeOption, expiredDate: $expireDate,  isExpired: $isExpired, item: $item, note: $note, prodduct: $prodduct}
   ) {
     success
   }

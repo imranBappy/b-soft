@@ -103,6 +103,11 @@ class Credential(models.Model):
     cookies = models.TextField(null=True, blank= True)         # cookies for the product
     access_limit = models.IntegerField(default=0)              
     note = models.CharField(max_length=255, null=True, blank= True)
+    
+    username = models.CharField(max_length=255, null=True, blank= True)
+    email = models.EmailField(max_length=255, null=True, blank= True)
+    password = models.CharField(max_length=255, null=True, blank= True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     access_count = models.IntegerField(default=0, null=True, blank= True) 
@@ -296,17 +301,13 @@ class OrderProduct(models.Model):
     
 
 class ProductAccess(models.Model):
-
     prodduct = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, related_name='access')
     attributeOption = models.ForeignKey(AttributeOption, on_delete=models.SET_NULL, null=True, blank=True, related_name='access')
-
     item = models.OneToOneField(OrderProduct, on_delete=models.SET_NULL, null=True, blank=True, related_name='access')
-    username = models.CharField(max_length=255, null=True, blank= True)
-    email = models.EmailField(max_length=255, null=True, blank= True)
-    password = models.CharField(max_length=255, null=True, blank= True)
-    download = models.CharField(max_length=255, null=True, blank= True)
+  
 
-    cookies = models.TextField(null=True, blank= True)
+    credential = models.ForeignKey(Credential, on_delete=models.CASCADE, related_name='access' )
+
     expired_date = models.DateTimeField(null=True, blank= True) # when the access will be expired
     access_count = models.IntegerField(default=0)              # how many times the access will be used
     access_limit = models.IntegerField(default=0)  # how many device 
