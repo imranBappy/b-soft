@@ -626,7 +626,7 @@ class OrderProductCredentialAccess(graphene.Mutation):
         
 
         # if is there cookies in product access then can access
-        if not productAccess.cookies:
+        if not productAccess.credential.cookies:
             raise GraphQLError("Product access not found")
         
         # check cookies is expired
