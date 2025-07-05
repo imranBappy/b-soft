@@ -126,18 +126,12 @@ const Orders = () => {
                         </p>
 
                     </div>
-                    <div className='flex gap-5 items-center mt-2 flex-wrap'>
-                        <Button variant={'outline'}>
-                            <Youtube />
-                            Watch Video
-                        </Button>
-                        <DownloadExtension />
-                    </div>
+
                 </div>
             </div>
             <div className="flex  gap-10   flex-wrap">
-                {node?.items?.edges?.map(({ node }) => (
-                    <OrderProduct item={node} key={node.id} />
+                {node?.items?.edges?.map(({ node: node2 }) => (
+                    <OrderProduct item={node2} key={node2.id} orderId={node.id} />
                 ))}
             </div>
         </div>
@@ -152,8 +146,15 @@ const Orders = () => {
 
 
     return (
-        <div className="w-full flex  gap-5 flex-col">
-            <div className="flex   flex-col gap-10 my-10">{content}</div>
+        <div className="w-full flex  gap-5 flex-col ">
+            <div className='mt-10 md:!-mb-14 flex gap-5 md:justify-end items-center flex-wrap'>
+                <Button variant={'outline'}>
+                    <Youtube />
+                    Watch Video
+                </Button>
+                <DownloadExtension />
+            </div>
+            <div className="flex   flex-col gap-10 ">{content}</div>
             <div
                 className=" flex justify-center w-full mt-5"
                 style={{ marginBottom: '100px' }}

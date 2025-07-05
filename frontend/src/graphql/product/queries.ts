@@ -228,6 +228,7 @@ export const ORDERS_QUERY = gql`
                                     id
                                     name
                                     photo
+                                    slug
                                 }
                                 access {
                                     isExpired
@@ -260,6 +261,7 @@ export const ORDER_QUERY = gql`
                             id
                             name
                             photo
+                            slug
                         }
                         access {
                             credential{

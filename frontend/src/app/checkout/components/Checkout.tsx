@@ -31,7 +31,7 @@ const orderForm = z.object({
         message: "Email must be valid",
     }),
     phone: z.string().min(11, {
-        message: "phone number must be at least 11 digit.",
+        message: "WhatsApp number must be at least 11 digit.",
     }).optional(),
 
     // paymentInfo
@@ -138,8 +138,8 @@ const Checkout = () => {
                                         <TextField
                                             form={form}
                                             name="phone"
-                                            label="Phone Number"
-                                            placeholder="Phone Number"
+                                            label="WhatsApp Number"
+                                            placeholder="WhatsApp Number"
                                         />
                                     </div>
 

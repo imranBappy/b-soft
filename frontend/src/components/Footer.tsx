@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import React from 'react';
 import Logo from '@/assets/logo.png'
-import { Phone, MapPinHouse, Mail, Facebook, Twitter, Youtube, Instagram, Linkedin } from 'lucide-react';
+import { Phone, MapPinHouse, Mail, Facebook, Youtube, Instagram } from 'lucide-react';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { useQuery } from '@apollo/client';
@@ -119,13 +119,7 @@ const Footer = () => {
                                 <Instagram />
                             </Button>
                         </Link>
-                        <Link href={
-                            data?.websiteinfo?.x || '#'
-                        }>
-                            <Button size={'icon'} variant={'ghost'} >
-                                <Twitter />
-                            </Button>
-                        </Link>
+
                         <Link href={
                             data?.websiteinfo?.youtube || '#'
                         }>
@@ -133,13 +127,7 @@ const Footer = () => {
                                 <Youtube />
                             </Button>
                         </Link>
-                        <Link href={
-                            data?.websiteinfo?.linkedin || '#'
-                        }>
-                            <Button size={'icon'} variant={'ghost'} >
-                                <Linkedin />
-                            </Button>
-                        </Link>
+
                     </div>
                 </div>
             </div>
